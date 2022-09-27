@@ -1,0 +1,978 @@
+{
+	"functions": {
+		"makeLuaSprite": {
+			"returns": "void",
+			"args": "tag:String, image:String, x:Float, y:Float",
+			"documentation": "Spawns a Lua Sprite with no animations using the tag `tag`, it will be using the image `image`.png, and will be spawned on position `x`, `y` If you want to make a Black screen with no texture, leave `image` field empty and use (luaSpriteMakeGraphic)[]\n\nIf another Lua Sprite that exists is already using the tag `tag`, it will be removed."
+		},
+		"makeAnimatedLuaSprite": {
+			"returns": "void",
+			"args": "tag:String, image:String, x:Float, y:Float",
+			"documentation": "Spawns a Lua Sprite that supports Animations, it will be using the tag `tag`, be using the image `image`.png, the XML `image`.xml, and will be spawned on position `x`, `y`\n\nIf another Lua Sprite that exists is already using the tag `tag`, it will be removed."
+		},
+		"addLuaSprite": {
+			"returns": "void",
+			"args": "tag:String, front:Bool = false",
+			"documentation": "Adds a Lua Sprite with the specified tag, either in front or behind the characters."
+		},
+		"removeLuaSprite": {
+			"returns": "void",
+			"args": "tag:String, destroy:Bool = true",
+			"documentation": "Removes a Lua Sprite with the specified tag\n* `tag` - The Lua Sprite's tag\n* `destroy` - Specifies if you don't want to use the sprite anymore. Default value is `true` (Set to `false` if you want to re-add it later)"
+		},
+		"makeLuaText": {
+			"returns": "void",
+			"args": "tag:String, text:String, width:Int, x:Float, y:Float",
+			"documentation": "Creates a Lua Text object on position `x`, `y` and a width with 'width'"
+		},
+		"addLuaText": {
+			"returns": "void",
+			"args": "tag:String",
+			"documentation": "Spawns a Lua Text on the stage"
+		},
+		"removeLuaText": {
+			"returns": "void",
+			"args": "tag:String, destroy:Bool = true",
+			"documentation": "Removes a Lua Text off the stage\n* `tag` - The Lua Sprite's tag\n* `destroy` - Specifies if you don't want to use the sprite anymore. Default value is `true` (Set to `false` if you want to re-add it later)"
+		},
+		"setTextString": {
+			"returns": "void",
+			"args": "tag:String, text:String",
+			"documentation": "Sets text string at the specified tag"
+		},
+		"setTextSize": {
+			"returns": "void",
+			"args": "tag:String, size:Int",
+			"documentation": "Sets text size at the specified tag"
+		},
+		"setTextWidth": {
+			"returns": "void",
+			"args": "tag:String, width:Float",
+			"documentation": "Sets text width at the specified tag"
+		},
+		"setTextBorder": {
+			"returns": "void",
+			"args": "tag:String, size:Int, color:Int",
+			"documentation": "Sets text border at the specified tag"
+		},
+		"setTextColor": {
+			"returns": "void",
+			"args": "tag:String, color:String",
+			"documentation": "Sets text color at the specified tag"
+		},
+		"setTextFont": {
+			"returns": "void",
+			"args": "tag:String, font:String",
+			"documentation": "Sets text font at the specified tag"
+		},
+		"setTextItalic": {
+			"returns": "void",
+			"args": "tag:String, italic:Bool",
+			"documentation": "Sets text as italic or not based on the `italic` parameter"
+		},
+		"setTextAlignment": {
+			"returns": "void",
+			"args": "tag:String, alignment:String = 'left'",
+			"documentation": "Sets text alignment at the specified tag `'left'`,`'right'`, or `'center'`"
+		},
+		"getTextString": {
+			"returns": "string",
+			"args": "tag:String",
+			"documentation": "Gets text object's text at the specified tag"
+		},
+		"getTextSize": {
+			"returns": "number",
+			"args": "tag:String",
+			"documentation": "Gets text object's size at the specified tag"
+		},
+		"getTextFont": {
+			"returns": "string",
+			"args": "tag:String",
+			"documentation": "Gets text object's font at the specified tag"
+		},
+		"getTextWidth": {
+			"returns": "number",
+			"args": "tag:String",
+			"documentation": "Gets text object's width at the specified tag"
+		},
+		"startDialogue": {
+			"returns": "void",
+			"args": "dialogueFile:String, song:String = null",
+			"documentation": "Starts a dialogue loading a file inside `mods/data/your-song-name/`.\n* `dialogueFile` - .TXT file to load\n* `song` - Optional value for a Background music during the dialogue\n\nExample: If i want to load a dialogue file `mods/data/bopeebo/dialogue.txt` using the pause menu song (Breakfast), i should use: `startDialogue('bopeebo/dialogue', 'breakfast')`\n\nNOTE: When the dialogue is ended, it calls `startCountdown()`\n\nNOTE 2: `onNextDialogue(line)` callback is called for every dialogue line passed"
+		},
+		"startVideo": {
+			"returns": "void",
+			"args": "videoFile:String",
+			"documentation": "Starts a Video Cutscene\n* `videoFile` - File name of your video, it must be inside `mods/videos/`\n\nExample: If you wanted to start the video `mods/videos/ughCutscene.mp4`, you'd have to use `startVideo('ughCutscene')`"
+		},
+		"startCountdown": {
+			"returns": "void",
+			"args": "",
+			"documentation": "In case you forced a countdown stop for doing a pre-song cutscene or something, this starts the countdown again manually."
+		},
+		"endSong": {
+			"returns": "void",
+			"args": "",
+			"documentation": "In case you forced a song end for doing a post-song cutscene or something, this ends the song manually."
+		},
+		"characterPlayAnim": {
+			"returns": "void",
+			"args": "character:String, anim:String, forced:Bool = false",
+			"documentation": "* `character` - Can be `boyfriend`, `dad` or `gf`\n*`anim` - Animation name to be played\n* `forced` - Can be either `true` or `false`, if set to `true`, it will force the animation to reset if the current animation is the same as the animation to play"
+		},
+		"characterDance": {
+			"returns": "void",
+			"args": "character:String",
+			"documentation": "Makes character do the idle dance\n* `character` - Can be `boyfriend`, `dad` or `gf`"
+		},
+		"getCharacterX": {
+			"returns": "number",
+			"args": "type:String",
+			"documentation": "Gets the general X position of a character from the type `type`\n* `type` - Can be `boyfriend`, `dad` or `gf`"
+		},
+		"setCharacterX": {
+			"returns": "void",
+			"args": "type:String, value:Float",
+			"documentation": "Sets the general X position of a character from the type `type`, this will also move all precached characters from the same type into the position you want\n* `type` - Can be `boyfriend`, `dad` or `gf`"
+		},
+		"getCharacterY": {
+			"returns": "number",
+			"args": "type:String",
+			"documentation": "Gets the general Y position of a character from the type `type`\n* `type` - Can be `boyfriend`, `dad` or `gf`"
+		},
+		"setCharacterY": {
+			"returns": "void",
+			"args": "type:String, value:Float",
+			"documentation": "Sets the general Y position of a character from the type `type`, this will also move all precached characters from the same type into the position you want\n* `type` - Can be `boyfriend`, `dad` or `gf`"
+		},
+		"addScore": {
+			"returns": "void",
+			"args": "value:Int = 0",
+			"documentation": "Adds `value` to the current song's score and recalculates rating"
+		},
+		"setScore": {
+			"returns": "void",
+			"args": "value:Int = 0",
+			"documentation": "Set the current song's score to `value` and recalculates rating"
+		},
+		"addMisses": {
+			"returns": "void",
+			"args": "value:Int = 0",
+			"documentation": "Adds `value` to the current song's misses total and recalculates rating"
+		},
+		"setMisses": {
+			"returns": "void",
+			"args": "value:Int = 0",
+			"documentation": "Set the current song's misses total to `value` and recalculates rating"
+		},
+		"addHits": {
+			"returns": "void",
+			"args": "value:Int = 0",
+			"documentation": "Adds `value` to the current song's notes hit total and recalculates rating"
+		},
+		"setHits": {
+			"returns": "void",
+			"args": "value:Int = 0",
+			"documentation": "Set the current song's notes hit total to `value` and recalculates rating"
+		},
+		"setRatingPercent": {
+			"returns": "void",
+			"args": "value:Float",
+			"documentation": "Sets the rating percent in case you want to do your own rating calculation.\n* `value` - Should go from `0` to `1` but can actually be whatever value you want, but it's kinda stupid to get out of the base values."
+		},
+		"setRatingString": {
+			"returns": "void",
+			"args": "value:String",
+			"documentation": "Sets the rating name to `value` in case you want to do your own rating calculation."
+		},
+		"keyJustPressed": {
+			"returns": "boolean",
+			"args": "name:String",
+			"documentation": "Get if the key `name` just got pressed on the current frame.\n\nKeys: `'left'`, `'down'`, `'up'`, `'right'`, `'accept'`, `'back'`, `'pause'`, `'reset'`, `'space'`"
+		},
+		"keyPressed": {
+			"returns": "boolean",
+			"args": "name:String",
+			"documentation": "Get if the key `name` is being held on the current frame.\n\nKeys: `'left'`, `'down'`, `'up'`, `'right'`, `'space'`"
+		},
+		"keyReleased": {
+			"returns": "boolean",
+			"args": "name:String",
+			"documentation": "Get if the key `name` was released on the current frame.\n\nKeys: `'left'`, `'down'`, `'up'`, `'right'`, `'space'`"
+		},
+		"mouseClicked": {
+			"returns": "boolean",
+			"args": "name:String",
+			"documentation": "Get if the mouse button `name` just got pressed on the current frame. leave 'name' blank for left mouse\n\nButtons: `'left'`, `'right'`, `'middle'`"
+		},
+		"mousePressed": {
+			"returns": "boolean",
+			"args": "name:String",
+			"documentation": "Get if the mouse button `name` is being held on the current frame.\n\nButtons: `'left'`, `'right'`, `'middle'`"
+		},
+		"mouseReleased": {
+			"returns": "boolean",
+			"args": "name:String",
+			"documentation": "Get if the mouse button `name` was released on the current frame.\n\nButtons: `'left'`, `'right'`, `'middle'`"
+		},
+		"getMouseX": {
+			"returns": "number",
+			"args": "camera:String",
+			"documentation": "Returns the relative mouse X position on a specific camera\n* `camera` - Can be either `game`, `hud` or `other`"
+		},
+		"getMouseY": {
+			"returns": "number",
+			"args": "camera:String",
+			"documentation": "Returns the relative mouse Y position on a specific camera\n* `camera` - Can be either `game`, `hud` or `other`"
+		},
+		"triggerEvent": {
+			"returns": "void",
+			"args": "name:String, arg1:String, arg2:String",
+			"documentation": "Triggers an event without you having to chart them.\n* `name` - Event name on Chart Editor\n* `arg1` - Value 1 on Chart Editor\n* `arg2` - Value 2 on Chart Editor"
+		},
+		"addLuaScript": {
+			"returns": "void",
+			"args": "path:String",
+			"documentation": "Loads another .lua script.\n* `path` - Path to LUA relative to the base folder"
+		},
+		"getColorFromHex": {
+			"returns": "number",
+			"args": "color:String",
+			"documentation": "Get the color decimal ID from an Hexadecimal value (`color`).\n\nExample: To get orange, you should use `getColorFromHex('FF7800')` or `getColorFromHex('0xFFFF7800')`"
+		},
+		"getSongPosition": {
+			"returns": "number",
+			"args": "",
+			"documentation": "Returns the current song position. Shortcut to `getPropertyClass('Conductor', 'songPosition')`"
+		},
+		"cameraShake": {
+			"returns": "void",
+			"args": "camera:String, intensity:Float, duration:Float",
+			"documentation": "* `camera` - \"game\",\"hud\" or \"other\"\n* `intensity` - How far away should it shake, recommended value is `0.05`\n* `duration` - Time duration for it to shake"
+		},
+		"cameraSetTarget": {
+			"returns": "void",
+			"args": "target:String",
+			"documentation": "Makes the camera focus on a specific target\n* `target` - Target can be either `boyfriend` or `dad`"
+		},
+		"cameraFlash": {
+			"returns": "void",
+			"args": "camera:String, color:String, duration:Float,forced:Bool",
+			"documentation": "* `camera` - \"game\",\"hud\" or \"other\"\n* `color` - color of flash\n* `duration` - Time duration for it to flash\n* `forced` - restarts flash or not"
+		},
+		"cameraFade": {
+			"returns": "void",
+			"args": "camera:String, color:String, duration:Float,forced:Bool",
+			"documentation": "* `camera` - \"game\",\"hud\" or \"other\"\n* `color` - color of fade\n* `duration` - Time duration for it to fade\n* `forced` - restarts fade or not"
+		},
+		"debugPrint": {
+			"returns": "void",
+			"args": "text1:Dynamic, text2:Dynamic, text3:Dynamic, text4:Dynamic, text5:Dynamic",
+			"documentation": "* Prints a debug message on the top-left corner of the screen\n* All values are optional\n* You can have up to 5 values to be printed.\n\nExample: `debugPrint(\"Current boyfriend character: \", getProperty(\"boyfriend.curCharacter\"));`\n\nThis will print the following message: `Current boyfriend character: bf`"
+		},
+		"close": {
+			"returns": "void",
+			"args": "printMessage:Bool",
+			"documentation": "Stops your script in the next 100 miliseconds.\n* `printMessage` - Wether you want a warning to show on the top-left corner of the screen or not"
+		},
+		"makeGraphic": {
+			"returns": "void",
+			"args": "obj:String, width:Int, height:Int, color:String",
+			"documentation": "Used for making an object use a solid color Width x Height frame instead of a texture.\n* `obj` - Lua Sprite tag or Object variable name\n* `width` - Width in pixels of the graphic you want to create\n`height` - Height in pixels of the graphic you want to create\n* `color` - Color string, works the same as `getColorFromHex()`\n\nExample: Use `makeGraphic('testBlackSquare', 1000, 1000, '000000')` to make the Lua Sprite with the tag \"testBlackSquare\" turn into a 1000x1000 black square."
+		},
+		"setBlendMode": {
+			"returns": "void",
+			"args": "obj:String, blend:String",
+			"documentation": "Changes the blend mode of a Sprite (Works similar to how Photoshop do it)\n* `obj` - Lua Sprite tag or Object variable name\n* `blend` - Blend mode to use. Example: `add`, `darken`, `normal`.\n\n[List of blend modes](https://api.haxe.org/flash/display/BlendMode.html)"
+		},
+		"addAnimationByPrefix": {
+			"returns": "void",
+			"args": "tag:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true",
+			"documentation": "Adds an animation `name` to the Lua Sprite/Object using the tag/variable `tag`, it will also overwrite another animation using the same name.\n* `obj` - Lua Sprite tag or Object variable name\n* `name` - Animation to be added's name\n* `prefix` - Animation name on the .xml file\n* `framerate` - Optional value, how many frames per second does the animation have, Default value is `24`\n* `loop` - Optional value, should the animation loop? Default value: `true`"
+		},
+		"addAnimationByIndices": {
+			"returns": "void",
+			"args": "tag:String, name:String, prefix:String, indices:String, framerate:Int = 24",
+			"documentation": "Adds an animation `name` to the Lua Sprite/Object using the tag/variable `tag` with the specified indices on `indices`, it will also overwrite another animation using the same name.\n* `obj` - Lua Sprite tag or Object variable name\n* `name` - Animation to be added's name\n* `prefix` - Animation name on the .xml file\n* `indices` - What frames the animation should use, must be separated with a comma. Example: `1, 2, 3, 4, 5, 3, 4, 5`\n* `framerate` - Optional value, how many frames per second does the animation have, Default value is `24`"
+		},
+		"objectPlayAnimation": {
+			"returns": "void",
+			"args": "obj:String, name:String, forced:Bool = false",
+			"documentation": "Plays animation `name` on a Lua Sprite/Object with the tag/variable `obj`.\n* `obj` - Lua Sprite tag or Object variable name\n* `name` - Animation name to play\n* `forced` - If true, the animation will reset if the current animation is the same as the one you're trying to play. Default value is `false`"
+		},
+		"getObjectOrder": {
+			"returns": "number",
+			"args": "obj:String",
+			"documentation": "Gets the object's layer position\n* `obj` - Object variable/Lua Sprite tag"
+		},
+		"setObjectOrder": {
+			"returns": "void",
+			"args": "obj:String, position:Int",
+			"documentation": "Sets the object's layer position\n* `obj` - Object variable/Lua Sprite tag\n* `position` - New position the object will be in\n\n(note: when referring to characters, you must refer to their group) `boyfriendGroup`, `gfGroup`, `dadGroup`"
+		},
+		"removeFromGroup": {
+			"returns": "void",
+			"args": "obj:String, index:Int, dontDestroy:Bool = false",
+			"documentation": "* `obj` - Group/Array variable\n* `index` - Member ID\n* `dontDestroy` - Optional variable. Won't clear member from memory, you will probably never ever use this.\n\nExample: To remove the first spawned note from the group you should use `removeFromGroup('notes', 0)`"
+		},
+		"setGraphicSize": {
+			"returns": "void",
+			"args": "obj:String, multX:Float, multY:Float = 0",
+			"documentation": "* `obj` - Object from PlayState or Lua Sprite\n* `multX` - Horizontal multiplier, default value is 1\n* `multY` - Vertical multiplier, default value is 1"
+		},
+		"scaleObject": {
+			"returns": "void",
+			"args": "obj:String, multX:Float, multY:Float = 0",
+			"documentation": "Works identically to `setGraphicSize()`"
+		},
+		"updateHitbox": {
+			"returns": "void",
+			"args": "obj:String",
+			"documentation": "Use this to update the hitbox in case you change the sprite's scale manually or via a tween.\n* `obj` - Object from PlayState or Lua Sprite"
+		},
+		"setScrollFactor": {
+			"returns": "void",
+			"args": "obj:String, scrollX:Float, scrollY:Float",
+			"documentation": "Changes how much a Sprite moves along with the camera.\n* `obj` - Lua Sprite tag or Object variable name\n* `scrollX` - Horizontal movement multiplier\n* `scrollY` - Vertical movement multiplier\n\nNote: Boyfriend/Opponent have a scrollX/scrollY value of 1, while Girlfriend have a scrollX/scrollY value of 0.95, if you're gonna do background elements, it's highly suggested that you make the values something under 1."
+		},
+		"setObjectCamera": {
+			"returns": "void",
+			"args": "obj:String, camera:String",
+			"documentation": "Changes on which camera should your object be drawn on\n* `obj` - Lua Sprite tag or Object variable name\n* `camera` - `game`, `hud` or `other`."
+		},
+		"addCharacterToList": {
+			"returns": "void",
+			"args": "name:String, type:String",
+			"documentation": "Creates a character for the `'Change Character'` event.\n* `name` - Character name, example: `pico-player`, `mom-car`, `gf`, etc.\n* `type` - Character type, 'boyfriend' for player, 'dad' for opponent, 'gf' for girlfriend."
+		},
+		"precacheSound": {
+			"returns": "void",
+			"args": "name:String",
+			"documentation": "* `name` - Asset name, should be located inside `mods/sounds/` or `assets/sounds/`"
+		},
+		"precacheImage": {
+			"returns": "void",
+			"args": "name:String",
+			"documentation": "* `name` - Asset name, should be located inside `mods/images/`\n\nNOTE: For now precacheImage is only capable of precaching images inside `mods/`!"
+		},
+		"playMusic": {
+			"returns": "void",
+			"args": "sound:String, volume:Float = 1, loop:Bool = false",
+			"documentation": "* `sound` - File name (Should be located in `mods/music/` or `assets/music/`)\n* `volume` - Optional value, volume percent goes from `0` to `1`. Default value: `1`\n* `volume` - Optional value, if the music should loop indefinitely. Default value: `false`"
+		},
+		"playSound": {
+			"returns": "void",
+			"args": "sound:String, volume:Float = 1, ?tag:String",
+			"documentation": "* `sound` - File name (Should be located in `mods/sounds/` or `assets/sounds/`)\n* `volume` - Optional value, volume percent goes from `0` to `1`. Default value: `1`\n* OPTIONAL: `tag` - Should only be used if you want to pause, resume, change the time, volume or fade in/out your sound, if you don't want to use it, don't include a third value."
+		},
+		"stopSound": {
+			"returns": "void",
+			"args": "tag:String",
+			"documentation": "This function will stop the sound AND remove it permanently!\n* `tag` - Sound tag"
+		},
+		"pauseSound": {
+			"returns": "void",
+			"args": "tag:String",
+			"documentation": "* `tag` - Sound tag"
+		},
+		"resumeSound": {
+			"returns": "void",
+			"args": "tag:String",
+			"documentation": "* `tag` - Sound tag"
+		},
+		"soundFadeIn": {
+			"returns": "void",
+			"args": "tag:String, duration:Float, fromValue:Float = 0, toValue:Float = 1",
+			"documentation": "* `tag` - Sound tag, leave this field empty if you want to do a fade in on the Background music instead\n`duration` - The time it takes for the volume to go from `fromValue` to `toValue`\n* `fromValue` - Starting value. Default value is `0`\n* `toValue` - End value. Default value is `1`"
+		},
+		"soundFadeOut": {
+			"returns": "void",
+			"args": "tag:String, duration:Float, toValue:Float = 0",
+			"documentation": "* `tag` - Sound tag, leave this field empty if you want to do a fade out on the Background music instead\n* `duration` - The time it takes for the volume to go from the starting volume to `toValue`\n* `toValue` - End value. Default value is `0`"
+		},
+		"soundFadeCancel": {
+			"returns": "void",
+			"args": "tag:String",
+			"documentation": "* `tag` - Sound tag, leave this field empty if you want cancel the Background music's fade in/out instead"
+		},
+		"getSoundVolume": {
+			"returns": "number",
+			"args": "tag:String",
+			"documentation": "* `tag` - Sound tag, leave this field empty if you want get the Background music's volume instead"
+		},
+		"setSoundVolume": {
+			"returns": "void",
+			"args": "tag:String, value:Float",
+			"documentation": "* `tag` - Sound tag, leave this field empty if you want change the Background music's volume instead\n* `value` - Goes from `0` to `1`."
+		},
+		"getSoundTime": {
+			"returns": "number",
+			"args": "tag:String",
+			"documentation": "Gets the current sound's position in miliseconds\n* `tag` - Sound tag"
+		},
+		"setSoundTime": {
+			"returns": "void",
+			"args": "tag:String, value:Float",
+			"documentation": "Sets the current sound's position in miliseconds\n* `tag` - Sound tag\n* `value` - New position"
+		},
+		"noteTweenX": {
+			"returns": "void",
+			"args": "tag:String, note:Int, value:Dynamic, duration:Float, ease:String",
+			"documentation": "Do a tween on a receptor's X position\n* `tag` - Once the tween is finished, it will do a callback of `onTweenCompleted(tag)`\n* `note` - Opponent's notes are 0, 1, 2 and 3, respectively. Boyfriend's notes are 4, 5, 6, 7 respectively.\n* `value` - Target value on the tween end\n* `duration` - How much time it will take for the tween to end\n* `ease` - The tweening method used, example: `linear`, `circInOut`. Check the link on the note in the first line of this page"
+		},
+		"noteTweenY": {
+			"returns": "void",
+			"args": "tag:String, note:Int, value:Dynamic, duration:Float, ease:String",
+			"documentation": "Do a tween on a receptor's Y position\n* `tag` - Once the tween is finished, it will do a callback of `onTweenCompleted(tag)`\n* `note` - Opponent's notes are 0, 1, 2 and 3, respectively. Boyfriend's notes are 4, 5, 6, 7 respectively.\n* `value` - Target value on the tween end\n* `duration` - How much time it will take for the tween to end\n* `ease` - The tweening method used, example: `linear`, `circInOut`. Check the link on the note in the first line of this page"
+		},
+		"noteTweenAngle": {
+			"returns": "void",
+			"args": "tag:String, note:Int, value:Dynamic, duration:Float, ease:String",
+			"documentation": "Do a tween on a receptor's Angle value\n* `tag` - Once the tween is finished, it will do a callback of `onTweenCompleted(tag)`\n* `note` - Opponent's notes are 0, 1, 2 and 3, respectively. Boyfriend's notes are 4, 5, 6, 7 respectively.\n* `value` - Target value on the tween end\n* `duration` - How much time it will take for the tween to end\n* `ease` - The tweening method used, example: `linear`, `circInOut`. Check the link on the note in the first line of this page"
+		},
+		"noteTweenAlpha": {
+			"returns": "void",
+			"args": "tag:String, note:Int, value:Dynamic, duration:Float, ease:String",
+			"documentation": "Do a tween on a receptor's Alpha value\n* `tag` - Once the tween is finished, it will do a callback of `onTweenCompleted(tag)`\n* `note` - Opponent's notes are 0, 1, 2 and 3, respectively. Boyfriend's notes are 4, 5, 6, 7 respectively.\n* `value` - Target value on the tween end\n* `duration` - How much time it will take for the tween to end\n* `ease` - The tweening method used, example: `linear`, `circInOut`. Check the link on the note in the first line of this page"
+		},
+		"doTweenX": {
+			"returns": "void",
+			"args": "tag:String, vars:String, value:Dynamic, duration:Float, ease:String",
+			"documentation": "Do a Tween on an object's X value\n\n**Calling this function will cancel another tween that is using the same tag!**\n* `tag` - Once the tween is finished, it will do a callback of `onTweenCompleted(tag)`\n* `vars` - Variable to tween, example: `boyfriend` for tweening Boyfriend's X position, `boyfriend.scale` for tweening Boyfriend's Scale X\n* `value` - Target value on the tween end\n* `duration` - How much time it will take for the tween to end\n* `ease` - The tweening method used, example: `linear`, `circInOut`. Check the link on the note i've added up here\n\nExample: To do a tween to Boyfriend's Scale X, you should use `doTweenX('bfScaleTweenX', 'boyfriend.scale', 1.5, 1, 'elasticInOut')`, when the tween ends, it will do a callback for `onTweenCompleted('bfScaleTweenX')`"
+		},
+		"doTweenY": {
+			"returns": "void",
+			"args": "tag:String, vars:String, value:Dynamic, duration:Float, ease:String",
+			"documentation": "Do a Tween on an object's Y value\n\n**Calling this function will cancel another tween that is using the same tag!**\n* `tag` - Once the tween is finished, it will do a callback of `onTweenCompleted(tag)`\n* `vars` - Variable to tween, example: `boyfriend` for tweening Boyfriend's X position, `boyfriend.scale` for tweening Boyfriend's Scale X\n* `value` - Target value on the tween end\n* `duration` - How much time it will take for the tween to end\n* `ease` - The tweening method used, example: `linear`, `circInOut`. Check the link on the note i've added up here\n\nExample: To do a tween to Boyfriend's Scale X, you should use `doTweenX('bfScaleTweenX', 'boyfriend.scale', 1.5, 1, 'elasticInOut')`, when the tween ends, it will do a callback for `onTweenCompleted('bfScaleTweenX')`"
+		},
+		"doTweenAngle": {
+			"returns": "void",
+			"args": "tag:String, vars:String, value:Dynamic, duration:Float, ease:String",
+			"documentation": "Do a Tween on an object's Angle value\n\n**Calling this function will cancel another tween that is using the same tag!**\n* `tag` - Once the tween is finished, it will do a callback of `onTweenCompleted(tag)`\n* `vars` - Variable to tween, example: `boyfriend` for tweening Boyfriend's X position, `boyfriend.scale` for tweening Boyfriend's Scale X\n* `value` - Target value on the tween end\n* `duration` - How much time it will take for the tween to end\n* `ease` - The tweening method used, example: `linear`, `circInOut`. Check the link on the note i've added up here\n\nExample: To do a tween to Boyfriend's Scale X, you should use `doTweenX('bfScaleTweenX', 'boyfriend.scale', 1.5, 1, 'elasticInOut')`, when the tween ends, it will do a callback for `onTweenCompleted('bfScaleTweenX')`"
+		},
+		"doTweenAlpha": {
+			"returns": "void",
+			"args": "tag:String, vars:String, value:Dynamic, duration:Float, ease:String",
+			"documentation": "Do a Tween on an object's Alpha value\n\n**Calling this function will cancel another tween that is using the same tag!**\n* `tag` - Once the tween is finished, it will do a callback of `onTweenCompleted(tag)`\n* `vars` - Variable to tween, example: `boyfriend` for tweening Boyfriend's X position, `boyfriend.scale` for tweening Boyfriend's Scale X\n* `value` - Target value on the tween end\n* `duration` - How much time it will take for the tween to end\n* `ease` - The tweening method used, example: `linear`, `circInOut`. Check the link on the note i've added up here\n\nExample: To do a tween to Boyfriend's Scale X, you should use `doTweenX('bfScaleTweenX', 'boyfriend.scale', 1.5, 1, 'elasticInOut')`, when the tween ends, it will do a callback for `onTweenCompleted('bfScaleTweenX')`"
+		},
+		"doTweenZoom": {
+			"returns": "void",
+			"args": "tag:String, cam:String, value:Dynamic, duration:Float, ease:String",
+			"documentation": "Do a Tween on a Camera's Zoom\n\n**Calling this function will cancel another tween that is using the same tag!**\n* `tag` - Once the tween is finished, it will do a callback of `onTweenCompleted(tag)`\n* `cam` - Should be `camGame`, `camHUD` or `camOther`\n* `value` - Target value on the tween end\n* `duration` - How much time it will take for the tween to end\n* `ease` - The tweening method used, example: `linear`, `circInOut`. Check the link on the note i've added up here\n\nExample: To do a tween to Boyfriend's Scale X, you should use `doTweenX('bfScaleTweenX', 'boyfriend.scale', 1.5, 1, 'elasticInOut')`, when the tween ends, it will do a callback for `onTweenCompleted('bfScaleTweenX')`"
+		},
+		"doTweenColor": {
+			"returns": "void",
+			"args": "tag:String, vars:String, targetColor:String, duration:Float, ease:String",
+			"documentation": "Do a Tween on an object's color\n\n**Calling this function will cancel another tween that is using the same tag!**\n* `tag` - Once the tween is finished, it will do a callback of `onTweenCompleted(tag)`\n* `vars` - Variable to tween, example: `boyfriend` for tweening Boyfriend's X position, `boyfriend.scale` for tweening Boyfriend's Scale X\n* `targetColor` - The color the object will have when the tween ends (Must be in hexadecimal!)\n* `duration` - How much time it will take for the tween to end\n* `ease` - The tweening method used, example: `linear`, `circInOut`. Check the link on the note i've added up here\n\nExample: To tween Boyfriend's color to Red, you should use `doTweenColor('bfColorTween', 'boyfriend', 'FF0000', 1, 'linear')`, when the tween ends, it will do a callback for `onTweenCompleted('bfColorTween')`"
+		},
+		"runTimer": {
+			"returns": "void",
+			"args": "tag:String, time:Float = 1, loops:Int = 1",
+			"documentation": "Runs a timer with a determined duration and loops count.\n\n**Calling this function will cancel another timer that is using the same tag!**\n* `tag` - Once the timer is finished, it will do a callback of `onTimerCompleted(tag, loops, loopsLeft)`\n* `time` - Optional value, how much time it takes to finish a loop. Default value is `1`\n* `loops` - Optional value, how much loops should it do, if it's set to `0`, it will repeat indefinitely. Default value is `1`"
+		},
+		"cancelTween": {
+			"returns": "void",
+			"args": "tag:String",
+			"documentation": "Cancels a tween using the tag `tag`, if there even is one."
+		},
+		"cancelTimer": {
+			"returns": "void",
+			"args": "tag:String",
+			"documentation": "Cancels a timer using the tag `tag`, if there even is one."
+		},
+		"getProperty": {
+			"returns": "?",
+			"args": "variable:String",
+			"documentation": "Returns a current variable from PlayState's name.\n\nIt can also be used to get the variable from an object that is inside PlayState or a Lua Sprite.\n\nExample: If you wanted to get the current health's value, you should use `getProperty('health')`.\n\nExample 2: If you'd want to get Boyfriend's current character, you should use `getProperty('boyfriend.curCharacter')`"
+		},
+		"getPropertyFromGroup": {
+			"returns": "?",
+			"args": "obj:String, index:Int, variable:Dynamic",
+			"documentation": "Gets a variable from an array/group member on PlayState.\n* `obj` - Group/Array variable\n* `index` - Member ID\n* `variable` - Variable to get the value\n\nExample: To get the next event note's strum Time, you should use `getPropertyFromGroup('eventNotes', 0, 0)`\n\nExample 2: To get the next unspawned note's noteData, you should use `getPropertyFromGroup('unspawnNotes', 0, 'noteData')`"
+		},
+		"getPropertyFromClass": {
+			"returns": "?",
+			"args": "classVar:String, variable:String",
+			"documentation": "Works similar to `getProperty()`, but can be used to access a variable inside a Class other than PlayState.\n\nExample: To get how much time has passed since the last frame (in milliseconds), you should use `getPropertyFromClass('flixel.FlxG', 'elapsed')`."
+		},
+		"setProperty": {
+			"returns": "boolean",
+			"args": "variable:String, value:Dynamic",
+			"documentation": "Works in the same way as `getProperty()`, but it sets a new value for the variable.\n\nAlso returns the new value of the variable.\n\nExample: To set the player's current health to 100%, you should use `setProperty('health', 2)`"
+		},
+		"setPropertyFromGroup": {
+			"returns": "void",
+			"args": "obj:String, index:Int, variable:Dynamic, value:Dynamic",
+			"documentation": "Sets the new value to a variable from an array/group member on PlayState.\n* `obj` - Group/Array variable\n* `index` - Member ID\n* `variable` - Variable to get the value\n* `value` - New value to set"
+		},
+		"setPropertyFromClass": {
+			"returns": "boolean",
+			"args": "classVar:String, variable:String, value:Dynamic",
+			"documentation": "Works similar to `setProperty()`, but can be used to access a variable inside a Class other than PlayState.\n\nExample: To make the mouse visible, you should use `getPropertyFromClass('FlxG', 'mouse.visible', true)`."
+		}
+	},
+	"variables": {
+		"luaDebugMode": {
+			"returns": "boolean",
+			"documentation": "Enables debug mode, use `luaDebugMode = true` to enable it. Default value: `false`"
+		},
+		"luaDeprecatedWarnings": {
+			"returns": "boolean",
+			"documentation": "Tells you if a function/variable is deprecated (shouldn't be used anymore), only works when Debug mode is on, use `luaDeprecatedWarnings = false` to disable it. Default value: `true`"
+		},
+		"inChartEditor": {
+			"returns": "boolean",
+			"documentation": "Tells you if your script is running on Chart Editor's chart playtest."
+		},
+		"curBpm": {
+			"returns": "number",
+			"documentation": "Current BPM of the Song, shortcut to `getPropertyFromClass('Conductor', 'bpm')`"
+		},
+		"bpm": {
+			"returns": "number",
+			"documentation": "Starting BPM of the Song, shortcut to `getProperty('SONG.bpm')`"
+		},
+		"scrollSpeed": {
+			"returns": "number",
+			"documentation": "Starting Scroll speed of the Song, shortcut to `getProperty('SONG.speed')`"
+		},
+		"crochet": {
+			"returns": "number",
+			"documentation": "Interval between Beat hits"
+		},
+		"stepCrochet": {
+			"returns": "number",
+			"documentation": "Interval between Step hits"
+		},
+		"songLength": {
+			"returns": "number",
+			"documentation": "Song duration in milliseconds"
+		},
+		"songName": {
+			"returns": "string",
+			"documentation": "Shortcut to `getProperty('SONG.song')`"
+		},
+		"isStoryMode": {
+			"returns": "boolean",
+			"documentation": "Shortcut to `getProperty('isStoryMode')`"
+		},
+		"difficulty": {
+			"returns": "number",
+			"documentation": "Returns the difficulty ID (Easy = 0, Normal = 1, Hard = 2), Shortcut to `getProperty('storyDifficulty')`"
+		},
+		"weekRaw": {
+			"returns": "number",
+			"documentation": "Returns the raw current week number. I doubt you will ever use this, but hey, just in case you do, it's here."
+		},
+		"week": {
+			"returns": "string",
+			"documentation": "Returns the properly formatted current week file name."
+		},
+		"cameraX": {
+			"returns": "number",
+			"documentation": "Shortcut to `getProperty('camFollowPos.x')`"
+		},
+		"cameraY": {
+			"returns": "number",
+			"documentation": "Shortcut to `getProperty('camFollowPos.y')`"
+		},
+		"screenWidth": {
+			"returns": "number",
+			"documentation": "Shortcut to `getPropertyFromClass('FlxG', width)`"
+		},
+		"screenHeight": {
+			"returns": "number",
+			"documentation": "Shortcut to `getPropertyFromClass('FlxG', height)`"
+		},
+		"startedCountdown": {
+			"returns": "boolean",
+			"documentation": "Tells you if the countdown already started"
+		},
+		"seenCutscene": {
+			"returns": "boolean",
+			"documentation": "Is set to `true` after `onCreate()` function, Shortcut to `getProperty('seenCutscene')`"
+		},
+		"curBeat": {
+			"returns": "number",
+			"documentation": "Current beat number"
+		},
+		"curStep": {
+			"returns": "number",
+			"documentation": "Current step number"
+		},
+		"score": {
+			"returns": "number",
+			"documentation": "Current score, Shortcut to `getProperty('songScore')`"
+		},
+		"misses": {
+			"returns": "number",
+			"documentation": "Current total number of notes missed, Shortcut to `getProperty('songMisses')`"
+		},
+		"ghostMisses": {
+			"returns": "number",
+			"documentation": "Current number of Key press misses, Shortcut to `getProperty('ghostMisses')`"
+		},
+		"hits": {
+			"returns": "number",
+			"documentation": "Current number of notes hit, Shortcut to `getProperty('songHits')`"
+		},
+		"rating": {
+			"returns": "number",
+			"documentation": "Current rating percentage, goes from `0` to `1`. Shortcut to `getProperty('ratingPercent')`"
+		},
+		"ratingName": {
+			"returns": "string",
+			"documentation": "Current rating's name. Shortcut to `getProperty('ratingString')`"
+		},
+		"inGameOver": {
+			"returns": "boolean",
+			"documentation": "Player is Dead"
+		},
+		"mustHitSection": {
+			"returns": "boolean",
+			"documentation": "Tells if the current section is a `Must Hit Section` (from Chart Editor)"
+		},
+		"altAnim": {
+			"returns": "boolean",
+			"documentation": "Tells if the current section is a `Alt Animation` Section (from Chart Editor)"
+		},
+		"gfSection": {
+			"returns": "boolean",
+			"documentation": "Tells if the current section is a `GF Section` (from Chart Editor)"
+		},
+		"botPlay": {
+			"returns": "boolean",
+			"documentation": "Tells if Botplay is enabled. Shortcut to `getProperty('cpuControlled')`"
+		},
+		"defaultPlayerStrumX0": {
+			"returns": "number",
+			"documentation": "Player's default left arrow X"
+		},
+		"defaultPlayerStrumY0": {
+			"returns": "number",
+			"documentation": "Player's default left arrow Y"
+		},
+		"defaultOpponentStrumX0": {
+			"returns": "number",
+			"documentation": "Opponent's default left arrow X"
+		},
+		"defaultOpponentStrumY0": {
+			"returns": "number",
+			"documentation": "Opponent's default left arrow Y"
+		},
+		"defaultPlayerStrumX1": {
+			"returns": "number",
+			"documentation": "Player's default down arrow X"
+		},
+		"defaultPlayerStrumY1": {
+			"returns": "number",
+			"documentation": "Player's default down arrow Y"
+		},
+		"defaultOpponentStrumX1": {
+			"returns": "number",
+			"documentation": "Opponent's default down arrow X"
+		},
+		"defaultOpponentStrumY1": {
+			"returns": "number",
+			"documentation": "Opponent's default down arrow Y"
+		},
+		"defaultPlayerStrumX2": {
+			"returns": "number",
+			"documentation": "Player's default up arrow X"
+		},
+		"defaultPlayerStrumY2": {
+			"returns": "number",
+			"documentation": "Player's default up arrow Y"
+		},
+		"defaultOpponentStrumX2": {
+			"returns": "number",
+			"documentation": "Opponent's default up arrow X"
+		},
+		"defaultOpponentStrumY2": {
+			"returns": "number",
+			"documentation": "Opponent's default up arrow Y"
+		},
+		"defaultPlayerStrumX3": {
+			"returns": "number",
+			"documentation": "Player's default right arrow X"
+		},
+		"defaultPlayerStrumY3": {
+			"returns": "number",
+			"documentation": "Player's default right arrow Y"
+		},
+		"defaultOpponentStrumX3": {
+			"returns": "number",
+			"documentation": "Opponent's default right arrow X"
+		},
+		"defaultOpponentStrumY3": {
+			"returns": "number",
+			"documentation": "Opponent's default right arrow Y"
+		},
+		"defaultBoyfriendX": {
+			"returns": "number",
+			"documentation": "Player's Default X position, defined by the Stage's JSON file."
+		},
+		"defaultBoyfriendY": {
+			"returns": "number",
+			"documentation": "Player's Default Y position, defined by the Stage's JSON file."
+		},
+		"defaultOpponentX": {
+			"returns": "number",
+			"documentation": "Opponent's Default X position, defined by the Stage's JSON file."
+		},
+		"defaultOpponentY": {
+			"returns": "number",
+			"documentation": "Opponent's Default Y position, defined by the Stage's JSON file."
+		},
+		"defaultGirlfriendX": {
+			"returns": "number",
+			"documentation": "Girlfriend's Default X position, defined by the Stage's JSON file."
+		},
+		"defaultGirlfriendY": {
+			"returns": "number",
+			"documentation": "Girlfriend's Default Y position, defined by the Stage's JSON file."
+		},
+		"downscroll": {
+			"returns": "boolean",
+			"documentation": "Downscroll is enabled. Shortcut to `getPropertyFromClass('ClientPrefs', 'downScroll')`"
+		},
+		"middlescroll": {
+			"returns": "boolean",
+			"documentation": "Middlescroll is enabled. Shortcut to `getPropertyFromClass('ClientPrefs', 'middleScroll')`"
+		},
+		"framerate": {
+			"returns": "boolean",
+			"documentation": "Current framerate limit. Shortcut to `getPropertyFromClass('ClientPrefs', 'framerate')`"
+		},
+		"ghostTapping": {
+			"returns": "boolean",
+			"documentation": "Ghost tapping is enabled. Shortcut to `getPropertyFromClass('ClientPrefs', 'ghostTapping')`"
+		},
+		"hideHud": {
+			"returns": "boolean",
+			"documentation": "\"Hide HUD\" is enabled. Shortcut to `getPropertyFromClass('ClientPrefs', 'hideHud')`"
+		},
+		"hideTime": {
+			"returns": "boolean",
+			"documentation": "\"Hide Song Length\" is enabled. Shortcut to `getPropertyFromClass('ClientPrefs', 'hideTime')`"
+		},
+		"cameraZoomOnBeat": {
+			"returns": "boolean",
+			"documentation": "Shortcut to `getPropertyFromClass('ClientPrefs', 'camZooms')`"
+		},
+		"flashingLights": {
+			"returns": "boolean",
+			"documentation": "Shortcut to `getPropertyFromClass('ClientPrefs', 'flashing')`"
+		},
+		"noteOffset": {
+			"returns": "number",
+			"documentation": "Represents the note delay in milliseconds (Goes from `0` to `500`). Shortcut to `getPropertyFromClass('ClientPrefs', 'noteOffset')`"
+		},
+		"lowQuality": {
+			"returns": "boolean",
+			"documentation": "Shortcut to `getPropertyFromClass('ClientPrefs', 'lowQuality')`"
+		}
+	},
+	"events": {
+		"onCreate": {
+			"returns": "void",
+			"documentation": "Local function called after registering all lua functions/variables",
+			"args": ""
+		},
+		"onDestroy": {
+			"returns": "void",
+			"documentation": "Local function called when this script gets released from the memory",
+			"args": ""
+		},
+		"onTweenCompleted": {
+			"returns": "void",
+			"documentation": "Local function called after specific `tag` tween is completed",
+			"args": "tag:String"
+		},
+		"onTimerCompleted": {
+			"returns": "void",
+			"documentation": "Local function called everytime `tag` timer loops/completes",
+			"args": "tag:String, loops:Integer, loopsLeft:Integer"
+		},
+		"onSoundFinished": {
+			"returns": "void",
+			"documentation": "Local function called after specific sound with `tag` tag finishes",
+			"args": "tag:String"
+		},
+		"onCustomSubstateCreate": {
+			"returns": "void",
+			"documentation": "Local function called when custom substate is created",
+			"args": "name:String"
+		},
+		"onCustomSubstateCreatePost": {
+			"returns": "void",
+			"documentation": "Local function called after custom substate `create()` function gets called",
+			"args": "name:String"
+		},
+		"onCustomSubstateUpdate": {
+			"returns": "void",
+			"documentation": "Local function called when custom substate updates",
+			"args": "name:String, elapsed:Float"
+		},
+		"onCustomSubstateUpdatePost": {
+			"returns": "void",
+			"documentation": "Local function called after custom substate `update()` function gets called",
+			"args": "name:String, elapsed:Float"
+		},
+		"onCustomSubstateDestroy": {
+			"returns": "void",
+			"documentation": "Local function called after custom substate gets destroyed",
+			"args": "name:String"
+		},
+		"onGameOverStart": {
+			"returns": "void",
+			"documentation": "Local function called when gameover screen is created",
+			"args": ""
+		},
+		"onUpdate": {
+			"returns": "void",
+			"documentation": "Local function called when playstate/gameover screen is updated",
+			"args": "elapsed:Float"
+		},
+		"onGameOverConfirm": {
+			"returns": "void",
+			"documentation": "Local function called when player presses [[Confirm]] to restart current playstate or go back to menu",
+			"args": "isNotGoingToMenu:Float"
+		},
+		"onUpdatePost": {
+			"returns": "void",
+			"documentation": "Local function called when playstate/gameover screen `update()` function is called",
+			"args": "elapsed:Float"
+		},
+		"onStartCountdown": {
+			"returns": "void",
+			"documentation": "Local function called when countdown is started",
+			"args": ""
+		},
+		"onCountdownStarted": {
+			"returns": "void",
+			"documentation": "Local function called when after countdown",
+			"args": ""
+		},
+		"onCountdownTick": {
+			"returns": "void",
+			"documentation": "Local function called every countdown tick",
+			"args": "swagCounter:Int"
+		},
+		"onUpdateScore": {
+			"returns": "void",
+			"documentation": "Local function called when score text gets updated",
+			"args": "miss:Boolean"
+		},
+		"onNextDialogue": {
+			"returns": "void",
+			"documentation": "Local function called when dialogue goes to another page",
+			"args": "dialogueCount:Int"
+		},
+		"onSkipDialogue": {
+			"returns": "void",
+			"documentation": "Local function called when dialogue is skipped",
+			"args": "dialogueCount:Int"
+		},
+		"onSongStart": {
+			"returns": "void",
+			"documentation": "Local function called when song starts",
+			"args": ""
+		},
+		"eventEarlyTrigger": {
+			"returns": "number",
+			"documentation": "Local function called before event note triggers, must return the miliseconds event delay",
+			"args": "event:String"
+		},
+		"onResume": {
+			"returns": "void",
+			"documentation": "Local function called after game resumes",
+			"args": ""
+		},
+		"onPause": {
+			"returns": "void",
+			"documentation": "Local function called after game pauses",
+			"args": ""
+		},
+		"onSpawnNote": {
+			"returns": "void",
+			"documentation": "Local function called when game note is spawned",
+			"args": "membersIndex:Int, noteData:Int, noteType:String, isSustainNote:Bool"
+		},
+		"onGameOver": {
+			"returns": "void",
+			"documentation": "Local function called when player fucking dies",
+			"args": ""
+		},
+		"onEvent": {
+			"returns": "void",
+			"documentation": "Local function called when some event gets triggered",
+			"args": "eventName:String, value1:String, value2:String"
+		},
+		"onMoveCamera": {
+			"returns": "void",
+			"documentation": "Local function called when camera focuses on specific character, characters: `gf`, `dad`, `boyfriend`",
+			"args": "character:String"
+		},
+		"onEndSong": {
+			"returns": "void",
+			"documentation": "Local function called when song ends",
+			"args": ""
+		},
+		"onGhostTap": {
+			"returns": "void",
+			"documentation": "Local function called when player ghost taps",
+			"args": "key:Int"
+		},
+		"onKeyPress": {
+			"returns": "void",
+			"documentation": "Local function called when player presses some key",
+			"args": "key:Int"
+		},
+		"onKeyRelease": {
+			"returns": "void",
+			"documentation": "Local function called when player releases some key",
+			"args": "key:Int"
+		},
+		"noteMiss": {
+			"returns": "void",
+			"documentation": "Local function called when player misses a note, (`badNoteHit()`?)",
+			"args": "membersIndex:Int, noteData:Int, noteType:String, isSustainNote:Bool"
+		},
+		"noteMissPress": {
+			"returns": "void",
+			"documentation": "Local function called when player misses",
+			"args": "direction:Int"
+		},
+		"opponentNoteHit": {
+			"returns": "void",
+			"documentation": "Local function called when opponent hits a note",
+			"args": "membersIndex:Int, noteData:Int, noteType:String, isSustainNote:Bool"
+		},
+		"goodNoteHit": {
+			"returns": "void",
+			"documentation": "Local function called when player hits a note",
+			"args": "membersIndex:Int, noteData:Int, noteType:String, isSustainNote:Bool"
+		},
+		"onStepHit": {
+			"returns": "void",
+			"documentation": "Local function called every song step",
+			"args": ""
+		},
+		"onBeatHit": {
+			"returns": "void",
+			"documentation": "Local function called every song beat",
+			"args": ""
+		},
+		"onSectionHit": {
+			"returns": "void",
+			"documentation": "Local function called when jumping to another section",
+			"args": ""
+		},
+		"onRecalculateRating": {
+			"returns": "void",
+			"documentation": "Local function called accuracy percent is recalculated/updates",
+			"args": ""
+		}
+	}
+}

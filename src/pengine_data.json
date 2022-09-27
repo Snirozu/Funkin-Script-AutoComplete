@@ -1,0 +1,493 @@
+{
+	"functions": {
+		"startRepeatingTimer": {
+			"returns": "void",
+			"args": "interval: float, func: string",
+			"documentation": "Calls a local `func` every `interval` seconds"
+		},
+		"startTimer": {
+			"returns": "void",
+			"args": "time:float, func:string, ?loops:integer = 1",
+			"documentation": "Calls a local `func` after `interval` seconds"
+		},
+		"getMousePosition": {
+			"returns": "array",
+			"args": "",
+			"documentation": "Returns a array with `x` and `y` mouse coordinates"
+		},
+		"isMouseJustLeftPressed": {
+			"returns": "boolean",
+			"args": "",
+			"documentation": "Returns true if player just left-clicked mouse"
+		},
+		"isMouseJustRightPressed": {
+			"returns": "boolean",
+			"args": "",
+			"documentation": "Returns true if player just right-clicked mouse"
+		},
+		"isMouseJustMiddlePressed": {
+			"returns": "boolean",
+			"args": "",
+			"documentation": "Returns true if player just clicked mouse scroll button"
+		},
+		"isMouseLeftPressed": {
+			"returns": "boolean",
+			"args": "",
+			"documentation": "Returns true if player is pressing mouse left button"
+		},
+		"isMouseRightPressed": {
+			"returns": "boolean",
+			"args": "",
+			"documentation": "Returns true if player is pressing mouse right button"
+		},
+		"isMouseMiddlePressed": {
+			"returns": "boolean",
+			"args": "",
+			"documentation": "Returns true if player is pressing mouse scroll button"
+		},
+		"isMouseLeftJustReleased": {
+			"returns": "boolean",
+			"args": "",
+			"documentation": "Returns true if player just released mouse left button"
+		},
+		"isMouseRightJustReleased": {
+			"returns": "boolean",
+			"args": "",
+			"documentation": "Returns true if player just released mouse right button"
+		},
+		"isMouseMiddleJustReleased": {
+			"returns": "boolean",
+			"args": "",
+			"documentation": "Returns true if player just released mouse scroll button"
+		},
+		"saveSet": {
+			"returns": "void",
+			"args": "field:string, value:string",
+			"documentation": "Sets `field` value in the game save file to `value`"
+		},
+		"saveGet": {
+			"returns": "any",
+			"args": "field:string",
+			"documentation": "Returns the value of `field` from the game save file"
+		},
+		"close": {
+			"returns": "void",
+			"args": "",
+			"documentation": "Closes this lua script"
+		},
+		"unlockAchievement": {
+			"returns": "void",
+			"args": "id:string",
+			"documentation": "Unlocks a achievement with ID `id`"
+		},
+		"isAchievementUnlocked": {
+			"returns": "boolean",
+			"args": "id:string",
+			"documentation": "Checks if achievement is unlocked"
+		},
+		"showNotification": {
+			"returns": "void",
+			"args": "str:string",
+			"documentation": "Shows a notification with `str`"
+		},
+		"callPlayStateFunction": {
+			"returns": "any",
+			"args": "func:string, ?args:array<string>",
+			"documentation": "Calls a `func` in PlayState class/instance"
+		},
+		"stageSpritePlay": {
+			"returns": "void",
+			"args": "spriteName:string, animation:String, ?force:bool = true",
+			"documentation": "Plays a animation on a stage sprite"
+		},
+		"stageSpriteAnimationAddByPrefix": {
+			"returns": "void",
+			"args": "spriteName:string, animationName:string, xmlAnimationName:string, framerate:Int = 24, ?looped:Bool = false",
+			"documentation": "Adds a animation to a stage sprite"
+		},
+		"stageSpriteAnimationAddByIndices": {
+			"returns": "void",
+			"args": "spriteName:string, animationName:string, xmlAnimationName:string, indices:array<int>, framerate:Int = 24, ?looped:Bool = false",
+			"documentation": "Adds a animation to a stage sprite"
+		},
+		"stageSpriteGetProperty": {
+			"returns": "any",
+			"args": "spriteName:string, property:string",
+			"documentation": "Returns a property from stage sprite"
+		},
+		"stageSpriteSetProperty": {
+			"returns": "void",
+			"args": "spriteName:string, property:string, value:any",
+			"documentation": "Sets a property from stage sprite to value `value`"
+		},
+		"tweenValue": {
+			"returns": "void",
+			"args": "from:float, to:float, duration:float = 1, tweenFunction:string = null",
+			"documentation": "Tweens a value and calls `tweenFunction` in local script"
+		},
+		"isKeyJustPressed": {
+			"returns": "boolean",
+			"args": "key:string",
+			"documentation": "Checks if `key` is just pressed on keyboard"
+		},
+		"isKeyPressed": {
+			"returns": "boolean",
+			"args": "key:string",
+			"documentation": "Checks if `key` is pressed on keyboard"
+		},
+		"isKeyJustReleased": {
+			"returns": "boolean",
+			"args": "key:string",
+			"documentation": "Checks if `key` is just released on keyboard"
+		},
+		"isControlJustPressed": {
+			"returns": "boolean",
+			"args": "control:string",
+			"documentation": "Checks if `control` keybind is just pressed"
+		},
+		"isControlPressed": {
+			"returns": "boolean",
+			"args": "control:string",
+			"documentation": "Checks if `control` keybind is pressed"
+		},
+		"isControlJustReleased": {
+			"returns": "boolean",
+			"args": "control:string",
+			"documentation": "Checks if `control` keybind is just released"
+		},
+		"cacheSound": {
+			"returns": "void",
+			"args": "path:string",
+			"documentation": "Caches a sound from mods folder"
+		},
+		"playSound": {
+			"returns": "void",
+			"args": "path:string",
+			"documentation": "Plays a sound from mods folder"
+		},
+		"addSpriteFromMods": {
+			"returns": "void",
+			"args": "name:string, path:string, x:float, y:float",
+			"documentation": "Adds a sprite from mods folder to lua sprites"
+		},
+		"addSprite": {
+			"returns": "void",
+			"args": "name:string, path:string, x:float, y:float",
+			"documentation": "Adds a sprite to lua sprites"
+		},
+		"removeSprite": {
+			"returns": "void",
+			"args": "name:string",
+			"documentation": "Removes a sprite from lua sprites"
+		},
+		"spriteAnimationAddByPrefix": {
+			"returns": "void",
+			"args": "name:string, animationName:string, xmlAnimationName:string, ?framerate:number = 24, ?looped:boolean = false",
+			"documentation": "Adds a animation to sprite from lua sprites"
+		},
+		"spriteAnimationAddByIndices": {
+			"returns": "void",
+			"args": "name:String, animationName:String, xmlAnimationName:String, indices:Array<Int>, ?framerate:Int = 24, ?looped:Bool = false",
+			"documentation": "Adds a animation to sprite from lua sprites"
+		},
+		"spritePlay": {
+			"returns": "void",
+			"args": "name:String, animation:String, ?force:Bool = true",
+			"documentation": "Plays a animation on a lua sprite"
+		},
+		"spriteSetSize": {
+			"returns": "void",
+			"args": "name:String, width:Int, height:Int",
+			"documentation": "Sets the size of lua sprite"
+		},
+		"spriteSetScrollFactor": {
+			"returns": "void",
+			"args": "name:String, x:Int, y:Int",
+			"documentation": "Sets the scrollfactor of lua sprite"
+		},
+		"spriteExists": {
+			"returns": "void",
+			"args": "name:String",
+			"documentation": "Checks if lua sprite exists"
+		},
+		"spriteSetCamera": {
+			"returns": "void",
+			"args": "name:String, camera:String",
+			"documentation": "Sets on what camera the lua sprite should render; `game`, `hud`, `static` or `options`"
+		},
+		"tweenSpriteProperty": {
+			"returns": "void",
+			"args": "name:String, property:String, value:Float = 0, duration:Float = 1, ?finishFunction:String",
+			"documentation": "Runs a tween on a lua sprite, `finishFunction` should be your local function name"
+		},
+		"setSpriteProperty": {
+			"returns": "void",
+			"args": "name:String, property:String, value:Dynamic",
+			"documentation": "Sets a property of a lua sprite"
+		},
+		"getSpriteProperty": {
+			"returns": "any",
+			"args": "name:String, property:String",
+			"documentation": "Returns some property of lua sprite"
+		},
+		"getProperty": {
+			"returns": "any",
+			"args": "field:String, property:String",
+			"documentation": "Returns property of some object"
+		},
+		"setProperty": {
+			"returns": "void",
+			"args": "field:String, property:String, value:Dynamic",
+			"documentation": "Set property of some object"
+		},
+		"tweenProperty": {
+			"returns": "void",
+			"args": "field:String, variable:String, value:Float = 0, duration:Float = 1, ?onComplete:String = null",
+			"documentation": "Does a tween on some property"
+		},
+		"getSetting": {
+			"returns": "any",
+			"args": "setting:String",
+			"documentation": "Gets some client setting from save file"
+		},
+		"changeStage": {
+			"returns": "void",
+			"args": "stageName:String",
+			"documentation": "Changes the current stage to another"
+		},
+		"cacheStage": {
+			"returns": "void",
+			"args": "stageName:String",
+			"documentation": "Caches some stage"
+		},
+		"addCameraZoom": {
+			"returns": "void",
+			"args": "value:Float",
+			"documentation": "Adds zoom to the game camera"
+		},
+		"addCamZoom": {
+			"returns": "void",
+			"args": "value:Float",
+			"documentation": "Adds zoom to the game camera"
+		},
+		"setDownscroll": {
+			"returns": "void",
+			"args": "value:Bool",
+			"documentation": "Sets if the spawned notes should go up or down"
+		},
+		"setDefaultCamZoom": {
+			"returns": "void",
+			"args": "zoom:Float",
+			"documentation": "Sets default cam zoom; by default it's stage zoom"
+		},
+		"cacheCharacter": {
+			"returns": "void",
+			"args": "char:String, daChar:String",
+			"documentation": "Caches some character; `char` should be `gf`, `bf` or `dad`"
+		},
+		"characterPlayAnimation": {
+			"returns": "void",
+			"args": "char:String, anim:String, ?force:Bool = true, ?reversed:Bool = false, ?frame:Int = 0",
+			"documentation": "Plays a animation on some character"
+		},
+		"changeCharacter": {
+			"returns": "void",
+			"args": "char:String, newChar:String",
+			"documentation": "Changes `char` to `newChar`; `char` should be `gf`, `bf` or `dad`"
+		},
+		"setGraphicSize": {
+			"returns": "void",
+			"args": "sprite:String, width:Int, height:Int",
+			"documentation": "Sets the size of some sprite"
+		},
+		"getPositionX": {
+			"returns": "number",
+			"args": "object:String",
+			"documentation": "Returns the X position of some object"
+		},
+		"getPositionY": {
+			"returns": "number",
+			"args": "object:String",
+			"documentation": "Returns the Y position of some object"
+		},
+		"setPosition": {
+			"returns": "void",
+			"args": "object:String, x:Int, y:Int",
+			"documentation": "Sets the position of some object"
+		},
+		"setStrumNoteAngle": {
+			"returns": "void",
+			"args": "char:String, note:Int, angle:Float",
+			"documentation": "Sets the strum note angle of some `char`; `char` should be `gf`, `bf` or `dad`"
+		},
+		"setStrumNoteAlpha": {
+			"returns": "void",
+			"args": "char:String, note:Int, alpha:Float",
+			"documentation": "Sets the strum note alpha of some `char`; `char` should be `gf`, `bf` or `dad`"
+		},
+		"setStrumNotePos": {
+			"returns": "void",
+			"args": "char:String, note:Int, x:Float, y:Float",
+			"documentation": "Sets the strum note X and Y of some `char`; `char` should be `gf`, `bf` or `dad`"
+		},
+		"getStrumNotePos": {
+			"returns": "array",
+			"args": "char:String, note:Int",
+			"documentation": "Gets the strum note X and Y of some `char`; `char` should be `gf`, `bf` or `dad`"
+		},
+		"setSelfField": {
+			"returns": "void",
+			"args": "object:String, value:Dynamic",
+			"documentation": "Set some field of parent instance"
+		},
+		"getSelfField": {
+			"returns": "any",
+			"args": "object:String",
+			"documentation": "Get some field of parent instance"
+		},
+		"setVariable": {
+			"returns": "void",
+			"args": "object:String, value:Dynamic",
+			"documentation": "Sets some variable of playstate instance"
+		},
+		"getVariable": {
+			"returns": "any",
+			"args": "object:String",
+			"documentation": "Gets some variable of playstate instance"
+		},
+		"setField": {
+			"returns": "void",
+			"args": "object:String, value:Dynamic",
+			"documentation": "Sets some field of playstate instance"
+		},
+		"getField": {
+			"returns": "any",
+			"args": "object:String",
+			"documentation": "Gets some field of playstate instance"
+		},
+		"setHealth": {
+			"returns": "void",
+			"args": "value:Float",
+			"documentation": "Sets the health of player; `value` should be from 0 to 1"
+		},
+		"getHealth": {
+			"returns": "number",
+			"args": "",
+			"documentation": "Gets the health of player; `returns` should be from 0 to 1"
+		},
+		"setCamPosition": {
+			"returns": "void",
+			"args": "cam:String, x:Float = 0, y:Float = 0",
+			"documentation": "Sets the position of some camera; `cam` should be `hud` or `game`"
+		},
+		"tweenVariable": {
+			"returns": "void",
+			"args": "object:String, value:Float = 0, duration:Float = 1",
+			"documentation": "Tweens some variable in playstate"
+		},
+		"tweenCamAngle": {
+			"returns": "void",
+			"args": "cam:String, value:Float = 0, duration:Float = 1",
+			"documentation": "Tweens angle of some camera; `cam` should be `hud` or `game`"
+		},
+		"tweenCamZoom": {
+			"returns": "void",
+			"args": "cam:String, value:Float = 0, duration:Float = 1",
+			"documentation": "Tweens zoom of some camera; `cam` should be `hud` or `game`"
+		},
+		"setCamAngle": {
+			"returns": "void",
+			"args": "cam:String, angle:Float = 0",
+			"documentation": "Sets angle of some camera; `cam` should be `hud` or `game`"
+		},
+		"getCamAngle": {
+			"returns": "number",
+			"args": "cam:String",
+			"documentation": "Gets angle of some camera; `cam` should be `hud` or `game`"
+		},
+		"setCamZoom": {
+			"returns": "void",
+			"args": "cam:String, zoom:Float = 0",
+			"documentation": "Sets zoom of some camera; `cam` should be `hud` or `game`"
+		},
+		"getCamZoom": {
+			"returns": "number",
+			"args": "cam:String",
+			"documentation": "Gets zoom of some camera; `cam` should be `hud` or `game`"
+		},
+		"shakeCamera": {
+			"returns": "void",
+			"args": "cam:String, intensity:Float = 0, duration:Float = 0",
+			"documentation": "Shakes some camera; `cam` should be `hud` or `game`"
+		}
+	},
+	"variables": {
+		"swagSong": {
+			"returns": "SONG",
+			"documentation": "Returns json data of current song"
+		},
+		"gameWidth": {
+			"returns": "number",
+			"documentation": "Returns game width"
+		},
+		"gameHeight": {
+			"returns": "number",
+			"documentation": "Returns game height"
+		},
+		"curDifficulty": {
+			"returns": "number",
+			"documentation": "Returns current difficulty; `0`, `1`, `2`"
+		},
+		"stageZoom": {
+			"returns": "number",
+			"documentation": "Returns current difficulty; `0`, `1`, `2`"
+		},
+		"curSection": {
+			"returns": "number",
+			"documentation": "Returns current section"
+		},
+		"curBeat": {
+			"returns": "number",
+			"documentation": "Returns current beat"
+		},
+		"curStep": {
+			"returns": "number",
+			"documentation": "Returns current step"
+		},
+		"camFollowX": {
+			"returns": "number",
+			"documentation": "Returns the X of the game camera follow"
+		},
+		"camFollowY": {
+			"returns": "number",
+			"documentation": "Returns the Y of the game camera follow"
+		}
+	},
+	"events": {
+		"onCameraMove": {
+			"returns": "void",
+			"documentation": "Local function called when the camera is moved",
+			"args": "character:String"
+		},
+		"onNotePress": {
+			"returns": "void",
+			"documentation": "Local function called when `dad` or `bf` presses a note",
+			"args": "character:String, noteData:Int"
+		},
+		"onUpdate": {
+			"returns": "void",
+			"documentation": "Local function called every frame",
+			"args": "elapsed:Float"
+		},
+		"stepHit": {
+			"returns": "void",
+			"documentation": "Local function called every step",
+			"args": ""
+		},
+		"beatHit": {
+			"returns": "void",
+			"documentation": "Local function called every beat",
+			"args": ""
+		}
+	}
+}

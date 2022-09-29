@@ -3,3 +3,5 @@ out/
 target/
 *.vsix
 TOKEN.txt
+.vscode/settings.json
+.vscode/extensions.json

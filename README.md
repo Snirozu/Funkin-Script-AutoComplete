@@ -3,7 +3,7 @@ Simple AutoCompleter for [Psych Engine](https://github.com/ShadowMario/FNF-Psych
 Report/Pull Request any missing functions or variables!
 
 ## Installation
-[DOWNLOAD FROM MARKETPLACE HERE](https://marketplace.visualstudio.com/items?itemName=Paidyy.funkin-script-autocomplete)
+[DOWNLOAD FROM MARKETPLACE HERE](https://marketplace.visualstudio.com/items?itemName=Paidyy.funkin-script-autocomplete)<br>
 or
 1. Download the .vsix file from the latest release
 2. Open **Visual Studio Code** and select **Extensions** from the left bar

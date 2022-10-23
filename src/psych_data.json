@@ -118,7 +118,8 @@
         "characterPlayAnim": {
             "returns": "void",
             "args": "character:String, anim:String, forced:Bool = false",
-            "documentation": "* `character` - Can be `boyfriend`, `dad` or `gf`\n*`anim` - Animation name to be played\n* `forced` - Can be either `true` or `false`, if set to `true`, it will force the animation to reset if the current animation is the same as the animation to play"
+            "documentation": "* `character` - Can be `boyfriend`, `dad` or `gf`\n*`anim` - Animation name to be played\n* `forced` - Can be either `true` or `false`, if set to `true`, it will force the animation to reset if the current animation is the same as the animation to play",
+            "deprecated": "characterPlayAnim is deprecated! Use playAnim instead"
         },
         "characterDance": {
             "returns": "void",
@@ -298,7 +299,8 @@
         "objectPlayAnimation": {
             "returns": "void",
             "args": "obj:String, name:String, forced:Bool = false",
-            "documentation": "Plays animation `name` on a Lua Sprite/Object with the tag/variable `obj`.\n* `obj` - Lua Sprite tag or Object variable name\n* `name` - Animation name to play\n* `forced` - If true, the animation will reset if the current animation is the same as the one you're trying to play. Default value is `false`"
+            "documentation": "Plays animation `name` on a Lua Sprite/Object with the tag/variable `obj`.\n* `obj` - Lua Sprite tag or Object variable name\n* `name` - Animation name to play\n* `forced` - If true, the animation will reset if the current animation is the same as the one you're trying to play. Default value is `false`",
+            "deprecated": "objectPlayAnimation is deprecated! Use playAnim instead"
         },
         "getObjectOrder": {
             "returns": "number",
@@ -511,144 +513,144 @@
             "documentation": "Works similar to `setProperty()`, but can be used to access a variable inside a Class other than PlayState.\n\nExample: To make the mouse visible, you should use `getPropertyFromClass('FlxG', 'mouse.visible', true)`."
         },
         "openCustomSubstate": {
-            "returns": "???",
+            "returns": "void",
             "args": "name:String, pauseGame:Bool = false",
-            "documentation": "Needs documentation"
+            "documentation": "Adds a custom substate named `name` to current FlxState"
         },
         "closeCustomSubstate": {
-            "returns": "???",
+            "returns": "void",
             "args": "",
-            "documentation": "Needs documentation"
+            "documentation": "Closes current active substate"
         },
         "initLuaShader": {
-            "returns": "???",
+            "returns": "void",
             "args": "name:String, glslVersion:Int = 120",
             "documentation": "Needs documentation"
         },
         "setSpriteShader": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, shader:String",
             "documentation": "Needs documentation"
         },
         "removeSpriteShader": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String",
             "documentation": "Needs documentation"
         },
         "getShaderBool": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "obj:String, prop:String",
             "documentation": "Needs documentation"
         },
         "getShaderBoolArray": {
-            "returns": "???",
+            "returns": "array",
             "args": "obj:String, prop:String",
             "documentation": "Needs documentation"
         },
         "getShaderInt": {
-            "returns": "???",
+            "returns": "number",
             "args": "obj:String, prop:String",
             "documentation": "Needs documentation"
         },
         "getShaderIntArray": {
-            "returns": "???",
+            "returns": "array",
             "args": "obj:String, prop:String",
             "documentation": "Needs documentation"
         },
         "getShaderFloat": {
-            "returns": "???",
+            "returns": "number",
             "args": "obj:String, prop:String",
             "documentation": "Needs documentation"
         },
         "getShaderFloatArray": {
-            "returns": "???",
+            "returns": "array",
             "args": "obj:String, prop:String",
             "documentation": "Needs documentation"
         },
         "setShaderBool": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, prop:String, value:Bool",
             "documentation": "Needs documentation"
         },
         "setShaderBoolArray": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, prop:String, values:Dynamic",
             "documentation": "Needs documentation"
         },
         "setShaderInt": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, prop:String, value:Int",
             "documentation": "Needs documentation"
         },
         "setShaderIntArray": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, prop:String, values:Dynamic",
             "documentation": "Needs documentation"
         },
         "setShaderFloat": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, prop:String, value:Float",
             "documentation": "Needs documentation"
         },
         "setShaderFloatArray": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, prop:String, values:Dynamic",
             "documentation": "Needs documentation"
         },
         "getRunningScripts": {
-            "returns": "???",
+            "returns": "array",
             "args": "",
-            "documentation": "Needs documentation"
+            "documentation": "Returns array of all running lua scripts"
         },
         "callOnLuas": {
             "returns": "???",
             "args": "?funcName:String, ?args:Array<Dynamic>, ignoreStops=false, ignoreSelf=true, ?exclusions:Array<String>",
-            "documentation": "Needs documentation"
+            "documentation": "Calls function on ALL lua scripts"
         },
         "callScript": {
             "returns": "???",
             "args": "?luaFile:String, ?funcName:String, ?args:Array<Dynamic>",
-            "documentation": "Needs documentation"
+            "documentation": "Calls a function on specific lua script"
         },
         "getGlobalFromScript": {
-            "returns": "???",
+            "returns": "?",
             "args": "?luaFile:String, ?global:String",
-            "documentation": "Needs documentation"
+            "documentation": "Gets a global field from specific lua script"
         },
         "setGlobalFromScript": {
-            "returns": "???",
+            "returns": "void",
             "args": "luaFile:String, global:String, val:Dynamic",
-            "documentation": "Needs documentation"
+            "documentation": "Sets a global field value from specific lua script to `val`"
         },
         "isRunning": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "luaFile:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if specific lua script is running"
         },
         "removeLuaScript": {
-            "returns": "???",
+            "returns": "void",
             "args": "luaFile:String, ?ignoreAlreadyRunning:Bool = false",
-            "documentation": "Needs documentation"
+            "documentation": "Removes lua script from active list"
         },
         "runHaxeCode": {
-            "returns": "???",
+            "returns": "?",
             "args": "codeToRun:String",
-            "documentation": "Needs documentation"
+            "documentation": "Runs a haxe code and returns it's value"
         },
         "addHaxeLibrary": {
-            "returns": "???",
+            "returns": "void",
             "args": "libName:String, ?libPackage:String = ''",
-            "documentation": "Needs documentation"
+            "documentation": "Adds a haxe library to all hscript scripts"
         },
         "loadSong": {
-            "returns": "???",
+            "returns": "void",
             "args": "?name:String = null, ?difficultyNum:Int = -1",
-            "documentation": "Needs documentation"
+            "documentation": "Sets current chart to another song"
         },
         "loadGraphic": {
             "returns": "???",
             "args": "variable:String, image:String, ?gridX:Int = 0, ?gridY:Int = 0",
-            "documentation": "Needs documentation"
+            "documentation": "Loads a graphic"
         },
         "loadFrames": {
             "returns": "???",
@@ -660,354 +662,365 @@
             "args": "tag:String, note:Int, value:Dynamic, duration:Float, ease:String",
             "documentation": "Needs documentation"
         },
-        "setPropertyAdvanced": {
-            "returns": "???",
-            "args": "varsStr:String, value:Dynamic",
-            "documentation": "Needs documentation"
-        },
         "getScore": {
-            "returns": "???",
+            "returns": "number",
             "args": "",
-            "documentation": "Needs documentation"
+            "documentation": "Returns current game score"
         },
         "getMisses": {
-            "returns": "???",
+            "returns": "number",
             "args": "",
-            "documentation": "Needs documentation"
+            "documentation": "Returns current game misses"
         },
         "getHits": {
-            "returns": "???",
+            "returns": "number",
             "args": "",
-            "documentation": "Needs documentation"
+            "documentation": "Returns current game hits"
         },
         "setHealth": {
-            "returns": "???",
+            "returns": "void",
             "args": "value:Float = 0",
-            "documentation": "Needs documentation"
+            "documentation": "Sets player's health ranged from `0` to `1`"
         },
         "addHealth": {
-            "returns": "???",
+            "returns": "void",
             "args": "value:Float = 0",
-            "documentation": "Needs documentation"
+            "documentation": "Sets player's health ranged from `0` to `1`"
         },
         "getHealth": {
-            "returns": "???",
+            "returns": "number",
             "args": "",
-            "documentation": "Needs documentation"
+            "documentation": "Returns player's health ranged from `0` to `1`"
         },
         "keyboardJustPressed": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if specific keyboard key was just pressed"
         },
         "keyboardPressed": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if specific keyboard key is pressed"
         },
         "keyboardReleased": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if specific keyboard key was just released"
         },
         "anyGamepadJustPressed": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if any gamepad specific button was just pressed"
         },
         "anyGamepadPressed": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if any gamepad specific button is pressed"
         },
         "anyGamepadReleased": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if any gamepad specific button was just released"
         },
         "gamepadAnalogX": {
-            "returns": "???",
+            "returns": "number",
             "args": "id:Int, ?leftStick:Bool = true",
             "documentation": "Needs documentation"
         },
         "gamepadAnalogY": {
-            "returns": "???",
+            "returns": "number",
             "args": "id:Int, ?leftStick:Bool = true",
             "documentation": "Needs documentation"
         },
         "gamepadJustPressed": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "id:Int, name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if gamepad with id `id` specific button was just pressed"
         },
         "gamepadPressed": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "id:Int, name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if gamepad with id `id` specific button is pressed"
         },
         "gamepadReleased": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "id:Int, name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if gamepad with id `id` specific button was just released"
         },
         "precacheMusic": {
-            "returns": "???",
+            "returns": "void",
             "args": "name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Precaches specific music"
         },
         "restartSong": {
-            "returns": "???",
+            "returns": "void",
             "args": "?skipTransition:Bool = false",
-            "documentation": "Needs documentation"
+            "documentation": "Restarts current song"
         },
         "exitSong": {
-            "returns": "???",
+            "returns": "void",
             "args": "?skipTransition:Bool = false",
-            "documentation": "Needs documentation"
+            "documentation": "Exits current song and goes to Menu"
         },
         "setRatingName": {
-            "returns": "???",
+            "returns": "void",
             "args": "value:String",
-            "documentation": "Needs documentation"
+            "documentation": "Sets the rating message"
         },
         "setRatingFC": {
-            "returns": "???",
+            "returns": "void",
             "args": "value:String",
-            "documentation": "Needs documentation"
+            "documentation": "Sets the FC rating"
         },
         "getMidpointX": {
-            "returns": "???",
+            "returns": "number",
             "args": "variable:String",
-            "documentation": "Needs documentation"
+            "documentation": "Returns the midpoint X of specific FlxSprite hitbox"
         },
         "getMidpointY": {
-            "returns": "???",
+            "returns": "number",
             "args": "variable:String",
-            "documentation": "Needs documentation"
+            "documentation": "Returns the midpoint Y of specific FlxSprite hitbox"
         },
         "getGraphicMidpointX": {
-            "returns": "???",
+            "returns": "number",
             "args": "variable:String",
-            "documentation": "Needs documentation"
+            "documentation": "Returns the midpoint X of specific FlxSprite graphic"
         },
         "getGraphicMidpointY": {
-            "returns": "???",
+            "returns": "number",
             "args": "variable:String",
-            "documentation": "Needs documentation"
+            "documentation": "Returns the midpoint Y of specific FlxSprite graphic"
         },
         "getScreenPositionX": {
-            "returns": "???",
+            "returns": "number",
             "args": "variable:String",
-            "documentation": "Needs documentation"
+            "documentation": "Returns the X position of `variable` on screen"
         },
         "getScreenPositionY": {
-            "returns": "???",
+            "returns": "number",
             "args": "variable:String",
-            "documentation": "Needs documentation"
+            "documentation": "Returns the Y position of `variable` on screen"
         },
         "addAnimation": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, name:String, frames:Array<Int>, framerate:Int = 24, loop:Bool = true",
-            "documentation": "Needs documentation"
+            "documentation": "Adds a animation to specific sprite"
         },
         "addAnimationByIndicesLoop": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, name:String, prefix:String, indices:String, framerate:Int = 24",
-            "documentation": "Needs documentation"
+            "documentation": "Adds a animation by indices to specific sprite"
         },
         "playAnim": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, name:String, forced:Bool = false, ?reverse:Bool = false, ?startFrame:Int = 0",
-            "documentation": "Needs documentation"
+            "documentation": "Plays a animation on specifc sprite"
         },
         "addOffset": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, anim:String, x:Float, y:Float",
-            "documentation": "Needs documentation"
+            "documentation": "Adds offset to the animation of specific sprite"
         },
         "updateHitboxFromGroup": {
-            "returns": "???",
+            "returns": "void",
             "args": "group:String, index:Int",
             "documentation": "Needs documentation"
         },
         "luaSpriteExists": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "tag:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if specific lua sprite exists"
         },
         "luaTextExists": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "tag:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if specifc lua text object exists"
         },
         "luaSoundExists": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "tag:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if specific lua sound exists"
         },
         "setHealthBarColors": {
-            "returns": "???",
+            "returns": "void",
             "args": "leftHex:String, rightHex:String",
-            "documentation": "Needs documentation"
+            "documentation": "Sets the colors player's health bar (in hex)"
         },
         "setTimeBarColors": {
-            "returns": "???",
+            "returns": "void",
             "args": "leftHex:String, rightHex:String",
-            "documentation": "Needs documentation"
+            "documentation": "Sets the colors of time progress bar (in hex)"
         },
         "screenCenter": {
-            "returns": "???",
+            "returns": "void",
             "args": "obj:String, pos:String = 'xy'",
-            "documentation": "Needs documentation"
+            "documentation": "Centers a object on screen"
         },
         "objectsOverlap": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "obj1:String, obj2:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if `obj1` overlaps/collides `obj2`"
         },
         "getPixelColor": {
-            "returns": "???",
+            "returns": "number",
             "args": "obj:String, x:Int, y:Int",
-            "documentation": "Needs documentation"
+            "documentation": "Gets the color of `obj` specific pixel"
         },
         "getRandomInt": {
-            "returns": "???",
+            "returns": "number",
             "args": "min:Int, max:Int = FlxMath.MAX_VALUE_INT, exclude:String = ''",
-            "documentation": "Needs documentation"
+            "documentation": "Returns randomly generated integer"
         },
         "getRandomFloat": {
-            "returns": "???",
+            "returns": "number",
             "args": "min:Float, max:Float = 1, exclude:String = ''",
-            "documentation": "Needs documentation"
+            "documentation": "Returns randomly generated float"
         },
         "getRandomBool": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "chance:Float = 50",
-            "documentation": "Needs documentation"
+            "documentation": "Returns `true` with `chance` chance; else `false`"
         },
         "changePresence": {
-            "returns": "???",
+            "returns": "void",
             "args": "details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float",
-            "documentation": "Needs documentation"
+            "documentation": "Changes discordrpc presence"
         },
         "initSaveData": {
-            "returns": "???",
+            "returns": "void",
             "args": "name:String, ?folder:String = 'psychenginemods'",
-            "documentation": "Needs documentation"
+            "documentation": "Initializes specific save"
         },
         "flushSaveData": {
-            "returns": "???",
+            "returns": "void",
             "args": "name:String",
-            "documentation": "Needs documentation"
+            "documentation": "Saves specific save"
         },
         "getDataFromSave": {
-            "returns": "???",
+            "returns": "?",
             "args": "name:String, field:String, ?defaultValue:Dynamic = null",
-            "documentation": "Needs documentation"
+            "documentation": "Returns data of specific save"
         },
         "setDataFromSave": {
-            "returns": "???",
+            "returns": "void",
             "args": "name:String, field:String, value:Dynamic",
-            "documentation": "Needs documentation"
+            "documentation": "Sets the data of specifc save to `value`"
         },
         "checkFileExists": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "filename:String, ?absolute:Bool = false",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if specific path exists"
         },
         "saveFile": {
-            "returns": "???",
+            "returns": "void",
             "args": "path:String, content:String, ?absolute:Bool = false",
-            "documentation": "Needs documentation"
+            "documentation": "Saves file with `content` content"
         },
         "deleteFile": {
-            "returns": "???",
+            "returns": "void",
             "args": "path:String, ?ignoreModFolders:Bool = false",
-            "documentation": "Needs documentation"
+            "documentation": "Deletes a path"
         },
         "getTextFromFile": {
-            "returns": "???",
+            "returns": "string",
             "args": "path:String, ?ignoreModFolders:Bool = false",
-            "documentation": "Needs documentation"
+            "documentation": "Returns content of specific file in text"
         },
         "luaSpriteMakeGraphic": {
             "returns": "???",
             "args": "tag:String, width:Int, height:Int, color:String",
-            "documentation": "Needs documentation"
+            "documentation": "Needs documentation",
+            "deprecated": "luaSpriteMakeGraphic is deprecated! Use makeGraphic instead"
         },
         "luaSpriteAddAnimationByPrefix": {
             "returns": "???",
             "args": "tag:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true",
-            "documentation": "Needs documentation"
+            "documentation": "Needs documentation",
+            "deprecated": "luaSpriteAddAnimationByPrefix is deprecated! Use addAnimationByPrefix instead"
         },
         "luaSpriteAddAnimationByIndices": {
             "returns": "???",
             "args": "tag:String, name:String, prefix:String, indices:String, framerate:Int = 24",
-            "documentation": "Needs documentation"
+            "documentation": "Needs documentation",
+            "deprecated": "luaSpriteAddAnimationByIndices is deprecated! Use addAnimationByIndices instead"
         },
         "luaSpritePlayAnimation": {
             "returns": "???",
             "args": "tag:String, name:String, forced:Bool = false",
-            "documentation": "Needs documentation"
+            "documentation": "Needs documentation",
+            "deprecated": "luaSpritePlayAnimation is deprecated! Use playAnim instead"
         },
         "setLuaSpriteCamera": {
             "returns": "???",
             "args": "tag:String, camera:String = ''",
-            "documentation": "Needs documentation"
+            "documentation": "Needs documentation",
+            "deprecated": "setLuaSpriteCamera is deprecated! Use setObjectCamera instead"
         },
         "setLuaSpriteScrollFactor": {
             "returns": "???",
             "args": "tag:String, scrollX:Float, scrollY:Float",
-            "documentation": "Needs documentation"
+            "documentation": "Needs documentation",
+            "deprecated": "setLuaSpriteScrollFactor is deprecated! Use setScrollFactor instead"
         },
         "scaleLuaSprite": {
             "returns": "???",
             "args": "tag:String, x:Float, y:Float",
-            "documentation": "Needs documentation"
+            "documentation": "Needs documentation",
+            "deprecated": "scaleLuaSprite is deprecated! Use scaleObject instead"
         },
         "getPropertyLuaSprite": {
             "returns": "???",
             "args": "tag:String, variable:String",
-            "documentation": "Needs documentation"
+            "documentation": "Needs documentation",
+            "deprecated": "getPropertyLuaSprite is deprecated! Use getProperty instead"
         },
         "setPropertyLuaSprite": {
             "returns": "???",
             "args": "tag:String, variable:String, value:Dynamic",
-            "documentation": "Needs documentation"
+            "documentation": "Needs documentation",
+            "deprecated": "setPropertyLuaSprite is deprecated! Use setProperty instead"
         },
         "musicFadeIn": {
-            "returns": "???",
+            "returns": "void",
             "args": "duration:Float, fromValue:Float = 0, toValue:Float = 1",
-            "documentation": "Needs documentation"
+            "documentation": "Fades in the volume of music",
+            "deprecated": "musicFadeIn is deprecated! Use soundFadeIn instead."
         },
         "musicFadeOut": {
-            "returns": "???",
+            "returns": "void",
             "args": "duration:Float, toValue:Float = 0",
-            "documentation": "Needs documentation"
+            "documentation": "Fades out the volume of music",
+            "deprecated": "musicFadeOut is deprecated! Use soundFadeOut instead."
         },
         "stringStartsWith": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "str:String, start:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if `str` starts with `start`"
         },
         "stringEndsWith": {
-            "returns": "???",
+            "returns": "boolean",
             "args": "str:String, end:String",
-            "documentation": "Needs documentation"
+            "documentation": "Checks if `str` ends with `end`"
         },
         "stringSplit": {
-            "returns": "???",
+            "returns": "array",
             "args": "str:String, split:String",
-            "documentation": "Needs documentation"
+            "documentation": "Splits string with `split` delimeter to array of strings"
         },
         "stringTrim": {
-            "returns": "???",
+            "returns": "string",
             "args": "str:String",
-            "documentation": "Needs documentation"
+            "documentation": "Removes empty characters from the beginning and end of `string`"
         },
         "directoryFileList": {
-            "returns": "???",
+            "returns": "array",
             "args": "folder:String",
+            "documentation": "Returns array of filenames in `folder`"
+        },
+        "setShaderSampler2D": {
+            "returns": "void",
+            "args": "obj:String, prop:String, bitmapdataPath:String",
             "documentation": "Needs documentation"
         }
     },
@@ -1285,116 +1298,116 @@
             "documentation": "Needs documentation"
         },
         "songPath": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "Returns path of current song"
         },
         "curStage": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "Returns the id/name of current stage"
         },
         "difficultyName": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "The difficulty of current difficulty"
         },
         "difficultyPath": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "Returns path of current song chart"
         },
         "curDecBeat": {
-            "returns": "???",
+            "returns": "number",
             "documentation": "Needs documentation"
         },
         "curDecStep": {
-            "returns": "???",
+            "returns": "number",
             "documentation": "Needs documentation"
         },
         "ratingFC": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "Returns current FC rating"
         },
         "version": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "Returns the version of engine"
         },
         "healthGainMult": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "number",
+            "documentation": "The gain multiplayer of health"
         },
         "healthLossMult": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "number",
+            "documentation": "The loss multiplayer of health"
         },
         "playbackRate": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "number",
+            "documentation": "Pitch of current song"
         },
         "instakillOnMiss": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "boolean",
+            "documentation": "Returns if miss == death"
         },
         "practice": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "boolean",
+            "documentation": "Whatever or not practice mode is on"
         },
-        "defaultPlayerStrumX + i": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+        "defaultPlayerStrumX": {
+            "returns": "number",
+            "documentation": "Returns default X position of player strumline"
         },
-        "defaultPlayerStrumY + i": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+        "defaultPlayerStrumY": {
+            "returns": "number",
+            "documentation": "Returns default Y position of player strumline"
         },
-        "defaultOpponentStrumX + i": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+        "defaultOpponentStrumX": {
+            "returns": "number",
+            "documentation": "Returns default X position of opponents strumline"
         },
-        "defaultOpponentStrumY + i": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+        "defaultOpponentStrumY": {
+            "returns": "number",
+            "documentation": "Returns default Y position of opponents strumline"
         },
         "boyfriendName": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "First name BOYFRIEND last name .xml (but seriously it's current character name of boyfriend)"
         },
         "dadName": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "Dad`s current character name"
         },
         "gfName": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "Gf's current character name"
         },
         "timeBarType": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "Returns the type of timebar"
         },
         "scoreZoom": {
-            "returns": "???",
+            "returns": "boolean",
             "documentation": "Needs documentation"
         },
         "healthBarAlpha": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "number",
+            "documentation": "Current alpha value of health bar"
         },
         "noResetButton": {
-            "returns": "???",
+            "returns": "boolean",
             "documentation": "Needs documentation"
         },
         "shadersEnabled": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "boolean",
+            "documentation": "Whetever or not shaders are enabled by player"
         },
         "scriptName": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "The name/id of this script"
         },
         "currentModDirectory": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "Returns the path to current mod"
         },
         "buildTarget": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "string",
+            "documentation": "The build target, should be `windows`, `linux`, `mac`, `browser`, `android` or `unknown` (useful to block playing a mod on gamaverse)"
         }
     },
     "events": {

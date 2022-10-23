@@ -8,18 +8,24 @@ export function activate(context: vscode.ExtensionContext) {
 	//Suggest functions and variables
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider('lua', {
 		provideCompletionItems: function (document, position) {
-			let list = [];
+			let list:vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
 			
 			for (const _func in getFunctions()) {
 				const func = getFunction(_func);
 				if (func == null)
 					continue;
 
+				let markdownString = new vscode.MarkdownString();
+				if (func.deprecated != null) {
+					markdownString.appendMarkdown("*@deprecated* **" + func.deprecated + "**\n\n");
+				}
+				markdownString.appendMarkdown(func.documentation);
+
 				list.push({
 					detail: func.returns + " " + func.name + "(" + func.args +")",
 					kind: vscode.CompletionItemKind.Function,
 					label: func.name,
-					documentation: new vscode.MarkdownString().appendMarkdown(func.documentation)
+					documentation: markdownString
 				});
 			}
 
@@ -49,29 +55,26 @@ export function activate(context: vscode.ExtensionContext) {
 			const func = getFunction(word);
 			const varia = getVariable(word);
 			const event = getEvent(word);
-
+			
+			const markdownString = new vscode.MarkdownString();
+			let object:any = null;
 			if (func != null) {
-				const markdownString = new vscode.MarkdownString();
-
+				if (func.deprecated != null) {
+					markdownString.appendMarkdown("*@deprecated* **" + func.deprecated + "**\n\n");
+				}
 				markdownString.appendCodeblock("function " + func.name + "(" + func.args + ") -> " + func.returns);
-				markdownString.appendMarkdown(func.documentation);
-
-				return new vscode.Hover(markdownString);
+				object = func;
 			}
 			if (varia != null) {
-				const markdownString = new vscode.MarkdownString();
-
 				markdownString.appendCodeblock("variable " + varia.name + " -> " + varia.returns);
-				markdownString.appendMarkdown(varia.documentation);
-
-				return new vscode.Hover(markdownString);
+				object = varia;
 			}
 			if (event != null) {
-				const markdownString = new vscode.MarkdownString();
-
 				markdownString.appendCodeblock("event " + event.name + "(" + event.args + ")" + " -> " + event.returns);
-				markdownString.appendMarkdown(event.documentation);
-
+				object = event;
+			}
+			if (object != null) {
+				markdownString.appendMarkdown(object.documentation);
 				return new vscode.Hover(markdownString);
 			}
 		}

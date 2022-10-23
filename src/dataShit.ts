@@ -21,7 +21,8 @@ export function getFunction(func: string) {
 		name: func,
 		returns: funct.returns,
 		args: funct.args,
-		documentation: funct.documentation
+		documentation: funct.documentation,
+		deprecated: funct.deprecated
 	};
 }
 

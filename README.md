@@ -1,6 +1,9 @@
 # Funkin Script AutoComplete
 Simple AutoCompleter for [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine) and [PEngine](https://github.com/Paidyy/Funkin-PEngine) Lua scripts.<br>
-Report/Pull Request any missing functions or variables!
+
+## Contributing
+Any pull requests are appreciated, feel free to Pull Request any missing engines, functions or variables! <br>
+If you want to add another engine to this extension make a json file in src/ called something like "piss-engine_data.json", this data file should be based of any `*_data.json` file <br>
 
 ## Installation
 [DOWNLOAD FROM MARKETPLACE HERE](https://marketplace.visualstudio.com/items?itemName=Paidyy.funkin-script-autocomplete)<br>

@@ -2,7 +2,7 @@
 	"name": "funkin-script-autocomplete",
 	"displayName": "Funkin Script AutoComplete",
 	"description": "AutoCompleter for Friday Night Funkin` scripts",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"icon": "images/icon.png",
 	"publisher": "Paidyy",
 	"private": true,

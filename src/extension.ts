@@ -1,4 +1,7 @@
 /* eslint-disable prefer-const */
+
+// fucking shitty dependency system what the fuck this does not work
+//import * as Color from 'color';
 import * as vscode from 'vscode';
 
 // import * from '.dataShit'  imagine
@@ -83,9 +86,29 @@ export function activate(context: vscode.ExtensionContext) {
 	//Suggest args for functions
 	context.subscriptions.push(vscode.languages.registerSignatureHelpProvider("lua", {
 		provideSignatureHelp: function (document, position, token) {
-			const range = document.getWordRangeAtPosition(position);
+			let i = document.offsetAt(position);
+			let lastCharPos:vscode.Position | null = null;
+			let numArgs = 0;
+			while (i > 0) {
+				const bch = document.getText().charAt(i - 1);
+				const ch = document.getText().charAt(i);
+				if (ch == ",") {
+					numArgs++;
+				}
+				if (ch.replace(/\s/g, "") != "") {
+					lastCharPos = document.positionAt(i);
+				}
+				if (bch == ";" || bch == ")" || bch == null) {
+					break;
+				}
+				i--;
+			}
+			if (lastCharPos == null) {
+				return;
+			}
+
+			const range = document.getWordRangeAtPosition(lastCharPos, /[a-zA-Z]+/g);
 			let word = document.getText(range);
-			word = word.substring(0, document.getText(range).length - 2);
 			const func = getFunction(word);
 
 			if (func == null)
@@ -93,18 +116,27 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const provider = new vscode.SignatureHelp;
 			provider.activeParameter = 0;
-			provider.activeSignature = 0;
+			provider.activeSignature = numArgs;
 
-			provider.signatures.push(new vscode.SignatureInformation(func.args));
+			const spltArgs:Array<string> = func.args.split(",");
+			let _i = 0;
+			for (let arg in spltArgs) {
+				provider.signatures.push({
+					label: spltArgs[arg],
+					parameters: []
+				});
+				//argsString.appendMarkdown((_i == numArgs ? "<blue>" : "") + arg + (_i == numArgs ? "</blue>" : "") + (_i == spltArgs.length - 1 ? "" : ", "));
+				_i++;
+			}
 
 			return provider;
 		}
-	}, '(', ','));
+	}, '(', ',', ')'));
 
 	//Suggest event snippets
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider('lua', {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
-			let list = [];
+			let list: vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
 
 			for (const _event in getEvents()) {
 				const event = getEvent(_event);
@@ -121,6 +153,155 @@ export function activate(context: vscode.ExtensionContext) {
 			return list;
 		}
 	}));
+
+	/*
+	// Show colors
+	context.subscriptions.push(
+		vscode.languages.registerColorProvider(
+			"lua", 
+			{
+				// select the locations of colors
+				provideDocumentColors(document, token) {
+					let colorsList:vscode.ProviderResult<vscode.ColorInformation[]> = [];
+					let i = 0;
+					let isInType = 0;
+					let curColorString = "";
+					let isInString = false;
+
+					let begS:vscode.Position | undefined = undefined;
+					let endS:vscode.Position;
+					
+					while (i++ < document.getText().length) {
+						const curChar = document.getText().charAt(i);
+						if (curChar == "'" || curChar == '"') {
+							if (!isInString) {
+								isInString = true;
+							}
+							else {
+								endS = document.positionAt(i);
+
+								let color:Color = new Color(curColorString);
+								
+								if (begS != undefined)
+									colorsList.push(
+										new vscode.ColorInformation(new vscode.Range(begS, endS), new vscode.Color(color.red(), color.green(), color.blue(), color.alpha()))
+									);
+
+								isInString = false;
+								isInType = 0;
+								curColorString = "";
+							}
+						}
+
+						if (isInString) {
+							if (curChar == "#") {
+								begS = document.positionAt(i);
+								isInType = 1;
+							}
+
+							if (isInType > 0) {
+								curColorString += curChar;
+							}
+						}
+					}
+					return colorsList;
+				},
+				// show the color picker
+				provideColorPresentations(color, context, token) {
+					return [
+						new vscode.ColorPresentation(context.document.getText(context.range))
+					];
+				}
+			}
+		));
+	*/
+
+	//deprecated warnings here
+	//copied from some example lmao
+	let timeout: NodeJS.Timer | undefined = undefined;
+
+	const warningDecorationType = vscode.window.createTextEditorDecorationType({
+		textDecoration: "line-through",
+		light: {
+			backgroundColor: "#ffff57"
+		},
+		dark: {
+			backgroundColor: "#5e5e29"
+		}
+	});
+
+	const collection = vscode.languages.createDiagnosticCollection('fnfsac');
+	let activeEditor = vscode.window.activeTextEditor;
+
+	function updateDecorations() {
+		if (!activeEditor || activeEditor.document.languageId != "lua") {
+			return;
+		}
+
+		collection.clear();
+
+		const regEx = /[a-zA-Z]+/g;
+		const text = activeEditor.document.getText();
+		const decorations: vscode.DecorationOptions[] = [];
+		let diagnostics: vscode.Diagnostic[] = [];
+		
+		let match;
+		while ((match = regEx.exec(text))) {
+			const startPos = activeEditor.document.positionAt(match.index);
+			const endPos = activeEditor.document.positionAt(match.index + match[0].length);
+			
+			if (startPos.line - 1 >= 0 && 
+				activeEditor.document.lineAt(startPos.line - 1).text.trim() == "---@diagnostic disable-next-line: " + match[0] ||
+				activeEditor.document.lineAt(startPos.line).text.trim() == "---@diagnostic disable-next-line: " + match[0] ||
+				activeEditor.document.lineAt(0).text.trim() == "---@diagnostic disable: " + match[0]) {
+				continue;
+			}
+
+			const func = getFunction(match[0]);
+			if (func != null && func.deprecated != null) {
+				const decoration: vscode.DecorationOptions = { range: new vscode.Range(startPos, endPos) };
+				decorations.push(decoration);
+				
+				diagnostics.push({
+					code: match[0],
+					message: func.deprecated,
+					range: new vscode.Range(startPos, endPos),
+					severity: vscode.DiagnosticSeverity.Warning
+				});
+			}
+		}
+		collection.set(activeEditor.document.uri, diagnostics);
+		activeEditor.setDecorations(warningDecorationType, decorations);
+	}
+
+	function triggerUpdateDecorations(throttle = false) {
+		if (timeout) {
+			clearTimeout(timeout);
+			timeout = undefined;
+		}
+		if (throttle) {
+			timeout = setTimeout(updateDecorations, 500);
+		} else {
+			updateDecorations();
+		}
+	}
+
+	if (activeEditor) {
+		triggerUpdateDecorations();
+	}
+
+	vscode.window.onDidChangeActiveTextEditor(editor => {
+		activeEditor = editor;
+		if (editor) {
+			triggerUpdateDecorations();
+		}
+	}, null, context.subscriptions);
+
+	vscode.workspace.onDidChangeTextDocument(event => {
+		if (activeEditor && event.document === activeEditor.document) {
+			triggerUpdateDecorations(true);
+		}
+	}, null, context.subscriptions);
 }
 
 function haxeArgsToLua(str:string) {

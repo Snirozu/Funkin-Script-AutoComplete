@@ -5,3 +5,5 @@ target/
 TOKEN.txt
 .vscode/settings.json
 .vscode/extensions.json
+# is this file important? lmao
+package-lock.json

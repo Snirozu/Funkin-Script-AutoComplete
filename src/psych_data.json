@@ -52,7 +52,7 @@
         },
         "setTextBorder": {
             "returns": "void",
-            "args": "tag:String, size:Int, color:Int",
+            "args": "tag:String, size:Int, color:String",
             "documentation": "Sets text border at the specified tag"
         },
         "setTextColor": {

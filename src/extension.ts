@@ -11,10 +11,14 @@ export function activate(context: vscode.ExtensionContext) {
 	//Suggest functions and variables
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider('lua', {
 		provideCompletionItems: function (document, position) {
+			if (!isEnabled(document)) {
+				return null;
+			}
+
 			let list:vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
 			
-			for (const _func in getFunctions()) {
-				const func = getFunction(_func);
+			for (const _func in getFunctions(document)) {
+				const func = getFunction(_func, document);
 				if (func == null)
 					continue;
 
@@ -32,8 +36,8 @@ export function activate(context: vscode.ExtensionContext) {
 				});
 			}
 
-			for (const _varia in getVariables()) {
-				const varia = getVariable(_varia);
+			for (const _varia in getVariables(document)) {
+				const varia = getVariable(_varia, document);
 				if (varia == null)
 					continue;
 
@@ -52,12 +56,16 @@ export function activate(context: vscode.ExtensionContext) {
 	//Word hover event
 	context.subscriptions.push(vscode.languages.registerHoverProvider("lua", {
 		provideHover: function (document, position, token) {
+			if (!isEnabled(document)) {
+				return null;
+			}
+
 			const range = document.getWordRangeAtPosition(position);
 			const word = document.getText(range);
 
-			const func = getFunction(word);
-			const varia = getVariable(word);
-			const event = getEvent(word);
+			const func = getFunction(word, document);
+			const varia = getVariable(word, document);
+			const event = getEvent(word, document);
 			
 			const markdownString = new vscode.MarkdownString();
 			let object:any = null;
@@ -86,6 +94,10 @@ export function activate(context: vscode.ExtensionContext) {
 	//Suggest args for functions
 	context.subscriptions.push(vscode.languages.registerSignatureHelpProvider("lua", {
 		provideSignatureHelp: function (document, position, token) {
+			if (!isEnabled(document)) {
+				return null;
+			}
+			
 			let i = document.offsetAt(position);
 			let lastCharPos:vscode.Position | null = null;
 			let numArgs = 0;
@@ -109,7 +121,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const range = document.getWordRangeAtPosition(lastCharPos, /[a-zA-Z]+/g);
 			let word = document.getText(range);
-			const func = getFunction(word);
+			const func = getFunction(word, document);
 
 			if (func == null)
 				return;
@@ -136,10 +148,14 @@ export function activate(context: vscode.ExtensionContext) {
 	//Suggest event snippets
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider('lua', {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+			if (!isEnabled(document)) {
+				return null;
+			}
+
 			let list: vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
 
-			for (const _event in getEvents()) {
-				const event = getEvent(_event);
+			for (const _event in getEvents(document)) {
+				const event = getEvent(_event, document);
 				if (event == null)
 					continue;
 				
@@ -257,8 +273,8 @@ export function activate(context: vscode.ExtensionContext) {
 				continue;
 			}
 
-			const func = getFunction(match[0]);
-			if (func != null && func.deprecated != null) {
+			const func = getFunction(match[0], activeEditor.document);
+			if (func != null && func.deprecated != null && activeEditor.document.getText().charAt(match.index + match[0].length) == "(") {
 				const decoration: vscode.DecorationOptions = { range: new vscode.Range(startPos, endPos) };
 				decorations.push(decoration);
 				
@@ -275,6 +291,12 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	function triggerUpdateDecorations(throttle = false) {
+		if (activeEditor && !isEnabled(activeEditor.document)) {
+			collection.set(activeEditor.document.uri, []);
+			activeEditor.setDecorations(warningDecorationType, []);
+			return;
+		}
+
 		if (timeout) {
 			clearTimeout(timeout);
 			timeout = undefined;
@@ -302,6 +324,13 @@ export function activate(context: vscode.ExtensionContext) {
 			triggerUpdateDecorations(true);
 		}
 	}, null, context.subscriptions);
+}
+
+function isEnabled(document:vscode.TextDocument) {
+	if (vscode.workspace.getConfiguration().get("funkinscriptautocomplete.enableOnlyOnCertainScripts") && document.getText().indexOf("---@funkinScript") == -1) {
+		return false;
+	}
+	return true;
 }
 
 function haxeArgsToLua(str:string) {

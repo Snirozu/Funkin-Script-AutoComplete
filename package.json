@@ -52,6 +52,11 @@
 						"Psych Engine",
 						"Funkin PEngine (UNFINISHED LUA API)"
 					]
+				},
+				"funkinscriptautocomplete.enableOnlyOnCertainScripts": {
+					"type": "boolean",
+					"default": false,
+					"description": "If true this extension will only work if a script contains '---@funkinScript'"
 				}
 			}
 		}

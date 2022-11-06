@@ -525,77 +525,77 @@
         "initLuaShader": {
             "returns": "void",
             "args": "name:String, glslVersion:Int = 120",
-            "documentation": "Needs documentation"
+            "documentation": "Initializes a new GLSL shader. This will get `name`.frag and `name`.vert files"
         },
         "setSpriteShader": {
             "returns": "void",
             "args": "obj:String, shader:String",
-            "documentation": "Needs documentation"
+            "documentation": "Sets the shader of some `obj` to `shader`"
         },
         "removeSpriteShader": {
             "returns": "void",
             "args": "obj:String",
-            "documentation": "Needs documentation"
+            "documentation": "Removes shader from sprite"
         },
         "getShaderBool": {
             "returns": "boolean",
             "args": "obj:String, prop:String",
-            "documentation": "Needs documentation"
+            "documentation": "Gets a boolean field from some shader"
         },
         "getShaderBoolArray": {
             "returns": "array",
             "args": "obj:String, prop:String",
-            "documentation": "Needs documentation"
+            "documentation": "Gets a boolean array field from some shader"
         },
         "getShaderInt": {
             "returns": "number",
             "args": "obj:String, prop:String",
-            "documentation": "Needs documentation"
+            "documentation": "Gets a integer field from some shader"
         },
         "getShaderIntArray": {
             "returns": "array",
             "args": "obj:String, prop:String",
-            "documentation": "Needs documentation"
+            "documentation": "Gets a integer array field from some shader"
         },
         "getShaderFloat": {
             "returns": "number",
             "args": "obj:String, prop:String",
-            "documentation": "Needs documentation"
+            "documentation": "Gets a float field from some shader"
         },
         "getShaderFloatArray": {
             "returns": "array",
             "args": "obj:String, prop:String",
-            "documentation": "Needs documentation"
+            "documentation": "Gets a float array field from some shader"
         },
         "setShaderBool": {
             "returns": "void",
             "args": "obj:String, prop:String, value:Bool",
-            "documentation": "Needs documentation"
+            "documentation": "Sets some shader's boolean field to `value`"
         },
         "setShaderBoolArray": {
             "returns": "void",
-            "args": "obj:String, prop:String, values:Dynamic",
-            "documentation": "Needs documentation"
+            "args": "obj:String, prop:String, values:Array<Bool>",
+            "documentation": "Sets some shader's boolean array field to `value`"
         },
         "setShaderInt": {
             "returns": "void",
             "args": "obj:String, prop:String, value:Int",
-            "documentation": "Needs documentation"
+            "documentation": "Sets some shader's integer field to `value`"
         },
         "setShaderIntArray": {
             "returns": "void",
             "args": "obj:String, prop:String, values:Dynamic",
-            "documentation": "Needs documentation"
+            "documentation": "Sets some shader's integer array field to `value`"
         },
         "setShaderFloat": {
             "returns": "void",
             "args": "obj:String, prop:String, value:Float",
-            "documentation": "Needs documentation"
+            "documentation": "Sets some shader's float field to `value`"
         },
         "setShaderFloatArray": {
             "returns": "void",
             "args": "obj:String, prop:String, values:Dynamic",
-            "documentation": "Needs documentation"
+            "documentation": "Sets some shader's float array field to `value`"
         },
         "getRunningScripts": {
             "returns": "array",
@@ -603,12 +603,12 @@
             "documentation": "Returns array of all running lua scripts"
         },
         "callOnLuas": {
-            "returns": "???",
+            "returns": "void",
             "args": "?funcName:String, ?args:Array<Dynamic>, ignoreStops=false, ignoreSelf=true, ?exclusions:Array<String>",
             "documentation": "Calls function on ALL lua scripts"
         },
         "callScript": {
-            "returns": "???",
+            "returns": "void",
             "args": "?luaFile:String, ?funcName:String, ?args:Array<Dynamic>",
             "documentation": "Calls a function on specific lua script"
         },
@@ -648,19 +648,19 @@
             "documentation": "Sets current chart to another song"
         },
         "loadGraphic": {
-            "returns": "???",
+            "returns": "void",
             "args": "variable:String, image:String, ?gridX:Int = 0, ?gridY:Int = 0",
             "documentation": "Loads a graphic"
         },
         "loadFrames": {
-            "returns": "???",
+            "returns": "void",
             "args": "variable:String, image:String, spriteType:String = \"sparrow\"",
-            "documentation": "Needs documentation"
+            "documentation": "Loads frames from some image"
         },
         "noteTweenDirection": {
-            "returns": "???",
+            "returns": "void",
             "args": "tag:String, note:Int, value:Dynamic, duration:Float, ease:String",
-            "documentation": "Needs documentation"
+            "documentation": "Tweens the rotation of `note` for `duration` seconds"
         },
         "getScore": {
             "returns": "number",
@@ -725,12 +725,12 @@
         "gamepadAnalogX": {
             "returns": "number",
             "args": "id:Int, ?leftStick:Bool = true",
-            "documentation": "Needs documentation"
+            "documentation": "Returns the x of `id` analog"
         },
         "gamepadAnalogY": {
             "returns": "number",
             "args": "id:Int, ?leftStick:Bool = true",
-            "documentation": "Needs documentation"
+            "documentation": "Returns the y of `id` analog"
         },
         "gamepadJustPressed": {
             "returns": "boolean",
@@ -825,7 +825,7 @@
         "updateHitboxFromGroup": {
             "returns": "void",
             "args": "group:String, index:Int",
-            "documentation": "Needs documentation"
+            "documentation": "Updates the hitbox of item with index `index` in group `group`"
         },
         "luaSpriteExists": {
             "returns": "boolean",
@@ -928,57 +928,57 @@
             "documentation": "Returns content of specific file in text"
         },
         "luaSpriteMakeGraphic": {
-            "returns": "???",
+            "returns": "void",
             "args": "tag:String, width:Int, height:Int, color:String",
-            "documentation": "Needs documentation",
+            "documentation": "Why are you using it?",
             "deprecated": "luaSpriteMakeGraphic is deprecated! Use makeGraphic instead"
         },
         "luaSpriteAddAnimationByPrefix": {
-            "returns": "???",
+            "returns": "void",
             "args": "tag:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true",
-            "documentation": "Needs documentation",
+            "documentation": "Why are you using it?",
             "deprecated": "luaSpriteAddAnimationByPrefix is deprecated! Use addAnimationByPrefix instead"
         },
         "luaSpriteAddAnimationByIndices": {
-            "returns": "???",
+            "returns": "void",
             "args": "tag:String, name:String, prefix:String, indices:String, framerate:Int = 24",
-            "documentation": "Needs documentation",
+            "documentation": "Why are you using it?",
             "deprecated": "luaSpriteAddAnimationByIndices is deprecated! Use addAnimationByIndices instead"
         },
         "luaSpritePlayAnimation": {
-            "returns": "???",
+            "returns": "void",
             "args": "tag:String, name:String, forced:Bool = false",
-            "documentation": "Needs documentation",
+            "documentation": "Why are you using it?",
             "deprecated": "luaSpritePlayAnimation is deprecated! Use playAnim instead"
         },
         "setLuaSpriteCamera": {
-            "returns": "???",
+            "returns": "void",
             "args": "tag:String, camera:String = ''",
-            "documentation": "Needs documentation",
+            "documentation": "Why are you using it?",
             "deprecated": "setLuaSpriteCamera is deprecated! Use setObjectCamera instead"
         },
         "setLuaSpriteScrollFactor": {
-            "returns": "???",
+            "returns": "void",
             "args": "tag:String, scrollX:Float, scrollY:Float",
-            "documentation": "Needs documentation",
+            "documentation": "Why are you using it?",
             "deprecated": "setLuaSpriteScrollFactor is deprecated! Use setScrollFactor instead"
         },
         "scaleLuaSprite": {
-            "returns": "???",
+            "returns": "void",
             "args": "tag:String, x:Float, y:Float",
-            "documentation": "Needs documentation",
+            "documentation": "Why are you using it?",
             "deprecated": "scaleLuaSprite is deprecated! Use scaleObject instead"
         },
         "getPropertyLuaSprite": {
-            "returns": "???",
+            "returns": "?",
             "args": "tag:String, variable:String",
-            "documentation": "Needs documentation",
+            "documentation": "Why are you using it?",
             "deprecated": "getPropertyLuaSprite is deprecated! Use getProperty instead"
         },
         "setPropertyLuaSprite": {
-            "returns": "???",
+            "returns": "void",
             "args": "tag:String, variable:String, value:Dynamic",
-            "documentation": "Needs documentation",
+            "documentation": "Why are you using it?",
             "deprecated": "setPropertyLuaSprite is deprecated! Use setProperty instead"
         },
         "musicFadeIn": {
@@ -1021,7 +1021,7 @@
         "setShaderSampler2D": {
             "returns": "void",
             "args": "obj:String, prop:String, bitmapdataPath:String",
-            "documentation": "Needs documentation"
+            "documentation": "Sets the shader sampler bitmap to `bitmapdataPath` image"
         }
     },
     "variables": {
@@ -1286,16 +1286,16 @@
             "documentation": "Shortcut to `getPropertyFromClass('ClientPrefs', 'lowQuality')`"
         },
         "Function_StopLua": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "number",
+            "documentation": "Returns 2"
         },
         "Function_Stop": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "number",
+            "documentation": "Returns 1"
         },
         "Function_Continue": {
-            "returns": "???",
-            "documentation": "Needs documentation"
+            "returns": "number",
+            "documentation": "Returns 0"
         },
         "songPath": {
             "returns": "string",
@@ -1315,11 +1315,11 @@
         },
         "curDecBeat": {
             "returns": "number",
-            "documentation": "Needs documentation"
+            "documentation": "Returns current beat in a decimal (float) value"
         },
         "curDecStep": {
             "returns": "number",
-            "documentation": "Needs documentation"
+            "documentation": "Returns current step in a decimal (float) value"
         },
         "ratingFC": {
             "returns": "string",
@@ -1383,7 +1383,7 @@
         },
         "scoreZoom": {
             "returns": "boolean",
-            "documentation": "Needs documentation"
+            "documentation": "Returns whatever or not score bar should be zoomed when a note is hit"
         },
         "healthBarAlpha": {
             "returns": "number",
@@ -1391,7 +1391,7 @@
         },
         "noResetButton": {
             "returns": "boolean",
-            "documentation": "Needs documentation"
+            "documentation": "If true reset button does nothing"
         },
         "shadersEnabled": {
             "returns": "boolean",

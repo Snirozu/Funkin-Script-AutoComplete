@@ -266,12 +266,20 @@ export function activate(context: vscode.ExtensionContext) {
 			const startPos = activeEditor.document.positionAt(match.index);
 			const endPos = activeEditor.document.positionAt(match.index + match[0].length);
 			
-			if (startPos.line - 1 >= 0 && 
-				activeEditor.document.lineAt(startPos.line - 1).text.trim() == "---@diagnostic disable-next-line: " + match[0] ||
-				activeEditor.document.lineAt(startPos.line).text.trim() == "---@diagnostic disable-next-line: " + match[0] ||
-				activeEditor.document.lineAt(0).text.trim() == "---@diagnostic disable: " + match[0]) {
-				continue;
+			let doContinue = false;
+			
+			if (startPos.line - 1 >= 0) {
+				let prevLine = activeEditor.document.lineAt(startPos.line - 1).text;
+				if (prevLine.includes("---@diagnostic disable-next-line:") && prevLine.substring(prevLine.indexOf(":")).includes(match[0]))
+					doContinue = true;
 			}
+
+			let firstFileDiagnComment = activeEditor.document.getText().indexOf("---@diagnostic disable:");
+			if (firstFileDiagnComment >= 0 && activeEditor.document.lineAt(activeEditor.document.positionAt(firstFileDiagnComment).line).text.includes(match[0]))
+				doContinue = true;
+
+			if (doContinue)
+				continue;
 
 			const func = getFunction(match[0], activeEditor.document);
 			if (func != null && func.deprecated != null && activeEditor.document.getText().charAt(match.index + match[0].length) == "(") {

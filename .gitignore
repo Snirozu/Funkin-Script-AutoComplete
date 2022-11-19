@@ -7,3 +7,4 @@ TOKEN.txt
 .vscode/extensions.json
 # is this file important? lmao
 package-lock.json
+changelog.txt

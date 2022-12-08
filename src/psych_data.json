@@ -1416,6 +1416,11 @@
             "documentation": "Local function called after registering all lua functions/variables",
             "args": ""
         },
+        "onCreatePost": {
+            "returns": "void",
+            "documentation": "Local function called after registering every main function/variables",
+            "args": ""
+        },
         "onDestroy": {
             "returns": "void",
             "documentation": "Local function called when this script gets released from the memory",

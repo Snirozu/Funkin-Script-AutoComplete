@@ -4,17 +4,16 @@
 	"description": "AutoCompleter for Friday Night Funkin` scripts",
 	"version": "1.2.0",
 	"icon": "images/icon.png",
-	"publisher": "Paidyy",
+	"publisher": "Snirozu",
 	"private": true,
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Paidyy/Funkin-Script-AutoComplete"
+		"url": "https://github.com/Snirozu/Funkin-Script-AutoComplete"
 	},
 	"engines": {
 		"vscode": "^1.32.0"
 	},
-	"readme": "readme.extension.md",
 	"categories": [
 		"Snippets",
 		"Other"

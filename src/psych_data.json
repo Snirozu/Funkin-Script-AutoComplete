@@ -184,7 +184,8 @@
         "setRatingString": {
             "returns": "void",
             "args": "value:String",
-            "documentation": "Sets the rating name to `value` in case you want to do your own rating calculation."
+            "documentation": "Sets the rating name to `value` in case you want to do your own rating calculation.",
+            "deprecated": "setRatingString is deprecated! Use setRatingName instead"
         },
         "keyJustPressed": {
             "returns": "boolean",

@@ -19,10 +19,11 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"onStartupFinished"
 	],
 	"main": "./out/extension.js",
 	"scripts": {
+		"build": "vsce package",
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
 		"lint": "eslint . --ext .ts,.tsx",
@@ -50,7 +51,7 @@
 					],
 					"enumItemLabels": [
 						"Psych Engine",
-						"Funkin PEngine (UNFINISHED LUA API)"
+						"Funkin PEngine (ABANDONWARE)"
 					]
 				},
 				"funkinscriptautocomplete.enableOnlyOnCertainScripts": {
@@ -60,5 +61,9 @@
 				}
 			}
 		}
+	},
+	"dependencies": {
+		"@types/needle": "^3.2.0",
+		"needle": "^3.2.0"
 	}
 }

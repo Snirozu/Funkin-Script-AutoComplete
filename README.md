@@ -6,6 +6,16 @@ Simple AutoCompleter for [Psych Engine](https://github.com/ShadowMario/FNF-Psych
 - Warnings for deprecated functions
 - Hovers with documentation
 
+# Installation
+[DOWNLOAD FROM MARKETPLACE HERE](https://marketplace.visualstudio.com/items?itemName=Paidyy.funkin-script-autocomplete)<br>
+or
+1. Download the .vsix file from the latest release
+2. Open **Visual Studio Code** and select **Extensions** from the left bar
+3. At the top of Extensions menu click on three dots and select "**Install From VSIX...**"
+4. In the Install from VSIX window select downloaded .vsix file
+5. Restart Visual Studio Code
+6. Optionally you can change the targetted engine in **File/Preferences/Settings/Extensions/Funkin Script AutoComplete/Lua Engine**
+
 # Quick Documentation
 ## Code Comments
 - Enable this extension in a file: `---@funkinScript` (only if `funkinscriptautocomplete.enableOnlyOnCertainScripts` setting is on)
@@ -18,6 +28,7 @@ Report bugs and contribute to this extension on [Github](https://github.com/Snir
 ## Contributing
 Any pull requests are appreciated, feel free to Pull Request any missing engines, functions or variables! <br>
 If you want to add another engine to this extension make a json file in src/ called something like "piss-engine_data.json", this data file should be based of any `*_data.json` file <br>
+NOTE : If you don't know how to install dependencies use `npm install`
 ### Adding a engine
 #### Creating a data file from a engine's lua class URL 
 1. Open `art/updateEngineData.py`
@@ -36,17 +47,8 @@ If `art/updateEngineData.py` has support for some engine then:
 You should manually add/change `documentation` value (if `documentation` is "Needs documentation" or doesn't exist) and a `returns` value (if `returns` is "???" or doesn't exist) <br>
 If a function is deprecated add `"deprecated": "deprecated message here"` to the function
 
-## Extension Installation
-[DOWNLOAD FROM MARKETPLACE HERE](https://marketplace.visualstudio.com/items?itemName=Paidyy.funkin-script-autocomplete)<br>
-or
-1. Download the .vsix file from the latest release
-2. Open **Visual Studio Code** and select **Extensions** from the left bar
-3. At the top of Extensions menu click on three dots and select "**Install From VSIX...**"
-4. In the Install from VSIX window select downloaded .vsix file
-5. Restart Visual Studio Code
-6. Optionally you can change the targetted engine in **File/Preferences/Settings/Extensions/Funkin Script AutoComplete/Lua Engine**
-
-## Testing
-1. Clone this repo
-2. Run ```npm install``` in terminal
-3. Start Debugging
+## Compiling and Editing the source
+1. Install [npm](https://nodejs.org/en/download/)
+2. Clone this repo with ```git clone https://github.com/Snirozu/Funkin-Script-AutoComplete.git``` (must be in empty folder)
+3. To install all the libraries run ```npm install```
+4. And to compile run ```npm run build```

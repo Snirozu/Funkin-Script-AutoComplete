@@ -1,24 +1,21 @@
 /* eslint-disable prefer-const */
 
-// fucking shitty dependency system what the fuck this does not work
 //import * as Color from 'color';
 import * as vscode from 'vscode';
-
-// import * from '.dataShit'  imagine
-import { getFunctions,getFunction,getVariable,getVariables,getEvent,getEvents } from './dataShit';
+import * as EngineData from './engineData';
 
 export function activate(context: vscode.ExtensionContext) {
 	//Suggest functions and variables
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider('lua', {
-		provideCompletionItems: function (document, position) {
+		provideCompletionItems: async function (document, position) {
 			if (!isEnabled(document)) {
 				return null;
 			}
 
 			let list:vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
-			
-			for (const _func in getFunctions(document)) {
-				const func = getFunction(_func, document);
+
+			for (const _func in await EngineData.getFunctions(document)) {
+				const func = await EngineData.getFunction(_func, document);
 				if (func == null)
 					continue;
 
@@ -36,8 +33,8 @@ export function activate(context: vscode.ExtensionContext) {
 				});
 			}
 
-			for (const _varia in getVariables(document)) {
-				const varia = getVariable(_varia, document);
+			for (const _varia in await EngineData.getVariables(document)) {
+				const varia = await EngineData.getVariable(_varia, document);
 				if (varia == null)
 					continue;
 
@@ -55,7 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//Word hover event
 	context.subscriptions.push(vscode.languages.registerHoverProvider("lua", {
-		provideHover: function (document, position, token) {
+		provideHover: async function (document, position, token) {
 			if (!isEnabled(document)) {
 				return null;
 			}
@@ -63,9 +60,9 @@ export function activate(context: vscode.ExtensionContext) {
 			const range = document.getWordRangeAtPosition(position);
 			const word = document.getText(range);
 
-			const func = getFunction(word, document);
-			const varia = getVariable(word, document);
-			const event = getEvent(word, document);
+			const func = await EngineData.getFunction(word, document);
+			const varia = await EngineData.getVariable(word, document);
+			const event = await EngineData.getEvent(word, document);
 			
 			const markdownString = new vscode.MarkdownString();
 			let object:any = null;
@@ -93,7 +90,7 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	//Suggest args for functions
 	context.subscriptions.push(vscode.languages.registerSignatureHelpProvider("lua", {
-		provideSignatureHelp: function (document, position, token) {
+		provideSignatureHelp: async function (document, position, token) {
 			if (!isEnabled(document)) {
 				return null;
 			}
@@ -121,7 +118,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const range = document.getWordRangeAtPosition(lastCharPos, /[a-zA-Z]+/g);
 			let word = document.getText(range);
-			const func = getFunction(word, document);
+			const func = await EngineData.getFunction(word, document);
 
 			if (func == null)
 				return;
@@ -147,15 +144,15 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//Suggest event snippets
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider('lua', {
-		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+		async provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 			if (!isEnabled(document)) {
 				return null;
 			}
 
 			let list: vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
 
-			for (const _event in getEvents(document)) {
-				const event = getEvent(_event, document);
+			for (const _event in await EngineData.getEvents(document)) {
+				const event = await EngineData.getEvent(_event, document);
 				if (event == null)
 					continue;
 				
@@ -249,7 +246,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const collection = vscode.languages.createDiagnosticCollection('fnfsac');
 	let activeEditor = vscode.window.activeTextEditor;
 
-	function updateDecorations() {
+	async function updateDecorations() {
 		if (!activeEditor || activeEditor.document.languageId != "lua") {
 			return;
 		}
@@ -281,7 +278,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if (doContinue)
 				continue;
 
-			const func = getFunction(match[0], activeEditor.document);
+			const func = await EngineData.getFunction(match[0], activeEditor.document);
 			if (func != null && func.deprecated != null && activeEditor.document.getText().charAt(match.index + match[0].length) == "(") {
 				const decoration: vscode.DecorationOptions = { range: new vscode.Range(startPos, endPos) };
 				decorations.push(decoration);
@@ -298,7 +295,7 @@ export function activate(context: vscode.ExtensionContext) {
 		activeEditor.setDecorations(warningDecorationType, decorations);
 	}
 
-	function triggerUpdateDecorations(throttle = false) {
+	async function triggerUpdateDecorations(throttle = false) {
 		if (activeEditor && !isEnabled(activeEditor.document)) {
 			collection.set(activeEditor.document.uri, []);
 			activeEditor.setDecorations(warningDecorationType, []);
@@ -312,7 +309,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (throttle) {
 			timeout = setTimeout(updateDecorations, 500);
 		} else {
-			updateDecorations();
+			await updateDecorations();
 		}
 	}
 
@@ -342,7 +339,6 @@ function isEnabled(document:vscode.TextDocument) {
 }
 
 function haxeArgsToLua(str:string) {
-	//str = "sex:String, fuck:Int"
 	let finalString = "";
 	let i = -1;
 	let searchedString = "";

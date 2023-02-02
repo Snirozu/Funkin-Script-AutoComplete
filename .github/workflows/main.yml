@@ -11,6 +11,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.4.0
+        with:
+          node-version: 16.x
+
+      - name: Install dependencies
+        run: npm ci
       
       - name: Package VS Code extension
         id: package

@@ -7,7 +7,7 @@ Simple AutoCompleter for [Psych Engine](https://github.com/ShadowMario/FNF-Psych
 - Hovers with documentation
 
 # Installation
-[**Latest Release**](https://marketplace.visualstudio.com/items?itemName=Paidyy.funkin-script-autocomplete) | [**Latest Build**](https://nightly.link/Snirozu/Funkin-Script-AutoComplete/workflows/main/master)
+[**Latest Release**](https://marketplace.visualstudio.com/items?itemName=Snirozu.funkin-script-autocompleter) | [**Latest Build**](https://nightly.link/Snirozu/Funkin-Script-AutoComplete/workflows/main/master)
 
 ### Installing VSIX 
 1. Download the .vsix file from the latest release

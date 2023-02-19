@@ -2,7 +2,6 @@ node_modules/
 out/
 target/
 *.vsix
-TOKEN.txt
 .vscode/settings.json
 .vscode/extensions.json
 # is this file important? lmao

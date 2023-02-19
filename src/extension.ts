@@ -3,16 +3,30 @@
 //import * as Color from 'color';
 import * as vscode from 'vscode';
 import * as EngineData from './engineData';
+import * as util from './util';
 
 export function activate(context: vscode.ExtensionContext) {
 	//Suggest functions and variables
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider('lua', {
 		provideCompletionItems: async function (document, position) {
+			let list:vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
+
 			if (!isEnabled(document)) {
-				return null;
+				list.push({
+					documentation: "Enable FNF Script AutoCompleting in this file",
+					kind: vscode.CompletionItemKind.Snippet,
+					label: "---@funkinScript"
+				});
+
+				return list;
 			}
 
-			let list:vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
+			list.push({
+				detail: "---@funkinEngine={engine}",
+				documentation: "Set the FNF engine",
+				kind: vscode.CompletionItemKind.Snippet,
+				label: "---@funkinEngine="
+			});
 
 			for (const _func in await EngineData.getFunctions(document)) {
 				const func = await EngineData.getFunction(_func, document);
@@ -22,6 +36,8 @@ export function activate(context: vscode.ExtensionContext) {
 				let markdownString = new vscode.MarkdownString();
 				if (func.deprecated != null) {
 					markdownString.appendMarkdown("*@deprecated* **" + func.deprecated + "**\n\n");
+					// i give up with this shit, help
+					//func.name = "~~" + func.name + "~~";
 				}
 				markdownString.appendMarkdown(func.documentation);
 
@@ -167,7 +183,6 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	}));
 
-	/*
 	// Show colors
 	context.subscriptions.push(
 		vscode.languages.registerColorProvider(
@@ -176,7 +191,7 @@ export function activate(context: vscode.ExtensionContext) {
 				// select the locations of colors
 				provideDocumentColors(document, token) {
 					let colorsList:vscode.ProviderResult<vscode.ColorInformation[]> = [];
-					let i = 0;
+					let i = -1;
 					let isInType = 0;
 					let curColorString = "";
 					let isInString = false;
@@ -184,7 +199,7 @@ export function activate(context: vscode.ExtensionContext) {
 					let begS:vscode.Position | undefined = undefined;
 					let endS:vscode.Position;
 					
-					while (i++ < document.getText().length) {
+					while (i++ < document.getText().length - 1) {
 						const curChar = document.getText().charAt(i);
 						if (curChar == "'" || curChar == '"') {
 							if (!isInString) {
@@ -193,12 +208,16 @@ export function activate(context: vscode.ExtensionContext) {
 							else {
 								endS = document.positionAt(i);
 
-								let color:Color = new Color(curColorString);
+								//let color:Color = new Color(curColorString);
 								
-								if (begS != undefined)
-									colorsList.push(
-										new vscode.ColorInformation(new vscode.Range(begS, endS), new vscode.Color(color.red(), color.green(), color.blue(), color.alpha()))
-									);
+								if (begS != undefined) {
+									const color = util.hexToVSColor(curColorString);
+
+									if (color != null)
+										colorsList.push(
+											new vscode.ColorInformation(new vscode.Range(begS, endS), color)
+										);
+								}
 
 								isInString = false;
 								isInType = 0;
@@ -222,12 +241,11 @@ export function activate(context: vscode.ExtensionContext) {
 				// show the color picker
 				provideColorPresentations(color, context, token) {
 					return [
-						new vscode.ColorPresentation(context.document.getText(context.range))
+						new vscode.ColorPresentation(util.rgbaToHex(color.red, color.green, color.blue, color.alpha))
 					];
 				}
 			}
 		));
-	*/
 
 	//deprecated warnings here
 	//copied from some example lmao

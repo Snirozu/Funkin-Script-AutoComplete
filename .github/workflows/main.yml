@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ master ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -29,5 +29,5 @@ jobs:
       - name: Publish VS Code extension artifact
         uses: actions/upload-artifact@v3
         with:
-            name: fsac-build
+            name: funkin-completer-build
             path: ${{ steps.package.outputs.packagePath }}

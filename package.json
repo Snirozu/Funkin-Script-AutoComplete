@@ -1,6 +1,6 @@
 {
-	"name": "funkin-script-autocompleter",
-	"displayName": "Funkin Script AutoCompleter",
+	"name": "funkin-script-autocomplete",
+	"displayName": "Funkin Script AutoComplete",
 	"description": "AutoCompleter for Friday Night Funkin` scripts",
 	"version": "1.3.0",
 	"icon": "images/icon.png",

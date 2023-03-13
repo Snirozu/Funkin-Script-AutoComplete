@@ -28,7 +28,7 @@ Report bugs and contribute to this extension on [Github](https://github.com/Snir
 
 ## Contributing
 Any pull requests are appreciated, feel free to Pull Request any missing engines, functions or variables! <br>
-If you want to add another engine to this extension make a json file in src/ called something like "piss-engine_data.json", this data file should be based of any `*_data.json` file <br>
+If you want to add another engine to this extension make a json file in data/ called something like "piss-engine_data.json", this data file should be based of any `*_data.json` file <br>
 NOTE : If you don't know how to install dependencies use `npm install`
 ### Adding a engine
 #### Creating a data file from a engine's lua class URL 

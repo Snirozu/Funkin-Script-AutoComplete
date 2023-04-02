@@ -36,15 +36,34 @@ export function activate(context: vscode.ExtensionContext) {
 				let markdownString = new vscode.MarkdownString();
 				if (func.deprecated != null) {
 					markdownString.appendMarkdown("*@deprecated* **" + func.deprecated + "**\n\n");
-					// i give up with this shit, help
+					// TODO i give up with this shit, help
 					//func.name = "~~" + func.name + "~~";
 				}
 				markdownString.appendMarkdown(func.documentation);
 
+				// i wonder how many people will get that refference
+				let completeArgArgArgs = "(";
+				let previewArgArgArgs = "";
+
+				const args = getArgArgParts(func.args);
+				args.forEach((arg, i) => {
+					const funnyDelimeter = (i >= args.length - 1 ? "" : ", ");
+					previewArgArgArgs += arg.name + funnyDelimeter;
+					if (vscode.workspace.getConfiguration().get("funkinscriptautocomplete.functionArgsGeneration")) {
+						completeArgArgArgs += arg.default + funnyDelimeter;
+					}
+					else {
+						completeArgArgArgs = "($0";
+					}
+				});
+
+				completeArgArgArgs += ")";
+
 				list.push({
 					detail: func.returns + " " + func.name + "(" + func.args +")",
 					kind: vscode.CompletionItemKind.Function,
-					label: func.name,
+					label: func.name + "(" + previewArgArgArgs + ")",
+					insertText: new vscode.SnippetString(func.name + completeArgArgArgs),
 					documentation: markdownString
 				});
 			}
@@ -86,16 +105,24 @@ export function activate(context: vscode.ExtensionContext) {
 				if (func.deprecated != null) {
 					markdownString.appendMarkdown("*@deprecated* **" + func.deprecated + "**\n\n");
 				}
-				markdownString.appendCodeblock("function " + func.name + "(" + func.args + ") -> " + func.returns);
+				markdownString.appendCodeblock("function " + func.name + "(" + func.args + "): " + func.returns);
 				object = func;
 			}
 			if (varia != null) {
-				markdownString.appendCodeblock("variable " + varia.name + " -> " + varia.returns);
+				markdownString.appendCodeblock(varia.name + ": " + varia.returns);
 				object = varia;
 			}
+			/*
+			generate the function comment instead
+
 			if (event != null) {
-				markdownString.appendCodeblock("event " + event.name + "(" + event.args + ")" + " -> " + event.returns);
+				markdownString.appendCodeblock("event " + event.name + "(" + event.args + "): " + event.returns);
 				object = event;
+			}
+			*/
+			if (event != null) {
+				markdownString.appendMarkdown("**FNF Engine Event/Trigger Function**");
+				return new vscode.Hover(markdownString);
 			}
 			if (object != null) {
 				markdownString.appendMarkdown(object.documentation);
@@ -171,9 +198,24 @@ export function activate(context: vscode.ExtensionContext) {
 				const event = await EngineData.getEvent(_event, document);
 				if (event == null)
 					continue;
+
+				let daComment = "---\n---" + event.documentation + "\n---";
+				let daArgs = "";
+
+				const args = getArgArgParts(event.args);
+				args.forEach((arg, i) => {
+					daComment += "\n--- @param " + arg.name + " " + arg.type;
+					const funnyDelimeter = (i >= args.length - 1 ? "" : ", ");
+					daArgs += arg.name + funnyDelimeter;
+				});
+
+				if (args.length > 0) {
+					daComment += "\n---\n";
+				}
 				
-				const snippet = new vscode.CompletionItem("Event: " + event.name + "()");
-				snippet.insertText = new vscode.SnippetString("function " + event.name + "(" + haxeArgsToLua(event.args) + ")\n\nend");
+				const snippet = new vscode.CompletionItem("Event: " + event.name + "(" + daArgs + ")");
+				snippet.detail = event.name + "(" + event.args + ")";
+				snippet.insertText = new vscode.SnippetString(daComment + "function " + event.name + "(" + haxeArgsToLua(event.args) + ")\n\t$0\nend");
 				snippet.documentation = new vscode.MarkdownString(event.documentation);
 
 				list.push(snippet);
@@ -370,4 +412,59 @@ function haxeArgsToLua(str:string) {
 	}
 
 	return finalString;
+}
+
+function getArgArgParts(argsString:string):Array<SexyArg> {
+	let args:Array<SexyArg> = [];
+
+	// argString = " arg1:String = null"
+	argsString.split(",").forEach((argString) => {
+		let arg:SexyArg = {
+			name: "(the program fucked up)",
+			type: "nil",
+			default: ""
+		};
+
+		const cachSplit1 = argString.split(":");
+
+		arg.name = cachSplit1[0].trim();
+
+		if (cachSplit1.length > 1) {
+			const cachSplit2 = cachSplit1[1].split("=");
+			arg.type = cachSplit2[0].trim().toLowerCase();
+
+			if (cachSplit2.length > 1) {
+				arg.default = cachSplit2[1].trim().toLowerCase();
+			}
+			else {
+				arg.default = getDefaultValue(arg.type);
+			}
+		}
+		
+		args.push(arg);
+	});
+
+	return args;
+}
+
+function getDefaultValue(type:string):string {
+	if (type.startsWith("string")) {
+		return '""';
+	}
+	if (type.startsWith("array")) {
+		return '{}';
+	}
+	if (type.startsWith("int")) {
+		return '0';
+	}
+	if (type.startsWith("float")) {
+		return '0.0';
+	}
+	return "nil";
+}
+
+interface SexyArg {
+	name:string,
+	type:string,
+	default:string
 }

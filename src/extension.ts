@@ -121,7 +121,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 			*/
 			if (event != null) {
-				markdownString.appendMarkdown("**FNF Engine Event/Trigger Function**");
+				markdownString.appendMarkdown("**FNF Engine Event/Trigger Function**\n\n" + event.documentation);
 				return new vscode.Hover(markdownString);
 			}
 			if (object != null) {
@@ -199,10 +199,11 @@ export function activate(context: vscode.ExtensionContext) {
 				if (event == null)
 					continue;
 
-				let daComment = "---\n---" + event.documentation + "\n---";
+				//let daComment = "---\n---" + event.documentation + "\n---";
 				let daArgs = "";
 
 				const args = getArgArgParts(event.args);
+				let daComment = (args.length > 0 ? "---" : "");
 				args.forEach((arg, i) => {
 					daComment += "\n--- @param " + arg.name + " " + arg.type;
 					const funnyDelimeter = (i >= args.length - 1 ? "" : ", ");
@@ -425,23 +426,25 @@ function getArgArgParts(argsString:string):Array<SexyArg> {
 			default: ""
 		};
 
-		const cachSplit1 = argString.split(":");
+		if (argString.trim() != "") {
+			const cachSplit1 = argString.split(":");
 
-		arg.name = cachSplit1[0].trim();
+			arg.name = cachSplit1[0].trim();
 
-		if (cachSplit1.length > 1) {
-			const cachSplit2 = cachSplit1[1].split("=");
-			arg.type = cachSplit2[0].trim().toLowerCase();
+			if (cachSplit1.length > 1) {
+				const cachSplit2 = cachSplit1[1].split("=");
+				arg.type = cachSplit2[0].trim().toLowerCase();
 
-			if (cachSplit2.length > 1) {
-				arg.default = cachSplit2[1].trim().toLowerCase();
+				if (cachSplit2.length > 1) {
+					arg.default = cachSplit2[1].trim().toLowerCase();
+				}
+				else {
+					arg.default = getDefaultValue(arg.type);
+				}
 			}
-			else {
-				arg.default = getDefaultValue(arg.type);
-			}
+			
+			args.push(arg);
 		}
-		
-		args.push(arg);
 	});
 
 	return args;

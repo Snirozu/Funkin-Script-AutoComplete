@@ -10,22 +10,28 @@ import * as needle from 'needle';
 // eslint-disable-next-line prefer-const
 let engines:Map<string, any> = new Map<string, any>();
 
+let latestVersion:string;
+
 //FUCKK ASYNC FUCK YOUUUUUUUU ASYNC
 
 export async function init(_engine:string):Promise<any> {
 	let jason;
 	let engine = _engine;
 	if (!engine.includes("_")) {
-		const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + engine + "_latest.ver");
-		engine = response.body;
+		if (latestVersion != null)
+			engine = latestVersion;
+		else {
+			const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + engine + "_latest.ver");
+			engine = response.body;
+		}
 	}
 	const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + engine + ".json");
 	if (response.statusCode == 200) {
 		jason = JSON.parse(response.body);
-		engines.set(engine, jason);
-		return engines.get(engine);
+		engines.set(_engine, jason);
+		return engines.get(_engine);
 	}
-	throw "Couldn't get engine data for engine: " + engine;
+	throw "Couldn't get engine data for engine: " + _engine;
 }
 
 export async function getEngineData(engiene:string | undefined):Promise<any> {

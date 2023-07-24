@@ -343,7 +343,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const event = await EngineData.getEvent(match[0], activeEditor.document);
 			const varr = await EngineData.getFunction(match[0], activeEditor.document);
 
-			let deprecatedMsg = "";
+			let deprecatedMsg = null;
 			if (func != null && func.deprecated != null)
 				deprecatedMsg = func.deprecated;
 			if (event != null && event.deprecated != null)
@@ -351,7 +351,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if (varr != null && varr.deprecated != null)
 				deprecatedMsg = varr.deprecated;
 
-			if ((varr != null && varr.deprecated != null) || activeEditor.document.getText().charAt(match.index + match[0].length) == "(") {
+			if (deprecatedMsg != null && (varr != null && varr.deprecated != null) && activeEditor.document.getText().charAt(match.index + match[0].length) == "(") {
 				const decoration: vscode.DecorationOptions = { range: new vscode.Range(startPos, endPos) };
 				decorations.push(decoration);
 				

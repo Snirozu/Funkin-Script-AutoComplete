@@ -12,9 +12,14 @@ let engines:Map<string, any> = new Map<string, any>();
 
 //FUCKK ASYNC FUCK YOUUUUUUUU ASYNC
 
-export async function init(engine:string):Promise<any> {
+export async function init(_engine:string):Promise<any> {
 	let jason;
-	const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + engine + "_data.json");
+	let engine = _engine;
+	if (!engine.includes("_")) {
+		const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + engine + "_latest.ver");
+		engine = response.body;
+	}
+	const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + engine + ".json");
 	if (response.statusCode == 200) {
 		jason = JSON.parse(response.body);
 		engines.set(engine, jason);
@@ -69,7 +74,8 @@ export async function getEvent(event: string, document?: vscode.TextDocument) {
 		name: event,
 		returns: e.returns,
 		args: e.args,
-		documentation: e.documentation
+		documentation: e.documentation,
+		deprecated: e.deprecated
 	};
 }
 
@@ -78,11 +84,12 @@ export async function getVariable(varia: string, document?: vscode.TextDocument)
 	if (!Reflect.has(variables, varia))
 		return null;
 
-	const funct = Reflect.get(variables, varia);
+	const varr = Reflect.get(variables, varia);
 	return {
 		name: varia,
-		returns: funct.returns,
-		documentation: funct.documentation
+		returns: varr.returns,
+		documentation: varr.documentation,
+		deprecated: varr.deprecated
 	};
 }
 

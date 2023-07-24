@@ -2,7 +2,7 @@
 	"name": "funkin-script-autocompleter",
 	"displayName": "Funkin Script AutoCompleter",
 	"description": "AutoCompleter for Friday Night Funkin` scripts",
-	"version": "1.3.2",
+	"version": "1.4.0",
 	"icon": "images/icon.png",
 	"publisher": "Snirozu",
 	"private": true,
@@ -48,11 +48,13 @@
 					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete.\nRequires Restart/Reload to take effect.",
 					"enum": [
 						"psych",
-						"pengine"
+						"psych_0.7",
+						"psych_0.6"
 					],
 					"enumItemLabels": [
-						"Psych Engine",
-						"Funkin PEngine (ABANDONWARE)"
+						"Psych Engine (latest)",
+						"Psych Engine (v0.7)",
+						"Psych Engine (v0.6)"
 					]
 				},
 				"funkinscriptautocomplete.enableOnlyOnCertainScripts": {

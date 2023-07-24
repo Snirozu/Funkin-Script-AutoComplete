@@ -7,3 +7,5 @@ target/
 # is this file important? lmao
 package-lock.json
 changelog.txt
+dataInput.txt
+dataOutput.json

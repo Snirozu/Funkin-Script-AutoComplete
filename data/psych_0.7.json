@@ -33,8 +33,7 @@
         "addHaxeLibrary": {
             "returns": "void",
             "args": "libName:String, ?libPackage:String = ''",
-            "documentation": "Adds a haxe library to all hscript scripts",
-            "deprecated": "Removed from the API."
+            "documentation": "Adds a haxe library to all hscript scripts"
         },
         "addHealth": {
             "returns": "void",
@@ -107,10 +106,14 @@
             "documentation": "Call a method from a `className` instance."
         },
         "callOnLuas": {
+            "returns": "boolean",
+            "args": "funcName:String, ?args:Array<Dynamic> = null, ?ignoreStops=false, ?ignoreSelf:Bool = true, ?excludeScripts:Array<String> = null, ?excludeValues:Array<Dynamic> = null",
+            "documentation": "Calls function on ALL lua scripts"
+        },
+        "setOnLuas": {
             "returns": "void",
-            "args": "?funcName:String, ?args:Array\u003cDynamic\u003e, ignoreStops=false, ignoreSelf=true, ?exclusions:Array\u003cString\u003e",
-            "documentation": "Calls function on ALL lua scripts",
-            "deprecated": "Removed from the API."
+            "args": "varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null",
+            "documentation": "Sets a variable on ALL lua scripts"
         },
         "callScript": {
             "returns": "void",
@@ -181,8 +184,7 @@
         "close": {
             "returns": "void",
             "args": "printMessage:Bool",
-            "documentation": "Stops your script in the next 100 miliseconds.\n* `printMessage` - Wether you want a warning to show on the top-left corner of the screen or not",
-            "deprecated": "Removed from the API."
+            "documentation": "Stops your script in the next 100 miliseconds.\n* `printMessage` - Wether you want a warning to show on the top-left corner of the screen or not"
         },
         "closeCustomSubstate": {
             "returns": "void",
@@ -502,8 +504,7 @@
         "initLuaShader": {
             "returns": "void",
             "args": "name:String, glslVersion:Int = 120",
-            "documentation": "Initializes a new GLSL shader. This will get `name`.frag and `name`.vert files",
-            "deprecated": "Removed from the API."
+            "documentation": "Initializes a new GLSL shader. This will get `name`.frag and `name`.vert files"
         },
         "initSaveData": {
             "returns": "void",
@@ -757,9 +758,13 @@
         },
         "runHaxeCode": {
             "returns": "?",
-            "args": "codeToRun:String",
-            "documentation": "Runs a haxe code and returns it's value",
-            "deprecated": "Removed from the API."
+            "args": "codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null",
+            "documentation": "Runs a haxe code and returns it's value"
+        },
+        "runHaxeFunction": {
+            "returns": "?",
+            "args": "funcToRun:String, ?funcArgs:Array<Dynamic> = null",
+            "documentation": "Runs a haxe function code"
         },
         "runTimer": {
             "returns": "void",
@@ -955,8 +960,7 @@
         "setSpriteShader": {
             "returns": "void",
             "args": "obj:String, shader:String",
-            "documentation": "Sets the shader of some `obj` to `shader`",
-            "deprecated": "Removed from the API."
+            "documentation": "Sets the shader of some `obj` to `shader`"
         },
         "setTextAlignment": {
             "returns": "void",

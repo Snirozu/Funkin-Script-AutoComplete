@@ -5,6 +5,7 @@ Simple AutoCompleter for [Psych Engine](https://github.com/ShadowMario/FNF-Psych
 - Function/Event/Variable auto completing
 - Warnings for deprecated functions
 - Hovers with documentation
+- API data is downloaded from the GitHub repository instead of being grabbed from local storage.
 
 # Installation
 [**Latest Release**](https://marketplace.visualstudio.com/items?itemName=Snirozu.funkin-script-autocompleter) | [**Latest Build**](https://nightly.link/Snirozu/Funkin-Script-AutoComplete/workflows/main/master)

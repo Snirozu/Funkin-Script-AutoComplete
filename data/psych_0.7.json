@@ -1086,6 +1086,81 @@
             "returns": "void",
             "args": "group:String, index:Int",
             "documentation": "Updates the hitbox of item with index `index` in group `group`"
+        },
+        "isAchievementUnlocked": {
+            "returns": "boolean",
+            "args": "name:String",
+            "documentation": "Checks if an achievement is unlocked"
+        },
+        "unlockAchievement": {
+            "returns": "void",
+            "args": "name:String",
+            "documentation": "Unlocks an achievement"
+        },
+        "addAchievementScore": {
+            "returns": "void",
+            "args": "name:String, ?value:Dynamic = 1, ?saveIfNotUnlocked:Bool = true",
+            "documentation": ""
+        },
+        "setAchievementScore": {
+            "returns": "void",
+            "args": "name:String, ?value = 1, ?saveIfNotUnlocked = true",
+            "documentation": ""
+        },
+        "getAchievementScore": {
+            "returns": "?",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "achievementExists": {
+            "returns": "boolean",
+            "args": "name:String",
+            "documentation": "Checks if an achievement exists"
+        },
+        "getModSetting": {
+            "returns": "?",
+            "args": "name:String, ?modFolder:String = null",
+            "documentation": "Returns the value of a mod setting"
+        },
+        "makeFlxAnimateSprite": {
+            "returns": "void",
+            "args": "tag:String, ?x:Float = 0, ?y:Float = 0, ?loadFolder:String = null",
+            "documentation": ""
+        },
+        "loadAnimateAtlas": {
+            "returns": "void",
+            "args": "tag:String, folderOrImg:String, ?spriteJson:String = null, ?animationJson:String = null",
+            "documentation": ""
+        },
+        "addAnimationBySymbol": {
+            "returns": "void",
+            "args": "tag:String, name:String, symbol:String, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0",
+            "documentation": "Adds sprite's animation by all indices from a symbol"
+        },
+        "addAnimationBySymbolIndices": {
+            "returns": "void",
+            "args": "tag:String, name:String, symbol:String, ?indices:Any = null, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0",
+            "documentation": "Adds sprite's animation by specific indices from a symbol"
+        },
+        "setTextHeight": {
+            "returns": "void",
+            "args": "tag:String, height:Int",
+            "documentation": "Sets the height of specified text"
+        },
+        "setTextAutoSize": {
+            "returns": "void",
+            "args": "tag:String, value:Bool",
+            "documentation": ""
+        },
+        "removeHScript": {
+            "returns": "boolean",
+            "args": "luaFile:String, ?ignoreAlreadyRunning:Bool = false",
+            "documentation": ""
+        },
+        "instanceArg": {
+            "returns": "string",
+            "args": "instanceName:String, ?className:String = null",
+            "documentation": ""
         }
     },
     "variables": {
@@ -1711,6 +1786,16 @@
             "returns": "void",
             "args": "membersIndex:Int, noteData:Int, noteType:String, isSustainNote:Bool",
             "documentation": "Local function called when opponent hits a note"
+        },
+        "goodNoteHitPost": {
+            "returns": "void",
+            "args": "membersIndex:Int, noteData:Int, noteType:String, isSustainNote:Bool",
+            "documentation": "Local function called after Playstate's goodNoteHit function"
+        },
+        "opponentNoteHitPost": {
+            "returns": "void",
+            "args": "membersIndex:Int, noteData:Int, noteType:String, isSustainNote:Bool",
+            "documentation": "Local function called after the game registers opponents note hit"
         }
     }
 }

@@ -1,5 +1,5 @@
 # Funkin Script AutoComplete
-Simple AutoCompleter for [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine) and [PEngine](https://github.com/Snirozu/Funkin-PEngine) Lua scripts.<br>
+Simple AutoCompleter for [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine) Lua scripts.<br>
 
 # Features
 - Function/Event/Variable auto completing
@@ -31,22 +31,9 @@ Report bugs and contribute to this extension on [Github](https://github.com/Snir
 Any pull requests are appreciated, feel free to Pull Request any missing engines, functions or variables! <br>
 If you want to add another engine to this extension make a json file in data/ called something like "piss-engine_data.json", this data file should be based of any `*_data.json` file <br>
 NOTE : If you don't know how to install dependencies use `npm install`
-### Adding a engine
-#### Creating a data file from a engine's lua class URL 
-1. Open `art/updateEngineData.py`
-2. Add `case "yourEngineName":` at the end of `match Data.engine_name:` in `selectEngine()`
-3. Follow the pattern of previous cases
-4. Run `python art/updateEngineData.py` in current repo's directory and enter `yourEngineName` there
-5. This will create a data file in `src/yourEngineName_data.json`
 
-If the data file is empty or lacks functions / variables or the function names are corrupted you can: <br>
-**A)** Add support for engine in updateEngineData.py <br>
-**B)** Add everything manually
-### Update existing engine data
-If `art/updateEngineData.py` has support for some engine then:
-1. Run `python art/updateEngineData.py` in current repo's directory and enter the name of engine there
+You should manually add/change `documentation` value (if `documentation` is "Needs documentation", "" or doesn't exist) and a `returns` value (if `returns` is "???" or doesn't exist) 
 
-You should manually add/change `documentation` value (if `documentation` is "Needs documentation" or doesn't exist) and a `returns` value (if `returns` is "???" or doesn't exist) <br>
 If a function is deprecated add `"deprecated": "deprecated message here"` to the function
 
 ## Compiling and Editing the source

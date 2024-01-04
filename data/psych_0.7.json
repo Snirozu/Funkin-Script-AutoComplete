@@ -38,7 +38,7 @@
         "addHealth": {
             "returns": "void",
             "args": "value:Float = 0",
-            "documentation": "Sets player's health ranged from `0` to `1`"
+            "documentation": "Adds player's health ranged from `0` to `2`"
         },
         "addHits": {
             "returns": "void",
@@ -329,7 +329,7 @@
         "getHealth": {
             "returns": "number",
             "args": "",
-            "documentation": "Returns player's health ranged from `0` to `1`"
+            "documentation": "Returns player's health ranged from `0` to `2`"
         },
         "getHits": {
             "returns": "number",
@@ -824,7 +824,7 @@
         "setHealth": {
             "returns": "void",
             "args": "value:Float = 0",
-            "documentation": "Sets player's health ranged from `0` to `1`"
+            "documentation": "Sets player's health ranged from `0` to `2`"
         },
         "setHealthBarColors": {
             "returns": "void",

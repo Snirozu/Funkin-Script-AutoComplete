@@ -33,6 +33,7 @@
 	"devDependencies": {
 		"@types/node": "^16.11.7",
 		"@types/vscode": "^1.32.0",
+		"@vscode/vsce": "2.23.0",
 		"@typescript-eslint/eslint-plugin": "^5.30.0",
 		"@typescript-eslint/parser": "^5.30.0",
 		"eslint": "^8.13.0",
@@ -44,10 +45,10 @@
 			"properties": {
 				"funkinscriptautocomplete.luaEngine": {
 					"type": "string",
-					"default": "psych",
+					"default": "psych_latest",
 					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete.\nRequires Restart/Reload to take effect.",
 					"enum": [
-						"psych",
+						"psych_latest",
 						"psych_0.7",
 						"psych_0.6"
 					],
@@ -65,7 +66,7 @@
 				"funkinscriptautocomplete.functionArgsGeneration": {
 					"type": "boolean",
 					"default": true,
-					"description": "If unchecked, after entering a function it doesn't add placeholder arguments and it also jumps inside the function body"
+					"description": "If unchecked, after entering a function placeholder arguments aren't prefixed to events"
 				}
 			}
 		}

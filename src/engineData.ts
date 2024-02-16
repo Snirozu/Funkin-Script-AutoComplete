@@ -16,12 +16,17 @@ async function getData(file:string):Promise<string | any> {
 			return cachedFiles.get(file);
 		}
 
-		const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + file);
-		if (response.statusCode == 200) {
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			writeFile(dataPath + file, response.body, err => {});
-			cachedFiles.set(file, response.body);
-			return response.body;
+		try {
+			const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + file);
+			if (response.statusCode == 200) {
+				// eslint-disable-next-line @typescript-eslint/no-empty-function
+				writeFile(dataPath + file, response.body, err => { });
+				cachedFiles.set(file, response.body);
+				return response.body;
+			}
+		}
+		catch (exc) {
+			//console.log(exc);
 		}
 
 		readFile(dataPath + file, (err, data) => {
@@ -36,17 +41,22 @@ async function getData(file:string):Promise<string | any> {
 			return cachedJsons.get(file);
 		}
 
-		const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + file);
-		if (response.statusCode == 200) {
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			writeFile(dataPath + file, response.body, err => {});
-			cachedJsons.set(file, JSON.parse(response.body));
-			return cachedJsons.get(file);
+		try {
+			const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + file);
+			if (response.statusCode == 200) {
+				// eslint-disable-next-line @typescript-eslint/no-empty-function
+				writeFile(dataPath + file, response.body, err => {});
+				cachedJsons.set(file, JSON.parse(response.body));
+				return cachedJsons.get(file);
+			}
+		}
+		catch (exc) {
+			//console.log(exc);
 		}
 
 		readFile(dataPath + file, (err, data) => {
 			if (!err) {
-				cachedJsons.set(file, data.toJSON());
+				cachedJsons.set(file, JSON.parse(data.toString()));
 				return cachedJsons.get(file);
 			}
 		});

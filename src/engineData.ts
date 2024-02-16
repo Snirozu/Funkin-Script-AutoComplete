@@ -1,46 +1,70 @@
 import * as vscode from 'vscode';
 
-//legacy data getting aka don't use it!
-//import * as pengine_data from "./pengine_data.json";
-//import * as psych_data from "./psych_data.json";
-
 import { getLineContentAt } from './util';
 import * as needle from 'needle';
+import { readFile, writeFile } from 'fs';
+import { dataPath } from './extension';
 
-// eslint-disable-next-line prefer-const
-let engines:Map<string, any> = new Map<string, any>();
+const cachedJsons: Map<string, any> = new Map<string, any>();
+const cachedFiles: Map<string, string> = new Map<string, string>();
 
-let latestVersion:string;
+async function getData(file:string):Promise<string | any> {
+	file = file.trim();
 
-//FUCKK ASYNC FUCK YOUUUUUUUU ASYNC
-
-export async function init(_engine:string):Promise<any> {
-	let jason;
-	let engine = _engine;
-	if (!engine.includes("_")) {
-		if (latestVersion != null)
-			engine = latestVersion;
-		else {
-			const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + engine + "_latest.ver");
-			engine = response.body;
+	if (file.endsWith(".ver")) {
+		if (cachedFiles.has(file)) {
+			return cachedFiles.get(file);
 		}
+
+		const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + file);
+		if (response.statusCode == 200) {
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			writeFile(dataPath + file, response.body, err => {});
+			cachedFiles.set(file, response.body);
+			return response.body;
+		}
+
+		readFile(dataPath + file, (err, data) => {
+			if (!err) {
+				cachedFiles.set(file, data.toString());
+				return cachedFiles.get(file);
+			}
+		});
 	}
-	const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + engine + ".json");
-	if (response.statusCode == 200) {
-		jason = JSON.parse(response.body);
-		engines.set(_engine, jason);
-		return engines.get(_engine);
+	else if (file.endsWith(".json")) {
+		if (cachedJsons.has(file)) {
+			return cachedJsons.get(file);
+		}
+
+		const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + file);
+		if (response.statusCode == 200) {
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			writeFile(dataPath + file, response.body, err => {});
+			cachedJsons.set(file, JSON.parse(response.body));
+			return cachedJsons.get(file);
+		}
+
+		readFile(dataPath + file, (err, data) => {
+			if (!err) {
+				cachedJsons.set(file, data.toJSON());
+				return cachedJsons.get(file);
+			}
+		});
 	}
-	throw "Couldn't get engine data for engine: " + _engine;
+	return null;
 }
 
-export async function getEngineData(engiene:string | undefined):Promise<any> {
-	if (engiene == undefined) throw "Extension couldn't find any engines...";
+export async function getEngineData(engine:string | undefined):Promise<any> {
+	if (engine == undefined) throw "Extension couldn't find any engines...";
 
-	if (engines.has(engiene) && engines.get(engiene) != null) {
-		return engines.get(engiene);
+	engine = engine + (engine.endsWith("_latest") ? ".ver" : ".json");
+
+	let data = await getData(engine);
+	if (engine.endsWith(".ver")) {
+		data = await getData(data + ".json");
 	}
-	return await init(engiene);
+
+	return data;
 }
 
 export async function getFunctions(document?:vscode.TextDocument): Promise<any> {

@@ -5,10 +5,16 @@ import * as vscode from 'vscode';
 import * as EngineData from './engineData';
 import * as util from './util';
 
+export let dataPath = "";
+
 export function activate(context: vscode.ExtensionContext) {
+	dataPath = context.asAbsolutePath("./data/");
+
 	//Suggest functions and variables
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider('lua', {
+		//executed every time the user requests tab completion
 		provideCompletionItems: async function (document, position) {
+			//list of items to append into the tab completer
 			let list:vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
 
 			if (!isEnabled(document)) {
@@ -28,6 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 				label: "---@funkinEngine="
 			});
 
+			//add function
 			for (const _func in await EngineData.getFunctions(document)) {
 				const func = await EngineData.getFunction(_func, document);
 				if (func == null)
@@ -41,43 +48,41 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 				markdownString.appendMarkdown(func.documentation);
 
-				// i wonder how many people will get that refference
-				let completeArgArgArgs = "(";
-				let previewArgArgArgs = "";
-
+				let labelArgs:Array<string> = [];
+				let completeArgs:Array<string> = [];
 				const args = getArgArgParts(func.args);
-				args.forEach((arg, i) => {
-					const funnyDelimeter = (i >= args.length - 1 ? "" : ", ");
-					previewArgArgArgs += arg.name + funnyDelimeter;
-					if (vscode.workspace.getConfiguration().get("funkinscriptautocomplete.functionArgsGeneration")) {
-						completeArgArgArgs += arg.default + funnyDelimeter;
-					}
-					else {
-						completeArgArgArgs = "($0";
-					}
+				args.forEach((arg, _) => {
+					labelArgs.push(arg.name);
+					if (!arg.optional)
+						completeArgs.push(arg.default);
 				});
-
-				completeArgArgArgs += ")";
 
 				list.push({
 					detail: func.returns + " " + func.name + "(" + func.args +")",
 					kind: vscode.CompletionItemKind.Function,
-					label: func.name + "(" + previewArgArgArgs + ")",
-					insertText: new vscode.SnippetString(func.name + completeArgArgArgs),
+					label: func.name + "(" + labelArgs.join(", ") + ")",
+					insertText: new vscode.SnippetString(func.name + "(" + completeArgs.join(", ") + ")"),
 					documentation: markdownString
 				});
 			}
 
+			//add variables
 			for (const _varia in await EngineData.getVariables(document)) {
 				const varia = await EngineData.getVariable(_varia, document);
 				if (varia == null)
 					continue;
 
+				let markdownString = new vscode.MarkdownString();
+				if (varia.deprecated != null) {
+					markdownString.appendMarkdown("*@deprecated* **" + varia.deprecated + "**\n\n");
+				}
+				markdownString.appendMarkdown(varia.documentation);
+
 				list.push({
 					detail: varia.returns + " " + varia.name,
 					kind: vscode.CompletionItemKind.Variable,
 					label: varia.name,
-					documentation: new vscode.MarkdownString().appendMarkdown(varia.documentation)
+					documentation: markdownString
 				});
 			}
 
@@ -109,6 +114,9 @@ export function activate(context: vscode.ExtensionContext) {
 				object = func;
 			}
 			if (varia != null) {
+				if (varia.deprecated != null) {
+					markdownString.appendMarkdown("*@deprecated* **" + varia.deprecated + "**\n\n");
+				}
 				markdownString.appendCodeblock(varia.name + ": " + varia.returns);
 				object = varia;
 			}
@@ -131,7 +139,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	}));
 	
-	//Suggest args for functions
+	//Suggest args for functions (broken)
 	context.subscriptions.push(vscode.languages.registerSignatureHelpProvider("lua", {
 		provideSignatureHelp: async function (document, position, token) {
 			if (!isEnabled(document)) {
@@ -200,21 +208,23 @@ export function activate(context: vscode.ExtensionContext) {
 					continue;
 
 				//let daComment = "---\n---" + event.documentation + "\n---";
-				let daArgs = "";
+				let daArgs:Array<string> = [];
 
 				const args = getArgArgParts(event.args);
-				let daComment = (args.length > 0 ? "---" : "");
+				const doAppendComments = vscode.workspace.getConfiguration().get("funkinscriptautocomplete.functionArgsGeneration");
+				let daComment:string = doAppendComments && args.length > 0 ? "---" : "";
 				args.forEach((arg, i) => {
-					daComment += "\n--- @param " + arg.name + " " + arg.type;
-					const funnyDelimeter = (i >= args.length - 1 ? "" : ", ");
-					daArgs += arg.name + funnyDelimeter;
+					if (doAppendComments) {
+						daComment += "\n--- @param " + arg.name + " " + arg.type;
+					}
+					daArgs.push(arg.name);
 				});
 
-				if (args.length > 0) {
+				if (doAppendComments && args.length > 0) {
 					daComment += "\n---\n";
 				}
 				
-				const snippet = new vscode.CompletionItem("Event: " + event.name + "(" + daArgs + ")");
+				const snippet = new vscode.CompletionItem("Event: " + event.name + "(" + daArgs.join(", ") + ")");
 				snippet.detail = event.name + "(" + event.args + ")";
 				snippet.insertText = new vscode.SnippetString(daComment + "function " + event.name + "(" + haxeArgsToLua(event.args) + ")\n\t$0\nend");
 				snippet.documentation = new vscode.MarkdownString(event.documentation);
@@ -379,7 +389,7 @@ export function activate(context: vscode.ExtensionContext) {
 			timeout = undefined;
 		}
 		if (throttle) {
-			timeout = setTimeout(updateDecorations, 500);
+			timeout = setTimeout(updateDecorations, 5000);
 		} else {
 			await updateDecorations();
 		}
@@ -401,6 +411,8 @@ export function activate(context: vscode.ExtensionContext) {
 			triggerUpdateDecorations(true);
 		}
 	}, null, context.subscriptions);
+
+	//https://github.com/microsoft/vscode/issues/187141 // I NEEED ITTTT!!!!!
 }
 
 function isEnabled(document:vscode.TextDocument) {
@@ -434,7 +446,8 @@ function getArgArgParts(argsString:string):Array<SexyArg> {
 		let arg:SexyArg = {
 			name: "(the program fucked up)",
 			type: "nil",
-			default: ""
+			default: "",
+			optional: false
 		};
 
 		if (argString.trim() != "") {
@@ -442,11 +455,16 @@ function getArgArgParts(argsString:string):Array<SexyArg> {
 
 			arg.name = cachSplit1[0].trim();
 
+			if (cachSplit1[0].startsWith("?")) {
+				arg.optional = true;
+			}
+
 			if (cachSplit1.length > 1) {
 				const cachSplit2 = cachSplit1[1].split("=");
 				arg.type = cachSplit2[0].trim().toLowerCase();
 
 				if (cachSplit2.length > 1) {
+					arg.optional = true;
 					arg.default = cachSplit2[1].trim().toLowerCase();
 				}
 				else {
@@ -462,6 +480,7 @@ function getArgArgParts(argsString:string):Array<SexyArg> {
 }
 
 function getDefaultValue(type:string):string {
+	type = type.toLowerCase();
 	if (type.startsWith("string")) {
 		return '""';
 	}
@@ -480,5 +499,6 @@ function getDefaultValue(type:string):string {
 interface SexyArg {
 	name:string,
 	type:string,
-	default:string
+	default:string,
+	optional:boolean
 }

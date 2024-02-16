@@ -1,7 +1,7 @@
 # Funkin Script AutoComplete
 Simple AutoCompleter for [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine) Lua scripts.<br>
 
-# Features
+# Features 
 - Function/Event/Variable auto completing
 - Warnings for deprecated functions
 - Hovers with documentation

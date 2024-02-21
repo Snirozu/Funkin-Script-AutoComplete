@@ -164,7 +164,7 @@
             "returns": "void",
             "args": "details:String, state:Null\u003cString\u003e, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float",
             "documentation": "Changes discordrpc presence",
-            "deprecated": "Removed from the API."
+            "deprecated": "Use `changeDiscordPresence` instead."
         },
         "characterDance": {
             "returns": "void",
@@ -389,7 +389,8 @@
         "getPropertyLuaSprite": {
             "returns": "?",
             "args": "tag:String, variable:String",
-            "documentation": "Why are you using it?"
+            "documentation": "Gets a property of lua sprite",
+            "deprecated": "Use `getProperty` instead."
         },
         "getRandomBool": {
             "returns": "boolean",
@@ -574,12 +575,14 @@
         "luaSpriteAddAnimationByIndices": {
             "returns": "void",
             "args": "tag:String, name:String, prefix:String, indices:String, framerate:Int = 24",
-            "documentation": "Why are you using it?"
+            "documentation": "Adds a animation by indices to specific sprite",
+            "deprecated": "Use `addAnimationByIndices` instead."
         },
         "luaSpriteAddAnimationByPrefix": {
             "returns": "void",
             "args": "tag:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true",
-            "documentation": "Why are you using it?"
+            "documentation": "Adds a animation to specific sprite",
+            "deprecated": "Use `addAnimationByPrefix` instead."
         },
         "luaSpriteExists": {
             "returns": "boolean",
@@ -589,12 +592,14 @@
         "luaSpriteMakeGraphic": {
             "returns": "void",
             "args": "tag:String, width:Int, height:Int, color:String",
-            "documentation": "Why are you using it?"
+            "documentation": "Creates a new graphic for lua sprite",
+            "deprecated": "Use `makeGraphic` instead."
         },
         "luaSpritePlayAnimation": {
             "returns": "void",
             "args": "tag:String, name:String, forced:Bool = false",
-            "documentation": "Why are you using it?"
+            "documentation": "Plays a animation on specifc sprite",
+            "deprecated": "Use `objectPlayAnimation` instead."
         },
         "luaTextExists": {
             "returns": "boolean",
@@ -779,7 +784,8 @@
         "scaleLuaSprite": {
             "returns": "void",
             "args": "tag:String, x:Float, y:Float",
-            "documentation": "Why are you using it?"
+            "documentation": "Works nearly identical to `setGraphicSize()`",
+            "deprecated": "Use `scaleObject` instead."
         },
         "scaleObject": {
             "returns": "void",
@@ -839,12 +845,14 @@
         "setLuaSpriteCamera": {
             "returns": "void",
             "args": "tag:String, camera:String = ''",
-            "documentation": "Why are you using it?"
+            "documentation": "Sets camera of a lua sprite",
+            "deprecated": "Use `setObjectCamera` instead."
         },
         "setLuaSpriteScrollFactor": {
             "returns": "void",
             "args": "tag:String, scrollX:Float, scrollY:Float",
-            "documentation": "Why are you using it?"
+            "documentation": "Sets scrollfactor value of lua sprite",
+            "deprecated": "Use `setScrollFactor` instead."
         },
         "setMisses": {
             "returns": "void",
@@ -879,7 +887,8 @@
         "setPropertyLuaSprite": {
             "returns": "void",
             "args": "tag:String, variable:String, value:Dynamic",
-            "documentation": "Why are you using it?"
+            "documentation": "Sets a property of lua sprite",
+            "deprecated": "Use `setProperty` instead."
         },
         "setRatingFC": {
             "returns": "void",
@@ -900,7 +909,7 @@
             "returns": "void",
             "args": "value:String",
             "documentation": "Sets the rating name to `value` in case you want to do your own rating calculation.",
-            "deprecated": "Removed from the API."
+            "deprecated": "Use `setRatingName` instead."
         },
         "setScore": {
             "returns": "void",

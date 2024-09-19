@@ -45,7 +45,7 @@
 			"properties": {
 				"funkinscriptautocomplete.engine": {
 					"type": "string",
-					"default": "lua_engine",
+					"default": "psych_0.7",
 					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete.\nRequires Restart/Reload to take effect."
 				},
 				"funkinscriptautocomplete.data": {

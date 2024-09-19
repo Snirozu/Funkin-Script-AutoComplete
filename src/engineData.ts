@@ -8,7 +8,7 @@ import { dataPath } from './extension';
 const cachedJsons: Map<string, any> = new Map<string, any>();
 const cachedFiles: Map<string, string> = new Map<string, string>();
 
-async function getData(file:string):Promise<string | any> {
+export async function getData(file:string):Promise<string | any> {
 	file = file.trim();
 
 	if (file.endsWith(".ver")) {

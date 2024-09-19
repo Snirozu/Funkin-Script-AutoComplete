@@ -34,3 +34,12 @@ export function hexToVSColor(hex: string) {
 
 	return new Color(r, g, b, 1);
 }
+
+export function characterOffsetToByteOffset(string:string, offset: number):number {
+	if (offset == 0)
+		return 0;
+	else if (offset == string.length)
+		return Buffer.byteLength(string, "utf-8");
+	else
+		return Buffer.byteLength(string.substring(0, offset), "utf-8");
+}

@@ -2,7 +2,7 @@
 	"name": "funkin-script-autocompleter",
 	"displayName": "Funkin Script AutoCompleter",
 	"description": "AutoCompleter for Friday Night Funkin` scripts",
-	"version": "1.4.2",
+	"version": "2.0.0",
 	"icon": "images/icon.png",
 	"publisher": "Snirozu",
 	"private": true,
@@ -33,9 +33,9 @@
 	"devDependencies": {
 		"@types/node": "^16.11.7",
 		"@types/vscode": "^1.32.0",
-		"@vscode/vsce": "2.23.0",
 		"@typescript-eslint/eslint-plugin": "^5.30.0",
 		"@typescript-eslint/parser": "^5.30.0",
+		"@vscode/vsce": "2.23.0",
 		"eslint": "^8.13.0",
 		"typescript": "^4.7.2"
 	},
@@ -43,10 +43,10 @@
 		"configuration": {
 			"title": "Funkin Script AutoComplete",
 			"properties": {
-				"funkinscriptautocomplete.luaEngine": {
+				"funkinvscode.luaEngine": {
 					"type": "string",
 					"default": "psych_latest",
-					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete.\nRequires Restart/Reload to take effect.",
+					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete\nRequires VSCode Restart to take effect!",
 					"enum": [
 						"psych_latest",
 						"psych_0.7",
@@ -58,21 +58,80 @@
 						"Psych Engine (v0.6)"
 					]
 				},
-				"funkinscriptautocomplete.enableOnlyOnCertainScripts": {
+				"funkinvscode.enableOnlyOnCertainScripts": {
 					"type": "boolean",
 					"default": false,
-					"description": "If checked, this extension will only work if a script contains '---@funkinScript' comment"
+					"description": "If checked, this extension will only work if a Lua script contains '---@funkinScript' comment"
 				},
-				"funkinscriptautocomplete.functionArgsGeneration": {
+				"funkinvscode.eventDocumentationGeneration": {
 					"type": "boolean",
-					"default": true,
-					"description": "If unchecked, after entering a function placeholder arguments aren't prefixed to events"
+					"default": false,
+					"description": "If checked, after entering a event function, placeholder arguments are inserted on top of the function"
+				},
+				"funkinvscode.functionArgumentsGeneration": {
+					"type": "boolean",
+					"default": false,
+					"description": "If checked, after entering a call function, default values of arguments are inserted inside of the function"
+				},
+				"funkinvscode.hscriptFileExtension": {
+					"type": "string",
+					"default": "hxc",
+					"description": "The associating file extension for Friday Night Funkin' scripts"
+				},
+				"funkinvscode.haxelibs": {
+					"type": "array",
+					"default": [
+						"funkin https://github.com/FunkinCrew/Funkin main source/",
+						"funkin.vis https://github.com/FunkinCrew/funkVis",
+						"flixel",
+						"flixel-addons",
+						"flixel-text-input",
+						"flixel-ui",
+						"flxanimate",
+						"format",
+						"hamcrest",
+						"haxeui-core",
+						"haxeui-flixel",
+						"hscript https://github.com/HaxeFoundation/hscript",
+						"hxCodec",
+						"json2object",
+						"lime",
+						"openfl",
+						"polymod",
+						"thx.semver",
+						"FlxPartialSound https://github.com/FunkinCrew/FlxPartialSound.git"
+					],
+					"description": "The Haxelibs you want to use\nRequires VSCode Restart to take effect!"
 				}
 			}
-		}
+		},
+		"languages": [
+			{
+				"id": "haxe",
+				"extensions": [
+					"hxc"
+				]
+			}
+		],
+		"commands": [
+			{
+				"command": "funkinvscode.updatelibs",
+				"title": "Update Haxelibs for Funkin Scripts"
+			},
+			{
+				"command": "funkinvscode.updatelibsnofunkin",
+				"title": "Update Haxelibs for Funkin Scripts (Excluding Funkin Lib)"
+			},
+			{
+				"command": "funkinvscode.updatefunkin",
+				"title": "Update Funkin API library"
+			}
+		]
 	},
 	"dependencies": {
 		"@types/needle": "^3.2.0",
+		"fast-xml-parser": "^4.4.1",
+		"funkin-script-autocompleter": "file:",
 		"needle": "^3.2.0"
 	}
 }

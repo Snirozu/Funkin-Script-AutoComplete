@@ -17,7 +17,7 @@ let decorationCollection: vscode.DiagnosticCollection;
 
 export async function activate(context: vscode.ExtensionContext) {
 
-	let path = vscode.workspace.getConfiguration().get<string>("funkinscriptautocomplete.data") || "./data/";
+	let path = vscode.workspace.getConfiguration().get<string>("funkinvscode.data") || "./data/";
 
 	dataPath = context.asAbsolutePath(path);
 

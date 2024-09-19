@@ -9,7 +9,7 @@ import { dataPath } from './extension';
 // 			ENGINE
 // ========================
 const ENGINE_SET = "---@funkinEngine=";
-const USER_DEFINED_ENGINE = "funkinscriptautocomplete.engine";
+const USER_DEFINED_ENGINE = "funkinvscode.engine";
 
 function getLuaEngine(document?: vscode.TextDocument | undefined): string | undefined {
 	// If document selected

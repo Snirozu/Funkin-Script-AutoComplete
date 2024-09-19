@@ -43,12 +43,12 @@
 		"configuration": {
 			"title": "Funkin Script AutoComplete",
 			"properties": {
-				"funkinscriptautocomplete.engine": {
+				"funkinvscode.engine": {
 					"type": "string",
 					"default": "psych_0.7",
 					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete.\nRequires Restart/Reload to take effect."
 				},
-				"funkinscriptautocomplete.data": {
+				"funkinvscode.data": {
 					"type": "string",
 					"default": "./data/",
 					"description": "Path to the folder containing all the descriptions for the different engines."

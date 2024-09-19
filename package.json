@@ -33,9 +33,9 @@
 	"devDependencies": {
 		"@types/node": "^16.11.7",
 		"@types/vscode": "^1.32.0",
-		"@vscode/vsce": "2.23.0",
 		"@typescript-eslint/eslint-plugin": "^5.30.0",
 		"@typescript-eslint/parser": "^5.30.0",
+		"@vscode/vsce": "2.23.0",
 		"eslint": "^8.13.0",
 		"typescript": "^4.7.2"
 	},
@@ -43,20 +43,15 @@
 		"configuration": {
 			"title": "Funkin Script AutoComplete",
 			"properties": {
-				"funkinscriptautocomplete.luaEngine": {
+				"funkinscriptautocomplete.engine": {
 					"type": "string",
-					"default": "psych_latest",
-					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete.\nRequires Restart/Reload to take effect.",
-					"enum": [
-						"psych_latest",
-						"psych_0.7",
-						"psych_0.6"
-					],
-					"enumItemLabels": [
-						"Psych Engine (latest)",
-						"Psych Engine (v0.7)",
-						"Psych Engine (v0.6)"
-					]
+					"default": "lua_engine",
+					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete.\nRequires Restart/Reload to take effect."
+				},
+				"funkinscriptautocomplete.data": {
+					"type": "string",
+					"default": "./data/",
+					"description": "Path to the folder containing all the descriptions for the different engines."
 				},
 				"funkinscriptautocomplete.enableOnlyOnCertainScripts": {
 					"type": "boolean",
@@ -73,6 +68,7 @@
 	},
 	"dependencies": {
 		"@types/needle": "^3.2.0",
-		"needle": "^3.2.0"
+		"needle": "^3.2.0",
+		"node-stream": "^0.0.1"
 	}
 }

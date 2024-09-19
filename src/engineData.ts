@@ -69,9 +69,9 @@ export async function getEngineData(engine:string | undefined):Promise<any> {
 
 	engine = engine + (engine.endsWith("_latest") ? ".ver" : ".json");
 
-	let data = await getData(engine);
+	let data = (await getData(engine)) || {};
 	if (engine.endsWith(".ver")) {
-		data = await getData(data + ".json");
+		data = (await getData(data + ".json")) || {};
 	}
 
 	return data;
@@ -91,6 +91,10 @@ export async function getVariables(document?: vscode.TextDocument): Promise<any>
 
 export async function getFunction(func: string, document?: vscode.TextDocument) {
 	const functions = await getFunctions(document);
+
+	if (functions === undefined)
+		return null;
+
 	if (!Reflect.has(functions, func))
 		return null;
 
@@ -106,6 +110,10 @@ export async function getFunction(func: string, document?: vscode.TextDocument) 
 
 export async function getEvent(event: string, document?: vscode.TextDocument) {
 	const events = await getEvents(document);
+
+	if (events === undefined)
+		return null;
+
 	if (!Reflect.has(events, event))
 		return null;
 
@@ -121,6 +129,10 @@ export async function getEvent(event: string, document?: vscode.TextDocument) {
 
 export async function getVariable(varia: string, document?: vscode.TextDocument) {
 	const variables = await getVariables(document);
+
+	if (variables === undefined)
+		return null;
+
 	if (!Reflect.has(variables, varia))
 		return null;
 
@@ -143,5 +155,5 @@ function getLuaEngine(document?:vscode.TextDocument | undefined):string | undefi
 			return line.trim().split("=")[1];
 		}
 	}
-	return vscode.workspace.getConfiguration().get("funkinscriptautocomplete.luaEngine");
+	return vscode.workspace.getConfiguration().get("funkinscriptautocomplete.engine");
 }

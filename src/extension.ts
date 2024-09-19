@@ -4,18 +4,23 @@
 import * as vscode from 'vscode';
 import * as EngineData from './engineData';
 import * as util from './util';
+import { existsSync } from 'fs';
 
 export let dataPath = "";
 
 export function activate(context: vscode.ExtensionContext) {
-	dataPath = context.asAbsolutePath("./data/");
+	let path = vscode.workspace.getConfiguration().get<string>("funkinscriptautocomplete.data") || "./data/";
+	dataPath = context.asAbsolutePath(path);
+
+	if (!existsSync(dataPath))
+		dataPath = path;
 
 	//Suggest functions and variables
 	context.subscriptions.push(vscode.languages.registerCompletionItemProvider('lua', {
 		//executed every time the user requests tab completion
 		provideCompletionItems: async function (document, position) {
 			//list of items to append into the tab completer
-			let list:vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
+			let list: vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
 
 			if (!isEnabled(document)) {
 				list.push({
@@ -48,8 +53,8 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 				markdownString.appendMarkdown(func.documentation);
 
-				let labelArgs:Array<string> = [];
-				let completeArgs:Array<string> = [];
+				let labelArgs: Array<string> = [];
+				let completeArgs: Array<string> = [];
 				const args = getArgArgParts(func.args);
 				args.forEach((arg, _) => {
 					labelArgs.push(arg.name);
@@ -58,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
 				});
 
 				list.push({
-					detail: func.returns + " " + func.name + "(" + func.args +")",
+					detail: func.returns + " " + func.name + "(" + func.args + ")",
 					kind: vscode.CompletionItemKind.Function,
 					label: func.name + "(" + labelArgs.join(", ") + ")",
 					insertText: new vscode.SnippetString(func.name + "(" + completeArgs.join(", ") + ")"),
@@ -103,9 +108,9 @@ export function activate(context: vscode.ExtensionContext) {
 			const func = await EngineData.getFunction(word, document);
 			const varia = await EngineData.getVariable(word, document);
 			const event = await EngineData.getEvent(word, document);
-			
+
 			const markdownString = new vscode.MarkdownString();
-			let object:any = null;
+			let object: any = null;
 			if (func != null) {
 				if (func.deprecated != null) {
 					markdownString.appendMarkdown("*@deprecated* **" + func.deprecated + "**\n\n");
@@ -138,16 +143,16 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 	}));
-	
+
 	//Suggest args for functions (broken)
 	context.subscriptions.push(vscode.languages.registerSignatureHelpProvider("lua", {
 		provideSignatureHelp: async function (document, position, token) {
 			if (!isEnabled(document)) {
 				return null;
 			}
-			
+
 			let i = document.offsetAt(position);
-			let lastCharPos:vscode.Position | null = null;
+			let lastCharPos: vscode.Position | null = null;
 			let numArgs = 0;
 			while (i > 0) {
 				const bch = document.getText().charAt(i - 1);
@@ -178,7 +183,7 @@ export function activate(context: vscode.ExtensionContext) {
 			provider.activeParameter = 0;
 			provider.activeSignature = numArgs;
 
-			const spltArgs:Array<string> = func.args.split(",");
+			const spltArgs: Array<string> = func.args.split(",");
 			let _i = 0;
 			for (let arg in spltArgs) {
 				provider.signatures.push({
@@ -208,11 +213,11 @@ export function activate(context: vscode.ExtensionContext) {
 					continue;
 
 				//let daComment = "---\n---" + event.documentation + "\n---";
-				let daArgs:Array<string> = [];
+				let daArgs: Array<string> = [];
 
 				const args = getArgArgParts(event.args);
 				const doAppendComments = vscode.workspace.getConfiguration().get("funkinscriptautocomplete.functionArgsGeneration");
-				let daComment:string = doAppendComments && args.length > 0 ? "---" : "";
+				let daComment: string = doAppendComments && args.length > 0 ? "---" : "";
 				args.forEach((arg, i) => {
 					if (doAppendComments) {
 						daComment += "\n--- @param " + arg.name + " " + arg.type;
@@ -223,7 +228,7 @@ export function activate(context: vscode.ExtensionContext) {
 				if (doAppendComments && args.length > 0) {
 					daComment += "\n---\n";
 				}
-				
+
 				const snippet = new vscode.CompletionItem("Event: " + event.name + "(" + daArgs.join(", ") + ")");
 				snippet.detail = event.name + "(" + event.args + ")";
 				snippet.insertText = new vscode.SnippetString(daComment + "function " + event.name + "(" + haxeArgsToLua(event.args) + ")\n\t$0\nend");
@@ -237,68 +242,66 @@ export function activate(context: vscode.ExtensionContext) {
 	}));
 
 	// Show colors
-	context.subscriptions.push(
-		vscode.languages.registerColorProvider(
-			"lua", 
-			{
-				// select the locations of colors
-				provideDocumentColors(document, token) {
-					let colorsList:vscode.ProviderResult<vscode.ColorInformation[]> = [];
-					let i = -1;
-					let isInType = 0;
-					let curColorString = "";
-					let isInString = false;
+	context.subscriptions.push(vscode.languages.registerColorProvider("lua",
+		{
+			// select the locations of colors
+			provideDocumentColors(document, token) {
+				let colorsList: vscode.ProviderResult<vscode.ColorInformation[]> = [];
+				let i = -1;
+				let isInType = 0;
+				let curColorString = "";
+				let isInString = false;
 
-					let begS:vscode.Position | undefined = undefined;
-					let endS:vscode.Position;
-					
-					while (i++ < document.getText().length - 1) {
-						const curChar = document.getText().charAt(i);
-						if (curChar == "'" || curChar == '"') {
-							if (!isInString) {
-								isInString = true;
-							}
-							else {
-								endS = document.positionAt(i);
+				let begS: vscode.Position | undefined = undefined;
+				let endS: vscode.Position;
 
-								//let color:Color = new Color(curColorString);
-								
-								if (begS != undefined) {
-									const color = util.hexToVSColor(curColorString);
-
-									if (color != null)
-										colorsList.push(
-											new vscode.ColorInformation(new vscode.Range(begS, endS), color)
-										);
-								}
-
-								isInString = false;
-								isInType = 0;
-								curColorString = "";
-							}
+				while (i++ < document.getText().length - 1) {
+					const curChar = document.getText().charAt(i);
+					if (curChar == "'" || curChar == '"') {
+						if (!isInString) {
+							isInString = true;
 						}
+						else {
+							endS = document.positionAt(i);
 
-						if (isInString) {
-							if (curChar == "#") {
-								begS = document.positionAt(i);
-								isInType = 1;
+							//let color:Color = new Color(curColorString);
+
+							if (begS != undefined) {
+								const color = util.hexToVSColor(curColorString);
+
+								if (color != null)
+									colorsList.push(
+										new vscode.ColorInformation(new vscode.Range(begS, endS), color)
+									);
 							}
 
-							if (isInType > 0) {
-								curColorString += curChar;
-							}
+							isInString = false;
+							isInType = 0;
+							curColorString = "";
 						}
 					}
-					return colorsList;
-				},
-				// show the color picker
-				provideColorPresentations(color, context, token) {
-					return [
-						new vscode.ColorPresentation(util.rgbaToHex(color.red, color.green, color.blue, color.alpha))
-					];
+
+					if (isInString) {
+						if (curChar == "#") {
+							begS = document.positionAt(i);
+							isInType = 1;
+						}
+
+						if (isInType > 0) {
+							curColorString += curChar;
+						}
+					}
 				}
+				return colorsList;
+			},
+			// show the color picker
+			provideColorPresentations(color, context, token) {
+				return [
+					new vscode.ColorPresentation(util.rgbaToHex(color.red, color.green, color.blue, color.alpha))
+				];
 			}
-		));
+		}
+	));
 
 	//deprecated warnings here
 	//copied from some example lmao
@@ -328,14 +331,14 @@ export function activate(context: vscode.ExtensionContext) {
 		const text = activeEditor.document.getText();
 		const decorations: vscode.DecorationOptions[] = [];
 		let diagnostics: vscode.Diagnostic[] = [];
-		
+
 		let match;
 		while ((match = regEx.exec(text))) {
 			const startPos = activeEditor.document.positionAt(match.index);
 			const endPos = activeEditor.document.positionAt(match.index + match[0].length);
-			
+
 			let doContinue = false;
-			
+
 			if (startPos.line - 1 >= 0) {
 				let prevLine = activeEditor.document.lineAt(startPos.line - 1).text;
 				if (prevLine.includes("---@diagnostic disable-next-line:") && prevLine.substring(prevLine.indexOf(":")).includes(match[0]))
@@ -364,7 +367,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if (deprecatedMsg != null && (varr != null && varr.deprecated != null) && activeEditor.document.getText().charAt(match.index + match[0].length) == "(") {
 				const decoration: vscode.DecorationOptions = { range: new vscode.Range(startPos, endPos) };
 				decorations.push(decoration);
-				
+
 				diagnostics.push({
 					code: match[0],
 					message: deprecatedMsg,
@@ -415,14 +418,14 @@ export function activate(context: vscode.ExtensionContext) {
 	//https://github.com/microsoft/vscode/issues/187141 // I NEEED ITTTT!!!!!
 }
 
-function isEnabled(document:vscode.TextDocument) {
+function isEnabled(document: vscode.TextDocument) {
 	if (vscode.workspace.getConfiguration().get("funkinscriptautocomplete.enableOnlyOnCertainScripts") && document.getText().indexOf("---@funkinScript") == -1) {
 		return false;
 	}
 	return true;
 }
 
-function haxeArgsToLua(str:string) {
+function haxeArgsToLua(str: string) {
 	let finalString = "";
 	let i = -1;
 	let searchedString = "";
@@ -438,12 +441,12 @@ function haxeArgsToLua(str:string) {
 	return finalString;
 }
 
-function getArgArgParts(argsString:string):Array<SexyArg> {
-	let args:Array<SexyArg> = [];
+function getArgArgParts(argsString: string): Array<SexyArg> {
+	let args: Array<SexyArg> = [];
 
 	// argString = " arg1:String = null"
 	argsString.split(",").forEach((argString) => {
-		let arg:SexyArg = {
+		let arg: SexyArg = {
 			name: "(the program fucked up)",
 			type: "nil",
 			default: "",
@@ -471,7 +474,7 @@ function getArgArgParts(argsString:string):Array<SexyArg> {
 					arg.default = getDefaultValue(arg.type);
 				}
 			}
-			
+
 			args.push(arg);
 		}
 	});
@@ -479,7 +482,7 @@ function getArgArgParts(argsString:string):Array<SexyArg> {
 	return args;
 }
 
-function getDefaultValue(type:string):string {
+function getDefaultValue(type: string): string {
 	type = type.toLowerCase();
 	if (type.startsWith("string")) {
 		return '""';
@@ -497,8 +500,8 @@ function getDefaultValue(type:string):string {
 }
 
 interface SexyArg {
-	name:string,
-	type:string,
-	default:string,
-	optional:boolean
+	name: string,
+	type: string,
+	default: string,
+	optional: boolean
 }

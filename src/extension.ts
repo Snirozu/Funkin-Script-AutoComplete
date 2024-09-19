@@ -16,7 +16,14 @@ let diagnosticCollection: vscode.DiagnosticCollection;
 let decorationCollection: vscode.DiagnosticCollection;
 
 export async function activate(context: vscode.ExtensionContext) {
-	dataPath = context.asAbsolutePath("./data/");
+
+	let path = vscode.workspace.getConfiguration().get<string>("funkinscriptautocomplete.data") || "./data/";
+
+	dataPath = context.asAbsolutePath(path);
+
+	// If path is not relative
+	if (!existsSync(dataPath))
+		dataPath = path;
 
 	diagnosticCollection = vscode.languages.createDiagnosticCollection('funkin_sac_diagnostics');
 	decorationCollection = vscode.languages.createDiagnosticCollection('funkin_sac_decorations');
@@ -64,7 +71,7 @@ export async function activate(context: vscode.ExtensionContext) {
 							break;
 						case "member":
 							item.kind = vscode.CompletionItemKind.Field;
-							break; 
+							break;
 						case "method":
 							item.kind = vscode.CompletionItemKind.Method;
 							break;
@@ -219,8 +226,8 @@ export async function activate(context: vscode.ExtensionContext) {
 				}
 				markdownString.appendMarkdown(func.documentation);
 
-				let labelArgs:Array<string> = [];
-				let completeArgs:Array<string> = [];
+				let labelArgs: Array<string> = [];
+				let completeArgs: Array<string> = [];
 				const doInsertArguments = vscode.workspace.getConfiguration().get("funkinvscode.functionArgumentsGeneration");
 				const args = getArgArgParts(func.args);
 				args.forEach((arg, _) => {
@@ -388,7 +395,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 				const args = getArgArgParts(event.args);
 				const doAppendComments = vscode.workspace.getConfiguration().get("funkinvscode.eventDocumentationGeneration");
-				let daComment:string = doAppendComments && args.length > 0 ? "---" : "";
+				let daComment: string = doAppendComments && args.length > 0 ? "---" : "";
 				args.forEach((arg, i) => {
 					if (doAppendComments) {
 						daComment += "\n--- @param " + arg.name + " " + arg.type;
@@ -597,7 +604,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	//https://github.com/microsoft/vscode/issues/187141 // I NEEED ITTTT!!!!!
 }
 
-function isEnabled(document:vscode.TextDocument) {
+function isEnabled(document: vscode.TextDocument) {
 	if (vscode.workspace.getConfiguration().get("funkinvscode.enableOnlyOnCertainScripts") && document.getText().indexOf("---@funkinScript") == -1) {
 		return false;
 	}
@@ -679,17 +686,17 @@ function getDefaultValue(type: string): string {
 }
 
 interface SexyArg {
-	name:string,
-	type:string,
-	default:string,
-	optional:boolean
+	name: string,
+	type: string,
+	default: string,
+	optional: boolean
 }
 
 async function showWarnings(output: string) {
 	if (!output)
 		return;
 
-	if (output == "Please Install Haxe!") { 
+	if (output == "Please Install Haxe!") {
 		const selection = await vscode.window.showErrorMessage(output + "\nTo use .hxc completion you need to install Haxe first!", 'Download Haxe');
 
 		if (selection == "Download Haxe") {
@@ -813,7 +820,7 @@ async function execCommand(document: vscode.TextDocument, position: vscode.Posit
 	else
 		mode = "";
 
-	let libs:Array<string> = [];
+	let libs: Array<string> = [];
 
 	(vscode.workspace.getConfiguration().get("funkinvscode.haxelibs") as Array<string>).forEach(async lib => {
 		libs.push('-L', lib.split(" ")[0]);
@@ -843,11 +850,11 @@ async function execCommand(document: vscode.TextDocument, position: vscode.Posit
 
 	//<haxeflag name="--macro" value="addMetadata('@:build(funkin.util.macro.FlxMacro.buildFlxBasic())', 'flixel.FlxBasic')" />
 
-	let _output = spawnSync('haxe', ['--display', fileNam + '@' + characterOffsetToByteOffset(document.getText(), document.offsetAt(position)) + mode, 
-		'--no-output', 
-		'--cpp', '_', 
-		'--connect', '6000', 
-		'--remap', 'flash:openfl', 
+	let _output = spawnSync('haxe', ['--display', fileNam + '@' + characterOffsetToByteOffset(document.getText(), document.offsetAt(position)) + mode,
+		'--no-output',
+		'--cpp', '_',
+		'--connect', '6000',
+		'--remap', 'flash:openfl',
 		'--macro flixel.system.macros.FlxDefines.run()',
 		'--macro haxe.macro.Compiler.addClassPath("' + funkinPath + '")',
 		'--macro haxe.macro.Compiler.addClassPath("' + funkinSource + '")',
@@ -877,11 +884,11 @@ async function execCommand(document: vscode.TextDocument, position: vscode.Posit
 	return rpc;
 }
 
-function getHScriptExtension():string {
+function getHScriptExtension(): string {
 	return "." + vscode.workspace.getConfiguration().get("funkinvscode.hscriptFileExtension") as string;
 }
 
-function updateLib(lib:string, terminal:vscode.Terminal) {
+function updateLib(lib: string, terminal: vscode.Terminal) {
 	let swagCommand = "haxelib install " + lib;
 	(vscode.workspace.getConfiguration().get("funkinvscode.haxelibs") as Array<string>).forEach(clib => {
 		const libProps = clib.split(" ");
@@ -913,8 +920,8 @@ function updateLib(lib:string, terminal:vscode.Terminal) {
 	terminal.sendText(swagCommand);
 }
 
-function updateLibs(terminal: vscode.Terminal, ignore?:string) {
-	let commands:Array<string> = [];
+function updateLibs(terminal: vscode.Terminal, ignore?: string) {
+	let commands: Array<string> = [];
 	(vscode.workspace.getConfiguration().get("funkinvscode.haxelibs") as Array<string>).forEach(clib => {
 		const libProps = clib.split(" ");
 		let swagCommand = "haxelib install " + libProps[0];

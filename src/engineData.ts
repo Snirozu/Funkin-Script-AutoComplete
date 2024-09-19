@@ -5,91 +5,111 @@ import * as needle from 'needle';
 import { readFile, writeFile } from 'fs';
 import { dataPath } from './extension';
 
-const cachedJsons: Map<string, any> = new Map<string, any>();
-const cachedFiles: Map<string, string> = new Map<string, string>();
+// ========================
+// 			ENGINE
+// ========================
+const ENGINE_SET = "---@funkinEngine=";
+const USER_DEFINED_ENGINE = "funkinscriptautocomplete.engine";
 
-export async function getData(file:string):Promise<string | any> {
-	file = file.trim();
+function getLuaEngine(document?: vscode.TextDocument | undefined): string | undefined {
+	// If document selected
+	if (document != undefined) {
+		const text = document.getText();
+		const index = text.indexOf(ENGINE_SET);
 
-	if (file.endsWith(".ver")) {
-		if (cachedFiles.has(file)) {
-			return cachedFiles.get(file);
-		}
-
-		try {
-			const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + file);
-			if (response.statusCode == 200) {
-				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				writeFile(dataPath + file, response.body, err => { });
-				cachedFiles.set(file, response.body);
-				return response.body;
-			}
-		}
-		catch (exc) {
-			//console.log(exc);
-		}
-
-		readFile(dataPath + file, (err, data) => {
-			if (!err) {
-				cachedFiles.set(file, data.toString());
-				return cachedFiles.get(file);
-			}
-		});
+		// If specified, take the engine
+		if (index != -1)
+			return getLineContentAt(text, index).trim().split("=")[1];
 	}
-	else if (file.endsWith(".json")) {
-		if (cachedJsons.has(file)) {
-			return cachedJsons.get(file);
-		}
 
-		try {
-			const response = await needle("get", "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/" + file);
-			if (response.statusCode == 200) {
-				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				writeFile(dataPath + file, response.body, err => {});
-				cachedJsons.set(file, JSON.parse(response.body));
-				return cachedJsons.get(file);
-			}
-		}
-		catch (exc) {
-			//console.log(exc);
-		}
-
-		readFile(dataPath + file, (err, data) => {
-			if (!err) {
-				cachedJsons.set(file, JSON.parse(data.toString()));
-				return cachedJsons.get(file);
-			}
-		});
-	}
-	return null;
+	return vscode.workspace.getConfiguration().get(USER_DEFINED_ENGINE);
 }
 
-export async function getEngineData(engine:string | undefined):Promise<any> {
-	if (engine == undefined) throw "Extension couldn't find any engines...";
+// ======================
+// 			DATA
+// ======================
+const CACHED: Map<string, any> = new Map<string, any>();
+const REPOSITORY_DATA_URL = "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/";
+
+export async function getData(file: string): Promise<string | any> {
+	file = file.trim();
+
+	// If cached, skip
+	if (CACHED.has(file))
+		return CACHED.get(file);
+
+	let content = await getOnlineData(file);
+
+	// If found, skip
+	if (content !== undefined)
+		return content;
+
+	// If not found, read from file
+	readFile(dataPath + file, (err, data) => {
+
+		// If error
+		if (err) {
+			console.log("Errro while reading file: " + err.message);
+			return {};
+		}
+
+		content = JSON.parse(data.toString());
+
+		CACHED.set(file, content);
+		return content;
+	});
+
+	return {};
+}
+
+async function getOnlineData(file: string): Promise<any | undefined> {
+
+	const response = await needle("get", REPOSITORY_DATA_URL + file);
+
+	// If failed, skip
+	if (response.statusCode != 200)
+		return undefined;
+
+	// Write to file
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	writeFile(dataPath + file, response.body, () => { });
+
+	const content = file.endsWith(".ver")
+		? response.body
+		: JSON.parse(response.body);
+
+	CACHED.set(file, content);
+
+	return content;
+}
+
+export async function getEngineData(document?: vscode.TextDocument): Promise<any> {
+
+	let engine = getLuaEngine(document);
+
+	// If no engine defined
+	if (engine == undefined)
+		throw "Extension couldn't find any engines...";
 
 	engine = engine + (engine.endsWith("_latest") ? ".ver" : ".json");
 
-	let data = (await getData(engine)) || {};
-	if (engine.endsWith(".ver")) {
-		data = (await getData(data + ".json")) || {};
-	}
+	// Fetch data
+	let data = await getData(engine);
+
+	if (engine.endsWith(".ver"))
+		data = await getData(data + ".json");
 
 	return data;
 }
 
-export async function getFunctions(document?:vscode.TextDocument): Promise<any> {
-	return (await getEngineData(getLuaEngine(document))).functions;
+// ===========================
+// 			FUNCTIONS
+// ===========================
+export async function getFunctions(document?: vscode.TextDocument): Promise<any | undefined> {
+	return (await getEngineData(document)).functions;
 }
 
-export async function getEvents(document?: vscode.TextDocument): Promise<any> {
-	return (await getEngineData(getLuaEngine(document))).events;
-}
-
-export async function getVariables(document?: vscode.TextDocument): Promise<any> {
-	return (await getEngineData(getLuaEngine(document))).variables;
-}
-
-export async function getFunction(func: string, document?: vscode.TextDocument) {
+export async function getFunction(func: string, document?: vscode.TextDocument): Promise<any | null> {
 	const functions = await getFunctions(document);
 
 	if (functions === undefined)
@@ -99,6 +119,7 @@ export async function getFunction(func: string, document?: vscode.TextDocument) 
 		return null;
 
 	const funct = Reflect.get(functions, func);
+
 	return {
 		name: func,
 		returns: funct.returns,
@@ -108,7 +129,14 @@ export async function getFunction(func: string, document?: vscode.TextDocument) 
 	};
 }
 
-export async function getEvent(event: string, document?: vscode.TextDocument) {
+// ========================
+// 			EVENTS
+// ========================
+export async function getEvents(document?: vscode.TextDocument): Promise<any | undefined> {
+	return (await getEngineData(document)).events;
+}
+
+export async function getEvent(event: string, document?: vscode.TextDocument) : Promise<any | null> {
 	const events = await getEvents(document);
 
 	if (events === undefined)
@@ -127,7 +155,14 @@ export async function getEvent(event: string, document?: vscode.TextDocument) {
 	};
 }
 
-export async function getVariable(varia: string, document?: vscode.TextDocument) {
+// ===========================
+// 			VARIABLES
+// ===========================
+export async function getVariables(document?: vscode.TextDocument): Promise<any> {
+	return (await getEngineData(document)).variables;
+}
+
+export async function getVariable(varia: string, document?: vscode.TextDocument) : Promise<any | null> {
 	const variables = await getVariables(document);
 
 	if (variables === undefined)
@@ -143,17 +178,4 @@ export async function getVariable(varia: string, document?: vscode.TextDocument)
 		documentation: varr.documentation,
 		deprecated: varr.deprecated
 	};
-}
-
-
-
-function getLuaEngine(document?:vscode.TextDocument | undefined):string | undefined {
-	if (document != undefined) {
-		const str = "---@funkinEngine=";
-		const line = getLineContentAt(document.getText(), document.getText().indexOf(str));
-		if (line != null) {
-			return line.trim().split("=")[1];
-		}
-	}
-	return vscode.workspace.getConfiguration().get("funkinscriptautocomplete.engine");
 }

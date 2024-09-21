@@ -14,6 +14,7 @@ export let dataPath = "";
 
 let diagnosticCollection: vscode.DiagnosticCollection;
 let decorationCollection: vscode.DiagnosticCollection;
+let outputChannel: vscode.OutputChannel;
 
 export async function activate(context: vscode.ExtensionContext) {
 
@@ -27,6 +28,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	diagnosticCollection = vscode.languages.createDiagnosticCollection('funkin_sac_diagnostics');
 	decorationCollection = vscode.languages.createDiagnosticCollection('funkin_sac_decorations');
+	outputChannel = vscode.window.createOutputChannel('Funkin VSCode DLogs');
 	context.subscriptions.push(diagnosticCollection);
 
 	const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "a_", textNodeName: "nval" });
@@ -696,6 +698,8 @@ async function showWarnings(output: string) {
 	if (!output)
 		return;
 
+	sendToOutput(output);
+
 	if (output == "Please Install Haxe!") {
 		const selection = await vscode.window.showErrorMessage(output + "\nTo use .hxc completion you need to install Haxe first!", 'Download Haxe');
 
@@ -875,13 +879,15 @@ async function execCommand(document: vscode.TextDocument, position: vscode.Posit
 		rpc = "<" + rpc;
 	}
 
-	console.log(warnings);
-	console.log(rpc);
-
 	showWarnings(warnings);
 	if (rpc.length < 1)
 		return;
 	return rpc;
+}
+
+export function sendToOutput(string: string) {
+	outputChannel.show();
+	outputChannel.appendLine(string);
 }
 
 function getHScriptExtension(): string {

@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import { getLineContentAt } from './util';
 import * as needle from 'needle';
 import { readFile, writeFile } from 'fs';
-import { dataPath } from './extension';
+import { dataPath, sendToOutput } from './extension';
 
 // ========================
 // 			ENGINE
@@ -49,7 +49,7 @@ export async function getData(file: string): Promise<string | any> {
 
 		// If error
 		if (err) {
-			console.log("Errro while reading file: " + err.message);
+			sendToOutput("Errro while reading file: " + err.message);
 			return {};
 		}
 

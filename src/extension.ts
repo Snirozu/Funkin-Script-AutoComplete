@@ -16,7 +16,14 @@ let diagnosticCollection: vscode.DiagnosticCollection;
 let decorationCollection: vscode.DiagnosticCollection;
 
 export async function activate(context: vscode.ExtensionContext) {
-	dataPath = context.asAbsolutePath("./data/");
+
+	let path = vscode.workspace.getConfiguration().get<string>("funkinvscode.data") || "./data/";
+
+	dataPath = context.asAbsolutePath(path);
+
+	// If path is not relative
+	if (!existsSync(dataPath))
+		dataPath = path;
 
 	diagnosticCollection = vscode.languages.createDiagnosticCollection('funkin_sac_diagnostics');
 	decorationCollection = vscode.languages.createDiagnosticCollection('funkin_sac_decorations');
@@ -64,7 +71,7 @@ export async function activate(context: vscode.ExtensionContext) {
 							break;
 						case "member":
 							item.kind = vscode.CompletionItemKind.Field;
-							break; 
+							break;
 						case "method":
 							item.kind = vscode.CompletionItemKind.Method;
 							break;
@@ -186,7 +193,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		//executed every time the user requests tab completion
 		provideCompletionItems: async function (document, position) {
 			//list of items to append into the tab completer
-			let list:vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
+			let list: vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> = [];
 
 			if (!isEnabled(document)) {
 				list.push({
@@ -219,8 +226,8 @@ export async function activate(context: vscode.ExtensionContext) {
 				}
 				markdownString.appendMarkdown(func.documentation);
 
-				let labelArgs:Array<string> = [];
-				let completeArgs:Array<string> = [];
+				let labelArgs: Array<string> = [];
+				let completeArgs: Array<string> = [];
 				const doInsertArguments = vscode.workspace.getConfiguration().get("funkinvscode.functionArgumentsGeneration");
 				const args = getArgArgParts(func.args);
 				args.forEach((arg, _) => {
@@ -230,7 +237,7 @@ export async function activate(context: vscode.ExtensionContext) {
 				});
 
 				list.push({
-					detail: func.returns + " " + func.name + "(" + func.args +")",
+					detail: func.returns + " " + func.name + "(" + func.args + ")",
 					kind: vscode.CompletionItemKind.Function,
 					label: func.name + "(" + labelArgs.join(", ") + ")",
 					insertText: new vscode.SnippetString(func.name + "(" + (doInsertArguments ? completeArgs.join(", ") : "") + "$0)"),
@@ -279,9 +286,9 @@ export async function activate(context: vscode.ExtensionContext) {
 			const func = await EngineData.getFunction(word, document);
 			const varia = await EngineData.getVariable(word, document);
 			const event = await EngineData.getEvent(word, document);
-			
+
 			const markdownString = new vscode.MarkdownString();
-			let object:any = null;
+			let object: any = null;
 			if (func != null) {
 				if (func.deprecated != null) {
 					markdownString.appendMarkdown("*@deprecated* **" + func.deprecated + "**\n\n");
@@ -314,16 +321,16 @@ export async function activate(context: vscode.ExtensionContext) {
 			}
 		}
 	}));
-	
+
 	//Suggest args for functions (broken)
 	context.subscriptions.push(vscode.languages.registerSignatureHelpProvider("lua", {
 		provideSignatureHelp: async function (document, position, token) {
 			if (!isEnabled(document)) {
 				return null;
 			}
-			
+
 			let i = document.offsetAt(position);
-			let lastCharPos:vscode.Position | null = null;
+			let lastCharPos: vscode.Position | null = null;
 			let numArgs = 0;
 			while (i > 0) {
 				const bch = document.getText().charAt(i - 1);
@@ -354,7 +361,7 @@ export async function activate(context: vscode.ExtensionContext) {
 			provider.activeParameter = 0;
 			provider.activeSignature = numArgs;
 
-			const spltArgs:Array<string> = func.args.split(",");
+			const spltArgs: Array<string> = func.args.split(",");
 			let _i = 0;
 			for (let arg in spltArgs) {
 				provider.signatures.push({
@@ -384,11 +391,11 @@ export async function activate(context: vscode.ExtensionContext) {
 					continue;
 
 				//let daComment = "---\n---" + event.documentation + "\n---";
-				let daArgs:Array<string> = [];
+				let daArgs: Array<string> = [];
 
 				const args = getArgArgParts(event.args);
 				const doAppendComments = vscode.workspace.getConfiguration().get("funkinvscode.eventDocumentationGeneration");
-				let daComment:string = doAppendComments && args.length > 0 ? "---" : "";
+				let daComment: string = doAppendComments && args.length > 0 ? "---" : "";
 				args.forEach((arg, i) => {
 					if (doAppendComments) {
 						daComment += "\n--- @param " + arg.name + " " + arg.type;
@@ -399,7 +406,7 @@ export async function activate(context: vscode.ExtensionContext) {
 				if (doAppendComments && args.length > 0) {
 					daComment += "\n---\n";
 				}
-				
+
 				const snippet = new vscode.CompletionItem("Event: " + event.name + "(" + daArgs.join(", ") + ")");
 				snippet.detail = event.name + "(" + event.args + ")";
 				snippet.insertText = new vscode.SnippetString(daComment + "function " + event.name + "(" + haxeArgsToLua(event.args) + ")\n\t$0\nend");
@@ -417,68 +424,66 @@ export async function activate(context: vscode.ExtensionContext) {
 	}));
 
 	// Show colors
-	context.subscriptions.push(
-		vscode.languages.registerColorProvider(
-			"lua", 
-			{
-				// select the locations of colors
-				provideDocumentColors(document, token) {
-					let colorsList:vscode.ProviderResult<vscode.ColorInformation[]> = [];
-					let i = -1;
-					let isInType = 0;
-					let curColorString = "";
-					let isInString = false;
+	context.subscriptions.push(vscode.languages.registerColorProvider("lua",
+		{
+			// select the locations of colors
+			provideDocumentColors(document, token) {
+				let colorsList: vscode.ProviderResult<vscode.ColorInformation[]> = [];
+				let i = -1;
+				let isInType = 0;
+				let curColorString = "";
+				let isInString = false;
 
-					let begS:vscode.Position | undefined = undefined;
-					let endS:vscode.Position;
-					
-					while (i++ < document.getText().length - 1) {
-						const curChar = document.getText().charAt(i);
-						if (curChar == "'" || curChar == '"') {
-							if (!isInString) {
-								isInString = true;
-							}
-							else {
-								endS = document.positionAt(i);
+				let begS: vscode.Position | undefined = undefined;
+				let endS: vscode.Position;
 
-								//let color:Color = new Color(curColorString);
-								
-								if (begS != undefined) {
-									const color = util.hexToVSColor(curColorString);
-
-									if (color != null)
-										colorsList.push(
-											new vscode.ColorInformation(new vscode.Range(begS, endS), color)
-										);
-								}
-
-								isInString = false;
-								isInType = 0;
-								curColorString = "";
-							}
+				while (i++ < document.getText().length - 1) {
+					const curChar = document.getText().charAt(i);
+					if (curChar == "'" || curChar == '"') {
+						if (!isInString) {
+							isInString = true;
 						}
+						else {
+							endS = document.positionAt(i);
 
-						if (isInString) {
-							if (curChar == "#") {
-								begS = document.positionAt(i);
-								isInType = 1;
+							//let color:Color = new Color(curColorString);
+
+							if (begS != undefined) {
+								const color = util.hexToVSColor(curColorString);
+
+								if (color != null)
+									colorsList.push(
+										new vscode.ColorInformation(new vscode.Range(begS, endS), color)
+									);
 							}
 
-							if (isInType > 0) {
-								curColorString += curChar;
-							}
+							isInString = false;
+							isInType = 0;
+							curColorString = "";
 						}
 					}
-					return colorsList;
-				},
-				// show the color picker
-				provideColorPresentations(color, context, token) {
-					return [
-						new vscode.ColorPresentation(util.rgbaToHex(color.red, color.green, color.blue, color.alpha))
-					];
+
+					if (isInString) {
+						if (curChar == "#") {
+							begS = document.positionAt(i);
+							isInType = 1;
+						}
+
+						if (isInType > 0) {
+							curColorString += curChar;
+						}
+					}
 				}
+				return colorsList;
+			},
+			// show the color picker
+			provideColorPresentations(color, context, token) {
+				return [
+					new vscode.ColorPresentation(util.rgbaToHex(color.red, color.green, color.blue, color.alpha))
+				];
 			}
-		));
+		}
+	));
 
 	//deprecated warnings here
 	//copied from some example lmao
@@ -507,14 +512,14 @@ export async function activate(context: vscode.ExtensionContext) {
 		const text = activeEditor.document.getText();
 		const decorations: vscode.DecorationOptions[] = [];
 		let diagnostics: vscode.Diagnostic[] = [];
-		
+
 		let match;
 		while ((match = regEx.exec(text))) {
 			const startPos = activeEditor.document.positionAt(match.index);
 			const endPos = activeEditor.document.positionAt(match.index + match[0].length);
-			
+
 			let doContinue = false;
-			
+
 			if (startPos.line - 1 >= 0) {
 				let prevLine = activeEditor.document.lineAt(startPos.line - 1).text;
 				if (prevLine.includes("---@diagnostic disable-next-line:") && prevLine.substring(prevLine.indexOf(":")).includes(match[0]))
@@ -543,7 +548,7 @@ export async function activate(context: vscode.ExtensionContext) {
 			if (deprecatedMsg != null && (varr != null && varr.deprecated != null) && activeEditor.document.getText().charAt(match.index + match[0].length) == "(") {
 				const decoration: vscode.DecorationOptions = { range: new vscode.Range(startPos, endPos) };
 				decorations.push(decoration);
-				
+
 				diagnostics.push({
 					code: match[0],
 					message: deprecatedMsg,
@@ -599,14 +604,14 @@ export async function activate(context: vscode.ExtensionContext) {
 	//https://github.com/microsoft/vscode/issues/187141 // I NEEED ITTTT!!!!!
 }
 
-function isEnabled(document:vscode.TextDocument) {
+function isEnabled(document: vscode.TextDocument) {
 	if (vscode.workspace.getConfiguration().get("funkinvscode.enableOnlyOnCertainScripts") && document.getText().indexOf("---@funkinScript") == -1) {
 		return false;
 	}
 	return true;
 }
 
-function haxeArgsToLua(str:string) {
+function haxeArgsToLua(str: string) {
 	let finalString = "";
 	let i = -1;
 	let searchedString = "";
@@ -622,12 +627,12 @@ function haxeArgsToLua(str:string) {
 	return finalString;
 }
 
-function getArgArgParts(argsString:string):Array<SexyArg> {
-	let args:Array<SexyArg> = [];
+function getArgArgParts(argsString: string): Array<SexyArg> {
+	let args: Array<SexyArg> = [];
 
 	// argString = " arg1:String = null"
 	argsString.split(",").forEach((argString) => {
-		let arg:SexyArg = {
+		let arg: SexyArg = {
 			name: "(the program fucked up)",
 			type: "nil",
 			default: "",
@@ -655,7 +660,7 @@ function getArgArgParts(argsString:string):Array<SexyArg> {
 					arg.default = getDefaultValue(arg.type);
 				}
 			}
-			
+
 			args.push(arg);
 		}
 	});
@@ -663,7 +668,7 @@ function getArgArgParts(argsString:string):Array<SexyArg> {
 	return args;
 }
 
-function getDefaultValue(type:string):string {
+function getDefaultValue(type: string): string {
 	type = type.toLowerCase();
 	if (type.startsWith("string")) {
 		return '""';
@@ -681,17 +686,17 @@ function getDefaultValue(type:string):string {
 }
 
 interface SexyArg {
-	name:string,
-	type:string,
-	default:string,
-	optional:boolean
+	name: string,
+	type: string,
+	default: string,
+	optional: boolean
 }
 
 async function showWarnings(output: string) {
 	if (!output)
 		return;
 
-	if (output == "Please Install Haxe!") { 
+	if (output == "Please Install Haxe!") {
 		const selection = await vscode.window.showErrorMessage(output + "\nTo use .hxc completion you need to install Haxe first!", 'Download Haxe');
 
 		if (selection == "Download Haxe") {
@@ -815,7 +820,7 @@ async function execCommand(document: vscode.TextDocument, position: vscode.Posit
 	else
 		mode = "";
 
-	let libs:Array<string> = [];
+	let libs: Array<string> = [];
 
 	(vscode.workspace.getConfiguration().get("funkinvscode.haxelibs") as Array<string>).forEach(async lib => {
 		libs.push('-L', lib.split(" ")[0]);
@@ -845,11 +850,11 @@ async function execCommand(document: vscode.TextDocument, position: vscode.Posit
 
 	//<haxeflag name="--macro" value="addMetadata('@:build(funkin.util.macro.FlxMacro.buildFlxBasic())', 'flixel.FlxBasic')" />
 
-	let _output = spawnSync('haxe', ['--display', fileNam + '@' + characterOffsetToByteOffset(document.getText(), document.offsetAt(position)) + mode, 
-		'--no-output', 
-		'--cpp', '_', 
-		'--connect', '6000', 
-		'--remap', 'flash:openfl', 
+	let _output = spawnSync('haxe', ['--display', fileNam + '@' + characterOffsetToByteOffset(document.getText(), document.offsetAt(position)) + mode,
+		'--no-output',
+		'--cpp', '_',
+		'--connect', '6000',
+		'--remap', 'flash:openfl',
 		'--macro flixel.system.macros.FlxDefines.run()',
 		'--macro haxe.macro.Compiler.addClassPath("' + funkinPath + '")',
 		'--macro haxe.macro.Compiler.addClassPath("' + funkinSource + '")',
@@ -879,11 +884,11 @@ async function execCommand(document: vscode.TextDocument, position: vscode.Posit
 	return rpc;
 }
 
-function getHScriptExtension():string {
+function getHScriptExtension(): string {
 	return "." + vscode.workspace.getConfiguration().get("funkinvscode.hscriptFileExtension") as string;
 }
 
-function updateLib(lib:string, terminal:vscode.Terminal) {
+function updateLib(lib: string, terminal: vscode.Terminal) {
 	let swagCommand = "haxelib install " + lib;
 	(vscode.workspace.getConfiguration().get("funkinvscode.haxelibs") as Array<string>).forEach(clib => {
 		const libProps = clib.split(" ");
@@ -915,8 +920,8 @@ function updateLib(lib:string, terminal:vscode.Terminal) {
 	terminal.sendText(swagCommand);
 }
 
-function updateLibs(terminal: vscode.Terminal, ignore?:string) {
-	let commands:Array<string> = [];
+function updateLibs(terminal: vscode.Terminal, ignore?: string) {
+	let commands: Array<string> = [];
 	(vscode.workspace.getConfiguration().get("funkinvscode.haxelibs") as Array<string>).forEach(clib => {
 		const libProps = clib.split(" ");
 		let swagCommand = "haxelib install " + libProps[0];

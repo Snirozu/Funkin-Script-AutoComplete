@@ -43,20 +43,15 @@
 		"configuration": {
 			"title": "Funkin Script AutoComplete",
 			"properties": {
-				"funkinvscode.luaEngine": {
+				"funkinvscode.engine": {
 					"type": "string",
-					"default": "psych_latest",
-					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete\nRequires VSCode Restart to take effect!",
-					"enum": [
-						"psych_latest",
-						"psych_0.7",
-						"psych_0.6"
-					],
-					"enumItemLabels": [
-						"Psych Engine (latest)",
-						"Psych Engine (v0.7)",
-						"Psych Engine (v0.6)"
-					]
+					"default": "psych_0.7",
+					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete.\nRequires Restart/Reload to take effect."
+				},
+				"funkinvscode.data": {
+					"type": "string",
+					"default": "./data/",
+					"description": "Path to the folder containing all the descriptions for the different engines."
 				},
 				"funkinvscode.enableOnlyOnCertainScripts": {
 					"type": "boolean",

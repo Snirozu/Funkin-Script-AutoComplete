@@ -45,7 +45,7 @@
 			"properties": {
 				"funkinvscode.engine": {
 					"type": "string",
-					"default": "psych_0.7",
+					"default": "psych_latest",
 					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete.\nRequires Restart/Reload to take effect."
 				},
 				"funkinvscode.data": {
@@ -94,6 +94,7 @@
 						"openfl",
 						"polymod",
 						"thx.semver",
+						"thx.core",
 						"FlxPartialSound https://github.com/FunkinCrew/FlxPartialSound.git"
 					],
 					"description": "The Haxelibs you want to use\nRequires VSCode Restart to take effect!"

@@ -1,0 +1,1898 @@
+{
+    "$psych_version": "1.0.2h",
+    "functions": {
+        "getAchievementScore": {
+            "returns": "float",
+            "args": "name:String",
+            "documentation": "Returns the score for Achievements with counters (like \"Roadkill Enthusiast\"). Returns -1 and throws an error if the Achievement couldn't be found.\n`name` - Achievement internal name.\n**Examples:**\n* `getAchievementScore('roadkill_enthusiast')` - Will Return the current score of \"Roadkill Enthusiast\"."
+        },
+        "setAchievementScore": {
+            "returns": "float",
+            "args": "name:String, ?value:Float = 0, ?saveIfNotUnlocked:Bool = true",
+            "documentation": ""
+        },
+        "addAchievementScore": {
+            "returns": "float",
+            "args": "name:String, ?value:Float = 1, ?saveIfNotUnlocked:Bool = true",
+            "documentation": ""
+        },
+        "unlockAchievement": {
+            "returns": "?",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "isAchievementUnlocked": {
+            "returns": "?",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "achievementExists": {
+            "returns": "boolean",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "changeDiscordPresence": {
+            "returns": "void",
+            "args": "details:String = 'In the Menus', ?state:String, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float, largeImageKey:String = 'icon'",
+            "documentation": ""
+        },
+        "changeDiscordClientID": {
+            "returns": "void",
+            "args": "?newID:String",
+            "documentation": ""
+        },
+        "getTranslationPhrase": {
+            "returns": "string",
+            "args": "key:String, ?defaultPhrase:String, ?values:Array<Dynamic> = null",
+            "documentation": ""
+        },
+        "getFileTranslation": {
+            "returns": "string",
+            "args": "key:String",
+            "documentation": ""
+        },
+        "addAnimationByIndicesLoop": {
+            "returns": "?",
+            "args": "obj:String, name:String, prefix:String, indices:String, framerate:Int = 24",
+            "documentation": "",
+            "deprecated": "Use `addAnimationByIndices` instead"
+        },
+        "objectPlayAnimation": {
+            "returns": "boolean",
+            "args": "obj:String, name:String, forced:Bool = false, ?startFrame:Int = 0",
+            "documentation": "",
+            "deprecated": "Use `playAnim` instead"
+        },
+        "characterPlayAnim": {
+            "returns": "void",
+            "args": "character:String, anim:String, ?forced:Bool = false",
+            "documentation": "",
+            "deprecated": "Use `playAnim` instead"
+        },
+        "luaSpriteMakeGraphic": {
+            "returns": "void",
+            "args": "tag:String, width:Int, height:Int, color:String",
+            "documentation": "",
+            "deprecated": "Use `makeGraphic` instead"
+        },
+        "luaSpriteAddAnimationByPrefix": {
+            "returns": "void",
+            "args": "tag:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true",
+            "documentation": "",
+            "deprecated": "Use `addAnimationByPrefix` instead"
+        },
+        "luaSpriteAddAnimationByIndices": {
+            "returns": "void",
+            "args": "tag:String, name:String, prefix:String, indices:String, framerate:Int = 24",
+            "documentation": "",
+            "deprecated": "Use `addAnimationByIndices` instead"
+        },
+        "luaSpritePlayAnimation": {
+            "returns": "void",
+            "args": "tag:String, name:String, forced:Bool = false",
+            "documentation": "",
+            "deprecated": "Use `playAnim` instead"
+        },
+        "setLuaSpriteCamera": {
+            "returns": "boolean",
+            "args": "tag:String, camera:String = ''",
+            "documentation": "",
+            "deprecated": "Use `setObjectCamera` instead"
+        },
+        "setLuaSpriteScrollFactor": {
+            "returns": "boolean",
+            "args": "tag:String, scrollX:Float, scrollY:Float",
+            "documentation": "",
+            "deprecated": "Use `setScrollFactor` instead"
+        },
+        "scaleLuaSprite": {
+            "returns": "boolean",
+            "args": "tag:String, x:Float, y:Float",
+            "documentation": "",
+            "deprecated": "Use `scaleObject` instead"
+        },
+        "getPropertyLuaSprite": {
+            "returns": "?",
+            "args": "tag:String, variable:String",
+            "documentation": "",
+            "deprecated": "Use `getProperty` instead"
+        },
+        "setPropertyLuaSprite": {
+            "returns": "boolean",
+            "args": "tag:String, variable:String, value:Dynamic",
+            "documentation": "",
+            "deprecated": "Use `setProperty` instead"
+        },
+        "musicFadeIn": {
+            "returns": "void",
+            "args": "duration:Float, fromValue:Float = 0, toValue:Float = 1",
+            "documentation": "",
+            "deprecated": "Use `soundFadeIn` instead"
+        },
+        "musicFadeOut": {
+            "returns": "void",
+            "args": "duration:Float, toValue:Float = 0",
+            "documentation": "",
+            "deprecated": "Use `soundFadeOut` instead"
+        },
+        "updateHitboxFromGroup": {
+            "returns": "void",
+            "args": "group:String, index:Int",
+            "documentation": "",
+            "deprecated": "Use `updateHitbox` instead"
+        },
+        "keyboardJustPressed": {
+            "returns": "boolean",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "keyboardPressed": {
+            "returns": "boolean",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "keyboardReleased": {
+            "returns": "boolean",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "anyGamepadJustPressed": {
+            "returns": "boolean",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "anyGamepadPressed": {
+            "returns": "boolean",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "anyGamepadReleased": {
+            "returns": "boolean",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "gamepadAnalogX": {
+            "returns": "float",
+            "args": "id:Int, ?leftStick:Bool = true",
+            "documentation": ""
+        },
+        "gamepadAnalogY": {
+            "returns": "float",
+            "args": "id:Int, ?leftStick:Bool = true",
+            "documentation": ""
+        },
+        "gamepadJustPressed": {
+            "returns": "boolean",
+            "args": "id:Int, name:String",
+            "documentation": ""
+        },
+        "gamepadPressed": {
+            "returns": "boolean",
+            "args": "id:Int, name:String",
+            "documentation": ""
+        },
+        "gamepadReleased": {
+            "returns": "boolean",
+            "args": "id:Int, name:String",
+            "documentation": ""
+        },
+        "keyJustPressed": {
+            "returns": "boolean",
+            "args": "name:String = ''",
+            "documentation": ""
+        },
+        "keyPressed": {
+            "returns": "boolean",
+            "args": "name:String = ''",
+            "documentation": ""
+        },
+        "keyReleased": {
+            "returns": "boolean",
+            "args": "name:String = ''",
+            "documentation": ""
+        },
+        "initSaveData": {
+            "returns": "void",
+            "args": "name:String, ?folder:String = 'psychenginemods'",
+            "documentation": ""
+        },
+        "flushSaveData": {
+            "returns": "void",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "getDataFromSave": {
+            "returns": "?",
+            "args": "name:String, field:String, ?defaultValue:Dynamic = null",
+            "documentation": ""
+        },
+        "setDataFromSave": {
+            "returns": "void",
+            "args": "name:String, field:String, value:Dynamic",
+            "documentation": ""
+        },
+        "eraseSaveData": {
+            "returns": "void",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "checkFileExists": {
+            "returns": "boolean",
+            "args": "filename:String, ?absolute:Bool = false",
+            "documentation": ""
+        },
+        "saveFile": {
+            "returns": "boolean",
+            "args": "path:String, content:String, ?absolute:Bool = false",
+            "documentation": ""
+        },
+        "deleteFile": {
+            "returns": "boolean",
+            "args": "path:String, ?ignoreModFolders:Bool = false, ?absolute:Bool = false",
+            "documentation": ""
+        },
+        "getTextFromFile": {
+            "returns": "string",
+            "args": "path:String, ?ignoreModFolders:Bool = false",
+            "documentation": ""
+        },
+        "directoryFileList": {
+            "returns": "array",
+            "args": "folder:String",
+            "documentation": ""
+        },
+        "stringStartsWith": {
+            "returns": "boolean",
+            "args": "str:String, start:String",
+            "documentation": ""
+        },
+        "stringEndsWith": {
+            "returns": "boolean",
+            "args": "str:String, end:String",
+            "documentation": ""
+        },
+        "stringSplit": {
+            "returns": "array",
+            "args": "str:String, split:String",
+            "documentation": ""
+        },
+        "stringTrim": {
+            "returns": "string",
+            "args": "str:String",
+            "documentation": ""
+        },
+        "getRandomInt": {
+            "returns": "int",
+            "args": "min:Int, max:Int = FlxMath.MAX_VALUE_INT, exclude:String = ''",
+            "documentation": ""
+        },
+        "getRandomFloat": {
+            "returns": "float",
+            "args": "min:Float, max:Float = 1, exclude:String = ''",
+            "documentation": ""
+        },
+        "getRandomBool": {
+            "returns": "boolean",
+            "args": "chance:Float = 50",
+            "documentation": ""
+        },
+        "makeFlxAnimateSprite": {
+            "returns": "void",
+            "args": "tag:String, ?x:Float = 0, ?y:Float = 0, ?loadFolder:String = null",
+            "documentation": ""
+        },
+        "loadAnimateAtlas": {
+            "returns": "void",
+            "args": "tag:String, folderOrImg:String, ?spriteJson:String = null, ?animationJson:String = null",
+            "documentation": ""
+        },
+        "addAnimationBySymbol": {
+            "returns": "boolean",
+            "args": "tag:String, name:String, symbol:String, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0",
+            "documentation": ""
+        },
+        "addAnimationBySymbolIndices": {
+            "returns": "boolean",
+            "args": "tag:String, name:String, symbol:String, ?indices:Any = null, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0",
+            "documentation": ""
+        },
+        "getRunningScripts": {
+            "returns": "array",
+            "args": "",
+            "documentation": ""
+        },
+        "setOnScripts": {
+            "returns": "void",
+            "args": "varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null",
+            "documentation": ""
+        },
+        "setOnHScript": {
+            "returns": "void",
+            "args": "varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null",
+            "documentation": ""
+        },
+        "setOnLuas": {
+            "returns": "void",
+            "args": "varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null",
+            "documentation": ""
+        },
+        "callOnScripts": {
+            "returns": "?",
+            "args": "funcName:String, ?args:Array<Dynamic> = null, ?ignoreStops=false, ?ignoreSelf:Bool = true, ?excludeScripts:Array<String> = null, ?excludeValues:Array<Dynamic> = null",
+            "documentation": ""
+        },
+        "callOnLuas": {
+            "returns": "?",
+            "args": "funcName:String, ?args:Array<Dynamic> = null, ?ignoreStops=false, ?ignoreSelf:Bool = true, ?excludeScripts:Array<String> = null, ?excludeValues:Array<Dynamic> = null",
+            "documentation": ""
+        },
+        "callOnHScript": {
+            "returns": "?",
+            "args": "funcName:String, ?args:Array<Dynamic> = null, ?ignoreStops=false, ?ignoreSelf:Bool = true, ?excludeScripts:Array<String> = null, ?excludeValues:Array<Dynamic> = null",
+            "documentation": ""
+        },
+        "callScript": {
+            "returns": "?",
+            "args": "luaFile:String, funcName:String, ?args:Array<Dynamic> = null",
+            "documentation": ""
+        },
+        "isRunning": {
+            "returns": "boolean",
+            "args": "scriptFile:String",
+            "documentation": ""
+        },
+        "setVar": {
+            "returns": "?",
+            "args": "varName:String, value:Dynamic",
+            "documentation": ""
+        },
+        "getVar": {
+            "returns": "?",
+            "args": "varName:String",
+            "documentation": ""
+        },
+        "addLuaScript": {
+            "returns": "void",
+            "args": "luaFile:String, ?ignoreAlreadyRunning:Bool = false",
+            "documentation": ""
+        },
+        "addHScript": {
+            "returns": "void",
+            "args": "scriptFile:String, ?ignoreAlreadyRunning:Bool = false",
+            "documentation": ""
+        },
+        "removeLuaScript": {
+            "returns": "boolean",
+            "args": "luaFile:String",
+            "documentation": ""
+        },
+        "removeHScript": {
+            "returns": "boolean",
+            "args": "scriptFile:String",
+            "documentation": ""
+        },
+        "loadSong": {
+            "returns": "void",
+            "args": "?name:String = null, ?difficultyNum:Int = -1",
+            "documentation": ""
+        },
+        "loadGraphic": {
+            "returns": "void",
+            "args": "variable:String, image:String, ?gridX:Int = 0, ?gridY:Int = 0",
+            "documentation": ""
+        },
+        "loadFrames": {
+            "returns": "void",
+            "args": "variable:String, image:String, spriteType:String = 'auto'",
+            "documentation": ""
+        },
+        "loadMultipleFrames": {
+            "returns": "void",
+            "args": "variable:String, images:Array<String>",
+            "documentation": ""
+        },
+        "getObjectOrder": {
+            "returns": "int",
+            "args": "obj:String, ?group:String = null",
+            "documentation": ""
+        },
+        "setObjectOrder": {
+            "returns": "void",
+            "args": "obj:String, position:Int, ?group:String = null",
+            "documentation": ""
+        },
+        "startTween": {
+            "returns": "string",
+            "args": "tag:String, vars:String, values:Any = null, duration:Float, ?options:Any = null",
+            "documentation": ""
+        },
+        "doTweenX": {
+            "returns": "string",
+            "args": "tag:String, vars:String, value:Dynamic, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "doTweenY": {
+            "returns": "string",
+            "args": "tag:String, vars:String, value:Dynamic, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "doTweenAngle": {
+            "returns": "string",
+            "args": "tag:String, vars:String, value:Dynamic, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "doTweenAlpha": {
+            "returns": "string",
+            "args": "tag:String, vars:String, value:Dynamic, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "doTweenZoom": {
+            "returns": "string",
+            "args": "tag:String, camera:String, value:Dynamic, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "doTweenColor": {
+            "returns": "string",
+            "args": "tag:String, vars:String, targetColor:String, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "noteTweenX": {
+            "returns": "string",
+            "args": "tag:String, note:Int, value:Dynamic, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "noteTweenY": {
+            "returns": "string",
+            "args": "tag:String, note:Int, value:Dynamic, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "noteTweenAngle": {
+            "returns": "string",
+            "args": "tag:String, note:Int, value:Dynamic, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "noteTweenAlpha": {
+            "returns": "string",
+            "args": "tag:String, note:Int, value:Dynamic, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "noteTweenDirection": {
+            "returns": "string",
+            "args": "tag:String, note:Int, value:Dynamic, duration:Float, ?ease:String = 'linear'",
+            "documentation": ""
+        },
+        "mouseClicked": {
+            "returns": "boolean",
+            "args": "?button:String = 'left'",
+            "documentation": ""
+        },
+        "mousePressed": {
+            "returns": "boolean",
+            "args": "?button:String = 'left'",
+            "documentation": ""
+        },
+        "mouseReleased": {
+            "returns": "boolean",
+            "args": "?button:String = 'left'",
+            "documentation": ""
+        },
+        "cancelTween": {
+            "returns": "void",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "runTimer": {
+            "returns": "string",
+            "args": "tag:String, time:Float = 1, loops:Int = 1",
+            "documentation": ""
+        },
+        "cancelTimer": {
+            "returns": "void",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "addScore": {
+            "returns": "void",
+            "args": "value:Int = 0",
+            "documentation": ""
+        },
+        "addMisses": {
+            "returns": "void",
+            "args": "value:Int = 0",
+            "documentation": ""
+        },
+        "addHits": {
+            "returns": "void",
+            "args": "value:Int = 0",
+            "documentation": ""
+        },
+        "setScore": {
+            "returns": "void",
+            "args": "value:Int = 0",
+            "documentation": ""
+        },
+        "setMisses": {
+            "returns": "void",
+            "args": "value:Int = 0",
+            "documentation": ""
+        },
+        "setHits": {
+            "returns": "void",
+            "args": "value:Int = 0",
+            "documentation": ""
+        },
+        "setHealth": {
+            "returns": "void",
+            "args": "value:Float = 1",
+            "documentation": ""
+        },
+        "addHealth": {
+            "returns": "void",
+            "args": "value:Float = 0",
+            "documentation": ""
+        },
+        "getHealth": {
+            "returns": "float",
+            "args": "",
+            "documentation": ""
+        },
+        "FlxColor": {
+            "returns": "int",
+            "args": "color:String",
+            "documentation": ""
+        },
+        "getColorFromName": {
+            "returns": "int",
+            "args": "color:String",
+            "documentation": ""
+        },
+        "getColorFromString": {
+            "returns": "int",
+            "args": "color:String",
+            "documentation": ""
+        },
+        "getColorFromHex": {
+            "returns": "int",
+            "args": "color:String",
+            "documentation": ""
+        },
+        "addCharacterToList": {
+            "returns": "void",
+            "args": "name:String, type:String",
+            "documentation": ""
+        },
+        "precacheImage": {
+            "returns": "void",
+            "args": "name:String, ?allowGPU:Bool = true",
+            "documentation": ""
+        },
+        "precacheSound": {
+            "returns": "void",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "precacheMusic": {
+            "returns": "void",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "triggerEvent": {
+            "returns": "boolean",
+            "args": "name:String, ?value1:String = '', ?value2:String = ''",
+            "documentation": ""
+        },
+        "startCountdown": {
+            "returns": "boolean",
+            "args": "",
+            "documentation": ""
+        },
+        "endSong": {
+            "returns": "boolean",
+            "args": "",
+            "documentation": ""
+        },
+        "restartSong": {
+            "returns": "boolean",
+            "args": "?skipTransition:Bool = false",
+            "documentation": ""
+        },
+        "exitSong": {
+            "returns": "boolean",
+            "args": "?skipTransition:Bool = false",
+            "documentation": ""
+        },
+        "getSongPosition": {
+            "returns": "float",
+            "args": "",
+            "documentation": ""
+        },
+        "getCharacterX": {
+            "returns": "float",
+            "args": "type:String",
+            "documentation": ""
+        },
+        "setCharacterX": {
+            "returns": "void",
+            "args": "type:String, value:Float",
+            "documentation": ""
+        },
+        "getCharacterY": {
+            "returns": "float",
+            "args": "type:String",
+            "documentation": ""
+        },
+        "setCharacterY": {
+            "returns": "void",
+            "args": "type:String, value:Float",
+            "documentation": ""
+        },
+        "cameraSetTarget": {
+            "returns": "void",
+            "args": "target:String",
+            "documentation": ""
+        },
+        "setCameraScroll": {
+            "returns": "void",
+            "args": "x:Float, y:Float",
+            "documentation": ""
+        },
+        "setCameraFollowPoint": {
+            "returns": "void",
+            "args": "x:Float, y:Float",
+            "documentation": ""
+        },
+        "addCameraScroll": {
+            "returns": "void",
+            "args": "?x:Float = 0, ?y:Float = 0",
+            "documentation": ""
+        },
+        "addCameraFollowPoint": {
+            "returns": "void",
+            "args": "?x:Float = 0, ?y:Float = 0",
+            "documentation": ""
+        },
+        "getCameraScrollX": {
+            "returns": "float",
+            "args": "",
+            "documentation": ""
+        },
+        "getCameraScrollY": {
+            "returns": "float",
+            "args": "",
+            "documentation": ""
+        },
+        "getCameraFollowX": {
+            "returns": "float",
+            "args": "",
+            "documentation": ""
+        },
+        "getCameraFollowY": {
+            "returns": "float",
+            "args": "",
+            "documentation": ""
+        },
+        "cameraShake": {
+            "returns": "void",
+            "args": "camera:String, intensity:Float, duration:Float",
+            "documentation": ""
+        },
+        "cameraFlash": {
+            "returns": "void",
+            "args": "camera:String, color:String, duration:Float,forced:Bool",
+            "documentation": ""
+        },
+        "cameraFade": {
+            "returns": "void",
+            "args": "camera:String, color:String, duration:Float, forced:Bool, ?fadeOut:Bool = false",
+            "documentation": ""
+        },
+        "setRatingPercent": {
+            "returns": "void",
+            "args": "value:Float",
+            "documentation": ""
+        },
+        "setRatingName": {
+            "returns": "void",
+            "args": "value:String",
+            "documentation": ""
+        },
+        "setRatingFC": {
+            "returns": "void",
+            "args": "value:String",
+            "documentation": ""
+        },
+        "updateScoreText": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        },
+        "getMouseX": {
+            "returns": "float",
+            "args": "?camera:String = 'game'",
+            "documentation": ""
+        },
+        "getMouseY": {
+            "returns": "float",
+            "args": "?camera:String = 'game'",
+            "documentation": ""
+        },
+        "getMidpointX": {
+            "returns": "float",
+            "args": "variable:String",
+            "documentation": ""
+        },
+        "getMidpointY": {
+            "returns": "float",
+            "args": "variable:String",
+            "documentation": ""
+        },
+        "getGraphicMidpointX": {
+            "returns": "float",
+            "args": "variable:String",
+            "documentation": ""
+        },
+        "getGraphicMidpointY": {
+            "returns": "float",
+            "args": "variable:String",
+            "documentation": ""
+        },
+        "getScreenPositionX": {
+            "returns": "float",
+            "args": "variable:String, ?camera:String = 'game'",
+            "documentation": ""
+        },
+        "getScreenPositionY": {
+            "returns": "float",
+            "args": "variable:String, ?camera:String = 'game'",
+            "documentation": ""
+        },
+        "characterDance": {
+            "returns": "void",
+            "args": "character:String",
+            "documentation": ""
+        },
+        "makeLuaSprite": {
+            "returns": "void",
+            "args": "tag:String, ?image:String = null, ?x:Float = 0, ?y:Float = 0",
+            "documentation": ""
+        },
+        "makeAnimatedLuaSprite": {
+            "returns": "void",
+            "args": "tag:String, ?image:String = null, ?x:Float = 0, ?y:Float = 0, ?spriteType:String = 'auto'",
+            "documentation": ""
+        },
+        "makeGraphic": {
+            "returns": "void",
+            "args": "obj:String, width:Int = 256, height:Int = 256, color:String = 'FFFFFF'",
+            "documentation": ""
+        },
+        "addAnimationByPrefix": {
+            "returns": "boolean",
+            "args": "obj:String, name:String, prefix:String, framerate:Float = 24, loop:Bool = true",
+            "documentation": ""
+        },
+        "addAnimation": {
+            "returns": "boolean",
+            "args": "obj:String, name:String, frames:Any, framerate:Float = 24, loop:Bool = true",
+            "documentation": ""
+        },
+        "addAnimationByIndices": {
+            "returns": "boolean",
+            "args": "obj:String, name:String, prefix:String, indices:Any, framerate:Float = 24, loop:Bool = false",
+            "documentation": ""
+        },
+        "playAnim": {
+            "returns": "boolean",
+            "args": "obj:String, name:String, ?forced:Bool = false, ?reverse:Bool = false, ?startFrame:Int = 0",
+            "documentation": ""
+        },
+        "addOffset": {
+            "returns": "boolean",
+            "args": "obj:String, anim:String, x:Float, y:Float",
+            "documentation": ""
+        },
+        "setScrollFactor": {
+            "returns": "void",
+            "args": "obj:String, scrollX:Float, scrollY:Float",
+            "documentation": ""
+        },
+        "addLuaSprite": {
+            "returns": "void",
+            "args": "tag:String, ?inFront:Bool = false",
+            "documentation": ""
+        },
+        "setGraphicSize": {
+            "returns": "void",
+            "args": "obj:String, x:Float, y:Float = 0, updateHitbox:Bool = true",
+            "documentation": ""
+        },
+        "scaleObject": {
+            "returns": "void",
+            "args": "obj:String, x:Float, y:Float, updateHitbox:Bool = true",
+            "documentation": ""
+        },
+        "updateHitbox": {
+            "returns": "void",
+            "args": "obj:String",
+            "documentation": ""
+        },
+        "removeLuaSprite": {
+            "returns": "void",
+            "args": "tag:String, destroy:Bool = true, ?group:String = null",
+            "documentation": ""
+        },
+        "luaSpriteExists": {
+            "returns": "boolean",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "luaTextExists": {
+            "returns": "boolean",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "luaSoundExists": {
+            "returns": "boolean",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "setHealthBarColors": {
+            "returns": "void",
+            "args": "left:String, right:String",
+            "documentation": ""
+        },
+        "setTimeBarColors": {
+            "returns": "void",
+            "args": "left:String, right:String",
+            "documentation": ""
+        },
+        "setObjectCamera": {
+            "returns": "boolean",
+            "args": "obj:String, camera:String = 'game'",
+            "documentation": ""
+        },
+        "setBlendMode": {
+            "returns": "boolean",
+            "args": "obj:String, blend:String = ''",
+            "documentation": ""
+        },
+        "screenCenter": {
+            "returns": "void",
+            "args": "obj:String, pos:String = 'xy'",
+            "documentation": ""
+        },
+        "objectsOverlap": {
+            "returns": "boolean",
+            "args": "obj1:String, obj2:String",
+            "documentation": ""
+        },
+        "getPixelColor": {
+            "returns": "int",
+            "args": "obj:String, x:Int, y:Int",
+            "documentation": ""
+        },
+        "startDialogue": {
+            "returns": "boolean",
+            "args": "dialogueFile:String, ?music:String = null",
+            "documentation": ""
+        },
+        "startVideo": {
+            "returns": "boolean",
+            "args": "videoFile:String, ?canSkip:Bool = true, ?forMidSong:Bool = false, ?shouldLoop:Bool = false, ?playOnLoad:Bool = true",
+            "documentation": ""
+        },
+        "playMusic": {
+            "returns": "void",
+            "args": "sound:String, ?volume:Float = 1, ?loop:Bool = false",
+            "documentation": ""
+        },
+        "playSound": {
+            "returns": "string",
+            "args": "sound:String, ?volume:Float = 1, ?tag:String = null, ?loop:Bool = false",
+            "documentation": ""
+        },
+        "stopSound": {
+            "returns": "void",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "pauseSound": {
+            "returns": "void",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "resumeSound": {
+            "returns": "void",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "soundFadeIn": {
+            "returns": "void",
+            "args": "tag:String, duration:Float, fromValue:Float = 0, toValue:Float = 1",
+            "documentation": ""
+        },
+        "soundFadeOut": {
+            "returns": "void",
+            "args": "tag:String, duration:Float, toValue:Float = 0",
+            "documentation": ""
+        },
+        "soundFadeCancel": {
+            "returns": "void",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "getSoundVolume": {
+            "returns": "float",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "setSoundVolume": {
+            "returns": "void",
+            "args": "tag:String, value:Float",
+            "documentation": ""
+        },
+        "getSoundTime": {
+            "returns": "float",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "setSoundTime": {
+            "returns": "void",
+            "args": "tag:String, value:Float",
+            "documentation": ""
+        },
+        "getSoundPitch": {
+            "returns": "float",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "setSoundPitch": {
+            "returns": "void",
+            "args": "tag:String, value:Float, ?doPause:Bool = false",
+            "documentation": ""
+        },
+        "getModSetting": {
+            "returns": "?",
+            "args": "saveTag:String, ?modName:String = null",
+            "documentation": ""
+        },
+        "debugPrint": {
+            "returns": "void",
+            "args": "text:Dynamic = '', color:String = 'WHITE'",
+            "documentation": ""
+        },
+        "close": {
+            "returns": "boolean",
+            "args": "",
+            "documentation": ""
+        },
+        "runHaxeCode": {
+            "returns": "?",
+            "args": "codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null",
+            "documentation": ""
+        },
+        "runHaxeFunction": {
+            "returns": "?",
+            "args": "funcToRun:String, ?funcArgs:Array<Dynamic> = null",
+            "documentation": ""
+        },
+        "addHaxeLibrary": {
+            "returns": "void",
+            "args": "libName:String, ?libPackage:String = ''",
+            "documentation": ""
+        },
+        "getProperty": {
+            "returns": "?",
+            "args": "variable:String, ?allowMaps:Bool = false",
+            "documentation": ""
+        },
+        "setProperty": {
+            "returns": "?",
+            "args": "variable:String, value:Dynamic, ?allowMaps:Bool = false, ?allowInstances:Bool = false",
+            "documentation": ""
+        },
+        "getPropertyFromClass": {
+            "returns": "?",
+            "args": "classVar:String, variable:String, ?allowMaps:Bool = false",
+            "documentation": ""
+        },
+        "setPropertyFromClass": {
+            "returns": "?",
+            "args": "classVar:String, variable:String, value:Dynamic, ?allowMaps:Bool = false, ?allowInstances:Bool = false",
+            "documentation": ""
+        },
+        "getPropertyFromGroup": {
+            "returns": "?",
+            "args": "group:String, index:Int, variable:Dynamic, ?allowMaps:Bool = false",
+            "documentation": ""
+        },
+        "setPropertyFromGroup": {
+            "returns": "?",
+            "args": "group:String, index:Int, variable:Dynamic, value:Dynamic, ?allowMaps:Bool = false, ?allowInstances:Bool = false",
+            "documentation": ""
+        },
+        "addToGroup": {
+            "returns": "void",
+            "args": "group:String, tag:String, ?index:Int = -1",
+            "documentation": ""
+        },
+        "removeFromGroup": {
+            "returns": "void",
+            "args": "group:String, ?index:Int = -1, ?tag:String = null, ?destroy:Bool = true",
+            "documentation": ""
+        },
+        "callMethod": {
+            "returns": "?",
+            "args": "funcToRun:String, ?args:Array<Dynamic>",
+            "documentation": ""
+        },
+        "callMethodFromClass": {
+            "returns": "?",
+            "args": "className:String, funcToRun:String, ?args:Array<Dynamic>",
+            "documentation": ""
+        },
+        "createInstance": {
+            "returns": "boolean",
+            "args": "variableToSave:String, className:String, ?args:Array<Dynamic>",
+            "documentation": ""
+        },
+        "addInstance": {
+            "returns": "void",
+            "args": "objectName:String, ?inFront:Bool = false",
+            "documentation": ""
+        },
+        "instanceArg": {
+            "returns": "string",
+            "args": "instanceName:String, ?className:String = null",
+            "documentation": ""
+        },
+        "initLuaShader": {
+            "returns": "boolean",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "setSpriteShader": {
+            "returns": "boolean",
+            "args": "obj:String, shader:String",
+            "documentation": ""
+        },
+        "removeSpriteShader": {
+            "returns": "boolean",
+            "args": "obj:String",
+            "documentation": ""
+        },
+        "getShaderBool": {
+            "returns": "boolean",
+            "args": "obj:String, prop:String",
+            "documentation": ""
+        },
+        "getShaderBoolArray": {
+            "returns": "array",
+            "args": "obj:String, prop:String",
+            "documentation": ""
+        },
+        "getShaderInt": {
+            "returns": "int",
+            "args": "obj:String, prop:String",
+            "documentation": ""
+        },
+        "getShaderIntArray": {
+            "returns": "array",
+            "args": "obj:String, prop:String",
+            "documentation": ""
+        },
+        "getShaderFloat": {
+            "returns": "float",
+            "args": "obj:String, prop:String",
+            "documentation": ""
+        },
+        "getShaderFloatArray": {
+            "returns": "array",
+            "args": "obj:String, prop:String",
+            "documentation": ""
+        },
+        "setShaderBool": {
+            "returns": "boolean",
+            "args": "obj:String, prop:String, value:Bool",
+            "documentation": ""
+        },
+        "setShaderBoolArray": {
+            "returns": "boolean",
+            "args": "obj:String, prop:String, values:Dynamic",
+            "documentation": ""
+        },
+        "setShaderInt": {
+            "returns": "boolean",
+            "args": "obj:String, prop:String, value:Int",
+            "documentation": ""
+        },
+        "setShaderIntArray": {
+            "returns": "boolean",
+            "args": "obj:String, prop:String, values:Dynamic",
+            "documentation": ""
+        },
+        "setShaderFloat": {
+            "returns": "boolean",
+            "args": "obj:String, prop:String, value:Float",
+            "documentation": ""
+        },
+        "setShaderFloatArray": {
+            "returns": "boolean",
+            "args": "obj:String, prop:String, values:Dynamic",
+            "documentation": ""
+        },
+        "setShaderSampler2D": {
+            "returns": "boolean",
+            "args": "obj:String, prop:String, bitmapdataPath:String",
+            "documentation": ""
+        },
+        "makeLuaText": {
+            "returns": "void",
+            "args": "tag:String, ?text:String = '', ?width:Int = 0, ?x:Float = 0, ?y:Float = 0",
+            "documentation": ""
+        },
+        "setTextString": {
+            "returns": "boolean",
+            "args": "tag:String, text:String",
+            "documentation": ""
+        },
+        "setTextSize": {
+            "returns": "boolean",
+            "args": "tag:String, size:Int",
+            "documentation": ""
+        },
+        "setTextWidth": {
+            "returns": "boolean",
+            "args": "tag:String, width:Float",
+            "documentation": ""
+        },
+        "setTextHeight": {
+            "returns": "boolean",
+            "args": "tag:String, height:Float",
+            "documentation": ""
+        },
+        "setTextAutoSize": {
+            "returns": "boolean",
+            "args": "tag:String, value:Bool",
+            "documentation": ""
+        },
+        "setTextBorder": {
+            "returns": "boolean",
+            "args": "tag:String, size:Float, color:String, ?style:String = 'outline'",
+            "documentation": ""
+        },
+        "setTextColor": {
+            "returns": "boolean",
+            "args": "tag:String, color:String",
+            "documentation": ""
+        },
+        "setTextFont": {
+            "returns": "boolean",
+            "args": "tag:String, newFont:String",
+            "documentation": ""
+        },
+        "setTextItalic": {
+            "returns": "boolean",
+            "args": "tag:String, italic:Bool",
+            "documentation": ""
+        },
+        "setTextAlignment": {
+            "returns": "boolean",
+            "args": "tag:String, alignment:String = 'left'",
+            "documentation": ""
+        },
+        "getTextString": {
+            "returns": "string",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "getTextSize": {
+            "returns": "int",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "getTextFont": {
+            "returns": "string",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "getTextWidth": {
+            "returns": "float",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "addLuaText": {
+            "returns": "void",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "removeLuaText": {
+            "returns": "void",
+            "args": "tag:String, destroy:Bool = true",
+            "documentation": ""
+        }
+    },
+    "variables": {
+        "Function_StopLua": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "Function_StopHScript": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "Function_StopAll": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "Function_Stop": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "Function_Continue": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "luaDebugMode": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "luaDeprecatedWarnings": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "version": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "modFolder": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "curBpm": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "bpm": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "scrollSpeed": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "crochet": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "stepCrochet": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "songLength": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "songName": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "songPath": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "loadedSongName": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "loadedSongPath": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "chartPath": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "startedCountdown": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "curStage": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "isStoryMode": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "difficulty": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "difficultyName": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "difficultyPath": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "difficultyNameTranslation": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "weekRaw": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "week": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "seenCutscene": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "hasVocals": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "screenWidth": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "screenHeight": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "curSection": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "curBeat": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "curStep": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "curDecBeat": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "curDecStep": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "score": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "misses": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "hits": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "combo": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "deaths": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "rating": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "ratingName": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "ratingFC": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "totalPlayed": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "totalNotesHit": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "inGameOver": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "mustHitSection": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "altAnim": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "gfSection": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "healthGainMult": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "healthLossMult": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "playbackRate": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "guitarHeroSustains": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "instakillOnMiss": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "botPlay": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "practice": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "defaultPlayerStrumX0": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultPlayerStrumX1": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultPlayerStrumX2": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultPlayerStrumX3": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultPlayerStrumY0": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultPlayerStrumY1": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultPlayerStrumY2": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultPlayerStrumY3": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultOpponentStrumX0": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultOpponentStrumX1": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultOpponentStrumX2": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultOpponentStrumX3": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultOpponentStrumY0": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultOpponentStrumY1": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultOpponentStrumY2": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultOpponentStrumY3": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultBoyfriendX": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultBoyfriendY": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultOpponentX": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultOpponentY": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultGirlfriendX": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "defaultGirlfriendY": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "boyfriendName": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "dadName": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "gfName": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "downscroll": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "middlescroll": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "framerate": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "ghostTapping": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "hideHud": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "timeBarType": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "scoreZoom": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "cameraZoomOnBeat": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "flashingLights": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "noteOffset": {
+            "returns": "int",
+            "documentation": ""
+        },
+        "healthBarAlpha": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "noResetButton": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "lowQuality": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "shadersEnabled": {
+            "returns": "boolean",
+            "documentation": ""
+        },
+        "scriptName": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "currentModDirectory": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "noteSkin": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "noteSkinPostfix": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "splashSkin": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "splashSkinPostfix": {
+            "returns": "string",
+            "documentation": ""
+        },
+        "splashAlpha": {
+            "returns": "float",
+            "documentation": ""
+        },
+        "buildTarget": {
+            "returns": "string",
+            "documentation": ""
+        }
+    },
+    "events": {
+        "onCustomSubstateCreate": {
+            "returns": "void",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "onCustomSubstateCreatePost": {
+            "returns": "void",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "onCustomSubstateUpdate": {
+            "returns": "void",
+            "args": "name:String, elapsed:Float",
+            "documentation": ""
+        },
+        "onCustomSubstateUpdatePost": {
+            "returns": "void",
+            "args": "name:String, elapsed:Float",
+            "documentation": ""
+        },
+        "onCustomSubstateDestroy": {
+            "returns": "void",
+            "args": "name:String",
+            "documentation": ""
+        },
+        "onCreatePost": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        },
+        "onStartCountdown": {
+            "returns": "?",
+            "args": "",
+            "documentation": ""
+        },
+        "onCountdownStarted": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        },
+        "preUpdateScore": {
+            "returns": "?",
+            "args": "miss:Bool",
+            "documentation": ""
+        },
+        "onUpdateScore": {
+            "returns": "void",
+            "args": "miss:Bool",
+            "documentation": ""
+        },
+        "onNextDialogue": {
+            "returns": "void",
+            "args": "dialogueCount:Int",
+            "documentation": ""
+        },
+        "onSkipDialogue": {
+            "returns": "void",
+            "args": "dialogueCount:Int",
+            "documentation": ""
+        },
+        "onSongStart": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        },
+        "eventEarlyTrigger": {
+            "returns": "void",
+            "args": "event:String, value1:String, value2:String, strumTime:Float",
+            "documentation": ""
+        },
+        "onEventPushed": {
+            "returns": "void",
+            "args": "event:String, value1:String, value2:String, strumTime:Float",
+            "documentation": ""
+        },
+        "onResume": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        },
+        "onUpdate": {
+            "returns": "void",
+            "args": "elapsed:Float",
+            "documentation": ""
+        },
+        "onPause": {
+            "returns": "?",
+            "args": "",
+            "documentation": ""
+        },
+        "onUpdatePost": {
+            "returns": "void",
+            "args": "elapsed:Float",
+            "documentation": ""
+        },
+        "onGameOver": {
+            "returns": "?",
+            "args": "",
+            "documentation": ""
+        },
+        "onEvent": {
+            "returns": "void",
+            "args": "event:String, value1:String, value2:String, strumTime:Float",
+            "documentation": ""
+        },
+        "onMoveCamera": {
+            "returns": "void",
+            "args": "character:String",
+            "documentation": ""
+        },
+        "onEndSong": {
+            "returns": "?",
+            "args": "",
+            "documentation": ""
+        },
+        "onKeyPressPre": {
+            "returns": "?",
+            "args": "key:Int",
+            "documentation": ""
+        },
+        "onGhostTap": {
+            "returns": "void",
+            "args": "key:Int",
+            "documentation": ""
+        },
+        "onKeyPress": {
+            "returns": "void",
+            "args": "key:Int",
+            "documentation": ""
+        },
+        "onKeyReleasePre": {
+            "returns": "?",
+            "args": "key:Int",
+            "documentation": ""
+        },
+        "onKeyRelease": {
+            "returns": "void",
+            "args": "key:Int",
+            "documentation": ""
+        },
+        "noteMissPress": {
+            "returns": "void",
+            "args": "direction:Int",
+            "documentation": ""
+        },
+        "onStepHit": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        },
+        "onBeatHit": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        },
+        "onSectionHit": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        },
+        "onRecalculateRating": {
+            "returns": "?",
+            "args": "",
+            "documentation": ""
+        },
+        "onGameOverStart": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        },
+        "onGameOverConfirm": {
+            "returns": "void",
+            "args": "isAccept:Bool",
+            "documentation": ""
+        },
+        "onTweenCompleted": {
+            "returns": "void",
+            "args": "tag:String, ?vars:String",
+            "documentation": ""
+        },
+        "onTimerCompleted": {
+            "returns": "void",
+            "args": "tag:String, loops:Int, loopsLeft:Int",
+            "documentation": ""
+        },
+        "onSoundFinished": {
+            "returns": "void",
+            "args": "tag:String",
+            "documentation": ""
+        },
+        "onCountdownTick": {
+            "returns": "void",
+            "args": "counter:Int",
+            "documentation": ""
+        },
+        "onSpawnNote": {
+            "returns": "void",
+            "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool, strumTime:Float",
+            "documentation": ""
+        },
+        "noteMiss": {
+            "returns": "?",
+            "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool",
+            "documentation": ""
+        },
+        "opponentNoteHitPre": {
+            "returns": "?",
+            "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool",
+            "documentation": ""
+        },
+        "opponentNoteHit": {
+            "returns": "?",
+            "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool",
+            "documentation": ""
+        },
+        "goodNoteHitPre": {
+            "returns": "?",
+            "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool",
+            "documentation": ""
+        },
+        "goodNoteHit": {
+            "returns": "?",
+            "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool",
+            "documentation": ""
+        },
+        "onCreate": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        },
+        "onDestroy": {
+            "returns": "void",
+            "args": "",
+            "documentation": ""
+        }
+    }
+}

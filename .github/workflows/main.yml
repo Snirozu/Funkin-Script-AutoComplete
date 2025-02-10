@@ -27,7 +27,7 @@ jobs:
         uses: nhedger/package-vscode-extension@v1
 
       - name: Publish VS Code extension artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
             name: funkin-completer-build
             path: ${{ steps.package.outputs.packagePath }}

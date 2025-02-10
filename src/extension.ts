@@ -854,6 +854,9 @@ async function execCommand(document: vscode.TextDocument, position: vscode.Posit
 
 	//<haxeflag name="--macro" value="addMetadata('@:build(funkin.util.macro.FlxMacro.buildFlxBasic())', 'flixel.FlxBasic')" />
 
+	//the issue with completion as of now is
+	// haxeui is not able to load the `module.xml` file for some reason
+
 	let _output = spawnSync('haxe', ['--display', fileNam + '@' + characterOffsetToByteOffset(document.getText(), document.offsetAt(position)) + mode,
 		'--no-output',
 		'--cpp', '_',
@@ -863,6 +866,11 @@ async function execCommand(document: vscode.TextDocument, position: vscode.Posit
 		'--macro haxe.macro.Compiler.addClassPath("' + funkinPath + '")',
 		'--macro haxe.macro.Compiler.addClassPath("' + funkinSource + '")',
 		'-D FLX_KEYBOARD',
+		'-D FLX_SOUND_TRAY',
+		'-D FLX_MOUSE',
+		'-D FLX_SOUND_SYSTEM',
+		'-D FLX_SAVE',
+		'-D FLX_JOYSTICK_API',
 		'-D haxeui_dont_impose_base_class'
 	].concat(libs), { cwd: fileDir }).output.join("");
 

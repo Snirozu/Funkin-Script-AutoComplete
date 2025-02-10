@@ -73,15 +73,20 @@
 					"default": false,
 					"description": "If checked, after entering a call function, default values of arguments are inserted inside of the function"
 				},
-				"funkinVSCode.hscriptFileExtension": {
-					"type": "string",
-					"default": "hxc",
-					"description": "The associating file extension for Friday Night Funkin' scripts"
-				},
 				"funkinVSCode.offlineMode": {
 					"type": "boolean",
 					"default": false,
 					"description": "If checked, the completion data will no longer update with the online iteration"
+				},
+				"funkinVSCode.haxeEnabled": {
+					"type": "boolean",
+					"default": false,
+					"description": "If checked, haxe completion will be enabled for V-Slice (EXPERIMENTAL)\nRequires Restart/Reload to take effect."
+				},
+				"funkinVSCode.hscriptFileExtension": {
+					"type": "string",
+					"default": "hxc",
+					"description": "The associating file extension for Friday Night Funkin' scripts (EXPERIMENTAL)"
 				},
 				"funkinVSCode.haxelibs": {
 					"type": "array",
@@ -107,7 +112,7 @@
 						"thx.core",
 						"FlxPartialSound https://github.com/FunkinCrew/FlxPartialSound.git"
 					],
-					"description": "The Haxelibs you want to use\nRequires VSCode Restart to take effect!"
+					"description": "The Haxelibs you want to use\nRequires VSCode Restart to take effect! (EXPERIMENTAL)"
 				}
 			}
 		},
@@ -122,15 +127,15 @@
 		"commands": [
 			{
 				"command": "funkinVSCode.clearCache",
-				"title": "Clear Cache for Engine API Data"
+				"title": "Clear Cache for Engine API Data (EXPERIMENTAL)"
 			},
 			{
 				"command": "funkinVSCode.updatelibs",
-				"title": "Update Haxelibs for Funkin Scripts"
+				"title": "Update Haxelibs for Funkin Scripts (EXPERIMENTAL)"
 			},
 			{
 				"command": "funkinVSCode.updatelibsnofunkin",
-				"title": "Update Haxelibs for Funkin Scripts (Excluding Funkin Lib)"
+				"title": "Update Haxelibs for Funkin Scripts (Excluding Funkin Lib) (EXPERIMENTAL)"
 			},
 			{
 				"command": "funkinVSCode.updatefunkin",

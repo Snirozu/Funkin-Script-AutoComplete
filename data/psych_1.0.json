@@ -4,7 +4,7 @@
         "getAchievementScore": {
             "returns": "float",
             "args": "name:String",
-            "documentation": "Returns the score for Achievements with counters (like \"Roadkill Enthusiast\"). Returns -1 and throws an error if the Achievement couldn't be found.\n`name` - Achievement internal name.\n**Examples:**\n* `getAchievementScore('roadkill_enthusiast')` - Will Return the current score of \"Roadkill Enthusiast\"."
+            "documentation": "Returns the score for Achievements with counters (like \"Roadkill Enthusiast\"). Returns -1 and throws an error if the Achievement couldn't be found.\n`name` - Achievement internal name.\n\n**Examples:**\n* `getAchievementScore('roadkill_enthusiast')` - Will Return the current score of \"Roadkill Enthusiast\"."
         },
         "setAchievementScore": {
             "returns": "float",

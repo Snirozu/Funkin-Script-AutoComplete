@@ -8,28 +8,25 @@ import { dataPath, sendToOutput } from './extension';
 // ========================
 // 			ENGINE
 // ========================
-const ENGINE_SET = "---@funkinEngine=";
-const USER_DEFINED_ENGINE = "funkinvscode.engine";
 
 function getLuaEngine(document?: vscode.TextDocument | undefined): string | undefined {
 	// If document selected
 	if (document != undefined) {
 		const text = document.getText();
-		const index = text.indexOf(ENGINE_SET);
+		const index = text.indexOf("---@funkinEngine=");
 
 		// If specified, take the engine
 		if (index != -1)
 			return getLineContentAt(text, index).trim().split("=")[1];
 	}
 
-	return vscode.workspace.getConfiguration().get(USER_DEFINED_ENGINE);
+	return vscode.workspace.getConfiguration().get("funkinVSCode.engine");
 }
 
 // ======================
 // 			DATA
 // ======================
-const CACHED: Map<string, any> = new Map<string, any>();
-const REPOSITORY_DATA_URL = "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/";
+export const CACHED: Map<string, any> = new Map<string, any>();
 
 export async function getData(file: string): Promise<string | any> {
 	file = file.trim();
@@ -64,10 +61,10 @@ export async function getData(file: string): Promise<string | any> {
 
 async function getOnlineData(file: string): Promise<any | undefined> {
 
-	const response = await needle("get", REPOSITORY_DATA_URL + file);
+	const response = await needle("get", vscode.workspace.getConfiguration().get<string>("funkinVSCode.onlineDataURL") + file);
 
 	// If failed, skip
-	if (response.statusCode != 200)
+	if (vscode.workspace.getConfiguration().get("funkinVSCode.offlineMode") || response.statusCode != 200)
 		return undefined;
 
 	// Write to file

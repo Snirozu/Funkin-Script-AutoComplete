@@ -43,37 +43,47 @@
 		"configuration": {
 			"title": "Funkin Script AutoComplete",
 			"properties": {
-				"funkinvscode.engine": {
+				"funkinVSCode.engine": {
 					"type": "string",
 					"default": "psych_latest",
 					"description": "Which Friday Night Funkin' Engine Lua Script API will this extension autocomplete.\nRequires Restart/Reload to take effect."
 				},
-				"funkinvscode.data": {
+				"funkinVSCode.data": {
 					"type": "string",
 					"default": "./data/",
-					"description": "Path to the folder containing all the descriptions for the different engines."
+					"description": "Path to the local folder containing all of the API Data for the different engines."
 				},
-				"funkinvscode.enableOnlyOnCertainScripts": {
+				"funkinVSCode.onlineDataURL": {
+					"type": "string",
+					"default": "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/",
+					"description": "URL path to the online folder which contains all of the API Data for the different engines."
+				},
+				"funkinVSCode.enableOnlyOnCertainScripts": {
 					"type": "boolean",
 					"default": false,
 					"description": "If checked, this extension will only work if a Lua script contains '---@funkinScript' comment"
 				},
-				"funkinvscode.eventDocumentationGeneration": {
+				"funkinVSCode.eventDocumentationGeneration": {
 					"type": "boolean",
 					"default": false,
 					"description": "If checked, after entering a event function, placeholder arguments are inserted on top of the function"
 				},
-				"funkinvscode.functionArgumentsGeneration": {
+				"funkinVSCode.functionArgumentsGeneration": {
 					"type": "boolean",
 					"default": false,
 					"description": "If checked, after entering a call function, default values of arguments are inserted inside of the function"
 				},
-				"funkinvscode.hscriptFileExtension": {
+				"funkinVSCode.hscriptFileExtension": {
 					"type": "string",
 					"default": "hxc",
 					"description": "The associating file extension for Friday Night Funkin' scripts"
 				},
-				"funkinvscode.haxelibs": {
+				"funkinVSCode.offlineMode": {
+					"type": "boolean",
+					"default": false,
+					"description": "If checked, the completion data will no longer update with the online iteration"
+				},
+				"funkinVSCode.haxelibs": {
 					"type": "array",
 					"default": [
 						"funkin https://github.com/FunkinCrew/Funkin main source/",
@@ -111,15 +121,19 @@
 		],
 		"commands": [
 			{
-				"command": "funkinvscode.updatelibs",
+				"command": "funkinVSCode.clearCache",
+				"title": "Clear Cache for Engine API Data"
+			},
+			{
+				"command": "funkinVSCode.updatelibs",
 				"title": "Update Haxelibs for Funkin Scripts"
 			},
 			{
-				"command": "funkinvscode.updatelibsnofunkin",
+				"command": "funkinVSCode.updatelibsnofunkin",
 				"title": "Update Haxelibs for Funkin Scripts (Excluding Funkin Lib)"
 			},
 			{
-				"command": "funkinvscode.updatefunkin",
+				"command": "funkinVSCode.updatefunkin",
 				"title": "Update Funkin API library"
 			}
 		]

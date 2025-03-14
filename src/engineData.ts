@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 
 import { getLineContentAt } from './util';
 import * as needle from 'needle';
-import { readFile, writeFile } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { dataPath, sendToOutput } from './extension';
 
 // ========================
@@ -42,34 +42,36 @@ export async function getData(file: string): Promise<string | any> {
 		return content;
 
 	// If not found, read from file
-	readFile(dataPath + file, (err, data) => {
+	try {
+		content = readFileSync(dataPath + file, { encoding: 'utf8', flag: 'r' });
 
-		// If error
-		if (err) {
-			sendToOutput("Errro while reading file: " + err.message);
-			return {};
-		}
-
-		content = JSON.parse(data.toString());
+		if (file.endsWith('.json'))
+			content = JSON.parse(content);
 
 		CACHED.set(file, content);
-		return content;
-	});
+	} 
+	catch (err) {
+		console.error('file? ERR ' + err);
+		sendToOutput("Errro while reading file: " + err);
+		content = undefined;
+	}
 
-	return {};
+	return content;
 }
 
 async function getOnlineData(file: string): Promise<any | undefined> {
+	if (vscode.workspace.getConfiguration().get("funkinVSCode.offlineMode"))
+		return undefined;
 
 	const response = await needle("get", vscode.workspace.getConfiguration().get<string>("funkinVSCode.onlineDataURL") + file);
 
 	// If failed, skip
-	if (vscode.workspace.getConfiguration().get("funkinVSCode.offlineMode") || response.statusCode != 200)
+	if (response.statusCode != 200)
 		return undefined;
 
 	// Write to file
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	writeFile(dataPath + file, response.body, () => { });
+	writeFileSync(dataPath + file, response.body);
 
 	const content = file.endsWith(".ver")
 		? response.body
@@ -82,10 +84,10 @@ async function getOnlineData(file: string): Promise<any | undefined> {
 
 export async function getEngineData(document?: vscode.TextDocument): Promise<any> {
 
-	let engine = getLuaEngine(document);
+	let engine:any = getLuaEngine(document);
 
 	// If no engine defined
-	if (engine == undefined)
+	if (!engine)
 		throw "Extension couldn't find any engines...";
 
 	engine = engine + (engine.endsWith("_latest") ? ".ver" : ".json");

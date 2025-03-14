@@ -1,15 +1,15 @@
 # Funkin Script AutoComplete
-Friday Night Funkin' Script AutoCompleter for [Friday Night Funkin](https://ninja-muffin24.itch.io/funkin) and [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine)!<br>
+Visual Studio Code AutoCompleter Extension for [Psych Engine](https://github.com/ShadowMario/FNF-PsychEngine) Modding API!<br>
 
 # Features
-## Haxe Scripted Classes
-- Functional Haxe completion!
-- *PLANNED!* ~~Completion for Friday Night Funkin v0.3.0 Modding API~~
 ## Lua
 - Function/Event/Variable auto completing
 - Warnings for deprecated functions
 - Hovers with documentation
 - API data is downloaded from the GitHub repository instead of being grabbed from local storage.
+## Haxe Scripted Classes (EXPERIMENTAL)
+- Functional Haxe completion!
+- Completion for Friday Night Funkin v0.3.0 Modding API
 
 # Installation
 [**Latest Release**](https://marketplace.visualstudio.com/items?itemName=Snirozu.funkin-script-autocompleter) | [**Latest Build**](https://nightly.link/Snirozu/Funkin-Script-AutoComplete/workflows/main/master)
@@ -24,8 +24,8 @@ Friday Night Funkin' Script AutoCompleter for [Friday Night Funkin](https://ninj
 
 # Quick Documentation
 ## Script Types
-* *.hxc - V-Slice (FNF v0.3.0) Scripts, they should always begin with a upper case
 * *.lua - Any other Lua based FNF Engine, like Psych Engine
+* *.hxc - V-Slice (FNF v0.3.0) Scripts, they should always begin with a upper case (Experimental Mode)
 
 ## Code Comments
 - Enable this extension in a file: `---@funkinScript` (only if `funkinVSCode.enableOnlyOnCertainScripts` setting is on)

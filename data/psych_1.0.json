@@ -1,55 +1,55 @@
 {
-    "$psych_version": "1.0.2h",
+    "$psych_version": "1.0.3",
     "functions": {
         "getAchievementScore": {
             "returns": "float",
             "args": "name:String",
-            "documentation": "Returns the score for Achievements with counters (like \"Roadkill Enthusiast\"). Returns -1 and throws an error if the Achievement couldn't be found.\n`name` - Achievement internal name.\n\n**Examples:**\n* `getAchievementScore('roadkill_enthusiast')` - Will Return the current score of \"Roadkill Enthusiast\"."
+            "documentation": "Returns the score for Achievements with counters (like `\"Roadkill Enthusiast\"`). Returns -1 and throws an error if the Achievement couldn't be found.\n`name` - Achievement internal name.\n\n**Examples:**\n* `getAchievementScore('roadkill_enthusiast')` - Will Return the current score of `\"Roadkill Enthusiast\"`."
         },
         "setAchievementScore": {
             "returns": "float",
             "args": "name:String, ?value:Float = 0, ?saveIfNotUnlocked:Bool = true",
-            "documentation": ""
+            "documentation": "Sets the score for Achievements with counters (like `\"Roadkill Enthusiast\"`) and returns its new value.\nReturns -1 and throws an error if the Achievement couldn't be found.\n`name` - Achievement internal name.\n`value` - Value to set the score to.\n`saveIfNotUnlocked` - Optimization, in case you constantly change the score, set to false.\n\n**Examples:**\n`setAchievementScore('my_achievement_name', 25)` - Will set the current score of `\"my_achievement_name\"` to 25 and save, even if doesn't unlock the achievement.\n`setAchievementScore('my_achievement_name', 3, false)` - Will set the current score of `\"my_achievement_name\"` to 3 and save only if it unlocks the achievement"
         },
         "addAchievementScore": {
             "returns": "float",
             "args": "name:String, ?value:Float = 1, ?saveIfNotUnlocked:Bool = true",
-            "documentation": ""
+            "documentation": "Adds score for Achievements with counters (like `\"Roadkill Enthusiast\"`) and returns its new value. Returns -1 and throws an error if the Achievement couldn't be found.\n`name` - Achievement internal name.\n`value` - Value to add to the score.\n`saveIfNotUnlocked` - Optimization, in case you constantly change the score, set to false.\n\n**Examples:**\n`addAchievementScore('my_achievement_name')` - Adds +1 to the score of `\"my_achievement_name\"` and save, even if doesn't unlock the achievement.\n`addAchievementScore('my_achievement_name', 1, false)` - Add +1 to the score of `\"my_achievement_name\"` and save only if it unlocks the achievement."
         },
         "unlockAchievement": {
-            "returns": "?",
+            "returns": "string",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Unlocks a named achievement and returns its name, returns null if already unlocked. Throws an error if achievement doesn't exist and returns null.\n* `name` - Achievement internal name.\n\n**Examples:**\n* `unlockAchievement('my_achievement_name')` - Unlocks `\"my_achievement_name\"`."
         },
         "isAchievementUnlocked": {
             "returns": "?",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Checks if achievement is unlocked and returns true/false for it.\nReturns null and throws an error if achievement doesn't exist.\n* `name` - Achievement internal name."
         },
         "achievementExists": {
             "returns": "boolean",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Checks if achievement exists returns true/false for it.\n* `name` - Achievement internal name."
         },
         "changeDiscordPresence": {
             "returns": "void",
             "args": "details:String = 'In the Menus', ?state:String, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float, largeImageKey:String = 'icon'",
-            "documentation": ""
+            "documentation": "Change Discord Rich Presence current details, allows you to also set up a timestamp for a timer.\n* `details` - Title of the Rich Presence.\n* `state` *(Optional)* - An optional subtitle for the Rich Presence.\n* `smallImageKey` *(Optional)* - Small/Secondary Icon, normally used for having the Opponent's Health Icon on Rich Presence.\n* `hasStartTimestamp` *(Optional)* - Shows a time counter in the Rich Presence.\n* `endTimestamp` *(Optional)* - Requires `hasStartTimestamp` to be `true`, counts down starting from this time (in milliseconds).\n* `largeImageKey` *(Optional)* - Rich Presence Main icon.\n\n**Examples:**\n* `changeDiscordPresence('Waiting...')` - Change RPC to `\"Waiting...\"`, with no subtitles or anything.\n* `changeDiscordPresence('Counting Down...', 'Three. Two. One. GO!', 'gf', true, 3000)` - Counts down 3 seconds (3000ms)\n\n*Note: To upload custom images to use on `smallImageKey` and `largeImageKey` you will need to change the Application ID.*"
         },
         "changeDiscordClientID": {
             "returns": "void",
             "args": "?newID:String",
-            "documentation": ""
+            "documentation": "Changes Discord Rich Presence's Application ID, necessary to change the \"Psych Engine\" Logo from the RPC.\n`newID` *(Optional)* - Application ID, you can get it from an application you create.\n\n**Examples:**\n * `changeDiscordClientID()` - Set Discord Client ID to Psych Engine's default.\n * `changeDiscordClientID('843895042442657792')` - Set Discord Client ID to Mind Games Mod's."
         },
         "getTranslationPhrase": {
             "returns": "string",
             "args": "key:String, ?defaultPhrase:String, ?values:Array<Dynamic> = null",
-            "documentation": ""
+            "documentation": "Returns the translation key for phrases.\n`key` - Translation key name.\n`defaultPhrase` *(Optional)* - String for a default text used when missing translation, if missing, it will use the `key` as the text.\n`args` *(Optional)* - Table with data for the translations.\n\n**Examples:**\n* `getTranslationPhrase('This is a Test')` - This will load translation phrase `\"this_is_a_test\"`.\n* `getTranslationPhrase('test_phrase', 'This is a Test')` - This will load translation phrase `\"test_phrase\"`, if missing, it will use `\"This is a Test\"`.\n* `getTranslationPhrase('test_phrase', 'Test: {1}', {someVariableHere})` - This will load translation phrase `\"this_is_a_test\"`, and replace `{1}`, `{2}`... with the values inside the table in its order."
         },
         "getFileTranslation": {
             "returns": "string",
             "args": "key:String",
-            "documentation": ""
+            "documentation": "Returns the translation key for assets path.\n* `key` - Original asset path for English (Default) language.\n\n**Examples:**\n* `getFileTranslation('images/mainmenu/menu_story_mode')` - If your game is in Portuguese, it should return `\"images/pt-BR/mainmenu/menu_story_mode\"`."
         },
         "addAnimationByIndicesLoop": {
             "returns": "?",
@@ -144,1755 +144,1755 @@
         "keyboardJustPressed": {
             "returns": "boolean",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Returns whether a specific keyboard button just got pressed.\n* `button` - [Click here for the full list of buttons](https://api.haxeflixel.com/flixel/input/keyboard/FlxKey.html)\n\n**Examples:**\n* `keyboardJustPressed('ENTER')` - Pressed Enter in your keyboard.\n* `keyboardJustPressed('F5')` - Pressed F5 in your keyboard."
         },
         "keyboardPressed": {
             "returns": "boolean",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Returns whether a specific keyboard button is being pressed.\n* `button` - [Click here for the full list of buttons](https://api.haxeflixel.com/flixel/input/keyboard/FlxKey.html)"
         },
         "keyboardReleased": {
             "returns": "boolean",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Returns whether a specific keyboard button was just released.\n* `button` - [Click here for the full list of buttons](https://api.haxeflixel.com/flixel/input/keyboard/FlxKey.html)"
         },
         "anyGamepadJustPressed": {
             "returns": "boolean",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Returns whether a specific gamepad button just got pressed in any controllers.\n* `button` - [Click here for the full list of buttons](https://api.haxeflixel.com/flixel/input/gamepad/FlxGamepadInputID.html)\n\n**Examples:**\n* `anyGamepadJustPressed('DPAD_LEFT')` - Pressed Arrow Left in any gamepad.\n* `anyGamepadJustPressed('X')` - Pressed X in any gamepad."
         },
         "anyGamepadPressed": {
             "returns": "boolean",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Returns whether a specific gamepad button is being pressed in any controllers.\n* `button` - [Click here for the full list of buttons](https://api.haxeflixel.com/flixel/input/gamepad/FlxGamepadInputID.html)"
         },
         "anyGamepadReleased": {
             "returns": "boolean",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Returns whether a specific gamepad button was just released in any controllers.\n* `button` - [Click here for the full list of buttons](https://api.haxeflixel.com/flixel/input/gamepad/FlxGamepadInputID.html)"
         },
         "gamepadAnalogX": {
             "returns": "float",
             "args": "id:Int, ?leftStick:Bool = true",
-            "documentation": ""
+            "documentation": "Returns the Analog X value in a specific controller, ranges from -1 to 1.\n* `id` - Controller ID, by detection order.\n* `button` - Left or Right analog? Default is Left (true).\n\n**Examples:**\n* `gamepadAnalogX(0)` - Returns Left Analog X of controller #1.\n* `gamepadAnalogX(1, false)` - Returns Right X Analog of controller #2."
         },
         "gamepadAnalogY": {
             "returns": "float",
             "args": "id:Int, ?leftStick:Bool = true",
-            "documentation": ""
+            "documentation": "Returns the Analog Y value in a specific controller, ranges from -1 to 1.\n* `id` - Controller ID, by detection order.\n* `button` - Left or Right analog? Default is Left (true)."
         },
         "gamepadJustPressed": {
             "returns": "boolean",
             "args": "id:Int, name:String",
-            "documentation": ""
+            "documentation": "Returns whether a specific gamepad button just got pressed in a specific controller.\n* `id` - Controller ID, by detection order.\n* `button` - [Click here for the full list of buttons](https://api.haxeflixel.com/flixel/input/gamepad/FlxGamepadInputID.html)\n\n**Examples:**\n* `gamepadJustPressed(0, 'DPAD_LEFT')` - Pressed Arrow Left in controller #1.\n* `gamepadJustPressed(1, 'X')` - Pressed X in in controller #2."
         },
         "gamepadPressed": {
             "returns": "boolean",
             "args": "id:Int, name:String",
-            "documentation": ""
+            "documentation": "Returns whether a specific gamepad button is being pressed in a specific controller.\n* `id` - Controller ID, by detection order.\n* `button` - [Click here for the full list of buttons](https://api.haxeflixel.com/flixel/input/gamepad/FlxGamepadInputID.html)"
         },
         "gamepadReleased": {
             "returns": "boolean",
             "args": "id:Int, name:String",
-            "documentation": ""
+            "documentation": "Returns whether a specific gamepad button was just released in a specific controller.\n* `id` - Controller ID, by detection order.\n* `button` - [Click here for the full list of buttons](https://api.haxeflixel.com/flixel/input/gamepad/FlxGamepadInputID.html)"
         },
         "keyJustPressed": {
             "returns": "boolean",
             "args": "name:String = ''",
-            "documentation": ""
+            "documentation": "Returns whether a keybind button just got pressed on a controller or keyboard.\n* `button` - Buttons: `left`, `down`,`up`, `right`, `ui_left`, `ui_down`, `ui_up`, `ui_right`, `accept`, `back`, `pause`, `reset`, `volume_mute`,`volume_up_down`, `debug_1`, `debug_2`.\n\n**Examples:**\n* `keyJustPressed('up')` - Pressed Up Note button.\n* `keyJustPressed('ui_up')` - Pressed Menu Up button, this is a different keybind from Up Note despite the default keys being the same."
         },
         "keyPressed": {
             "returns": "boolean",
             "args": "name:String = ''",
-            "documentation": ""
+            "documentation": "Returns whether a keybind button is being held on a controller or keyboard.\n* `button` - Same as `keyJustPressed`."
         },
         "keyReleased": {
             "returns": "boolean",
             "args": "name:String = ''",
-            "documentation": ""
+            "documentation": "Returns whether a keybind button was just released on a controller or keyboard.\n* `button` - Same as `keyJustPressed`."
         },
         "initSaveData": {
             "returns": "void",
             "args": "name:String, ?folder:String = 'psychenginemods'",
-            "documentation": ""
+            "documentation": "Initializes a Save Data.\n* `save` - Save Data Name, make it unique to avoid overwriting!\n* `folder` *(Optional)* - Folder in \"%appdata%/ShadowMario/PsychEngine/\".\n\n**Examples:**\n* `initSaveData('my_mod_savedata')` - Initializes `\"my_mod_savedata.sol\"`.\n\n*Note: Save Data does NOT save automatically! Use `flushSaveData` in moderation for saving it.*"
         },
         "flushSaveData": {
             "returns": "void",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Flushes (Saves) the Save Data, recommended to call this on `function onDestroy` in your Lua Script to avoid any changes from being lost.\n* `save` - Save Data Name, make it unique to avoid overwriting!\n\n**Examples:**\n* `flushSaveData('my_mod_savedata')` - Saves `\"my_mod_savedata.sol\"`."
         },
         "getDataFromSave": {
             "returns": "?",
             "args": "name:String, field:String, ?defaultValue:Dynamic = null",
-            "documentation": ""
+            "documentation": "Returns a field data from the Save file specified.\n* `save` - Save Data Name.\n* `field` - Field/Property to get from the Save Data loaded.\n* `defaultValue` *(Optional)* - Default value to use in case the field isn't available in the Save Data.\n\n**Examples:**\n* `getDataFromSave('my_mod_savedata', 'score', 0)` - Returns `score` from `\"my_mod_savedata.sol\"`, in case it's missing, it will use 0."
         },
         "setDataFromSave": {
             "returns": "void",
             "args": "name:String, field:String, value:Dynamic",
-            "documentation": ""
+            "documentation": "Sets a field data to the Save file specified.\n* `save` - Save Data Name.\n* `field` - Field/Property to get from the Save Data loaded.\n* `defaultValue` *(Optional)* - Default value to use in case the field isn't available in the Save Data.\n\n**Examples:**\n* `setDataFromSave('my_mod_savedata', 'score', 1000)` - Saves `score` to `\"my_mod_savedata.sol\"`."
         },
         "eraseSaveData": {
             "returns": "void",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Erases the save file specified.\n* `save` - Save Data Name.\n\n**Examples:**\n* `eraseSaveData('my_mod_savedata')` - Erases `\"my_mod_savedata.sol\"`."
         },
         "checkFileExists": {
             "returns": "boolean",
             "args": "filename:String, ?absolute:Bool = false",
-            "documentation": ""
+            "documentation": "Returns true if the file input exists.\n* `file` - File name path.\n* `absolute` *(Optional)* - Toggles absolute path.\n\n**Examples:**\n* `checkFileExists('data/myFile.json')` - Checks for `\"mods/My-Mod/data/myFile.json\"`.\n* `checkFileExists('mods/My-Mod/data/myFile.json', true)` - Same as above but with absolute path."
         },
         "saveFile": {
             "returns": "boolean",
             "args": "path:String, content:String, ?absolute:Bool = false",
-            "documentation": ""
+            "documentation": "Returns true if the file was saved successfully.\n* `file` - File name path\n* `content` - Data to save.\n* `absolute` *(Optional)* - Toggles absolute path.\n\n**Examples:**\n* `saveFile('data/textFile.txt', 'Hello World!')` - Saves `\"Hello World!\"` into a text file in `\"mods/My-Mod/data/textFile.txt\"`.\n* `saveFile('mods/My-Mod/data/textFile.txt', 'Hello World!', true)` - Same as above but with absolute path."
         },
         "deleteFile": {
             "returns": "boolean",
             "args": "path:String, ?ignoreModFolders:Bool = false, ?absolute:Bool = false",
-            "documentation": ""
+            "documentation": "Returns true if the file existed and was deleted successfully.\n* `file` - File name path\n* `ignoreModFolders` *(Optional)* - Ignore all files that are not compiled (softcoded files), does nothing when `absolute` is true.\n* `absolute` *(Optional)* - Toggles absolute path.\n\n**Examples:**\n* `deleteFile('data/textFile.txt')` - Deletes file `\"mods/My-Mod/data/textFile.txt\"`.\n* `deleteFile('mods/My-Mod/data/textFile.txt', _, true)` - Same as above but with absolute path."
         },
         "getTextFromFile": {
             "returns": "string",
             "args": "path:String, ?ignoreModFolders:Bool = false",
-            "documentation": ""
+            "documentation": "Loads a File as text and returns its content. If the file couldn't be found, it will return null.\n* `file` - File name path.\n* `ignoreModFolders` *(Optional)* - Ignore all files that are not compiled (softcoded files).\n\n**Examples:**\n* `getTextFromFile('data/textFile.txt')` - Will try to load `\"mods/My-Mod/data/textFile.txt\"`."
         },
         "directoryFileList": {
             "returns": "array",
             "args": "folder:String",
-            "documentation": ""
+            "documentation": "Returns a table with the name of all files inside a mentioned path.\n* `folder` - Absolute folder path."
         },
         "stringStartsWith": {
             "returns": "boolean",
             "args": "str:String, start:String",
-            "documentation": ""
+            "documentation": "Shortcut for `StringTools.startsWith` in Lua.\n* `str` - String being checked.\n* `start` - String to check if the previous value starts with it.\n\n**Examples:**\n* `stringStartsWith('Test', 'Te')` - `\"Test\"` starts with `\"Te\"`, returns true.\n* `stringStartsWith('Test', 'A')` - `\"Test\"` doesn't start with `\"A\"`, returns false."
         },
         "stringEndsWith": {
             "returns": "boolean",
             "args": "str:String, end:String",
-            "documentation": ""
+            "documentation": "Shortcut for `StringTools.endsWith` in Lua.\n* `str` - String being checked.\n* `end` - String to check if the previous value ends with it.\n\n**Examples:**\n* `stringEndsWith('Test', 'st')` - `\"Test\"` ends with `\"st\"`, returns true.\n* `stringEndsWith('Test', 'Z')` - `\"Test\"` doesn't ends with `\"Z\"`, returns false."
         },
         "stringSplit": {
             "returns": "array",
             "args": "str:String, split:String",
-            "documentation": ""
+            "documentation": "Shortcut for `String.split` in Lua.\n* `str` - String being checked.\n* `split` - String delimiter.\n\n**Examples:**\n* `stringSplit('A,B,C,D,E', ',')` - Separates the string through commas, returns the following table: `{'A', 'B', 'C', 'D', 'E'}`"
         },
         "stringTrim": {
             "returns": "string",
             "args": "str:String",
-            "documentation": ""
+            "documentation": "Clears the spaces at the start and end of a string. Shortcut for `StringTools.trim` in Lua.\n* `str` - String being checked.\n\n**Examples:**\n* `stringSplit('   Hello World!   ')` - Returns `\"Hello World!\"`, notice how the space between words did not get removed."
         },
         "getRandomInt": {
             "returns": "int",
             "args": "min:Int, max:Int = FlxMath.MAX_VALUE_INT, exclude:String = ''",
-            "documentation": ""
+            "documentation": "Randomizer that returns an integer value.\n* `min` - Minimal number to randomize.\n* `max` *(Optional)* - Max number to randomize.\n* `exclude` &*(Optional)* - Randomization exclusions, separated by commas.\n\n**Examples:**\n* `getRandomInt(1, 5)` - Chooses a random number between 1 and 5.\n* `getRandomInt(1, 8, '3, 4')` - Chooses a random number between 1 and 8 that aren't 3 or 4."
         },
         "getRandomFloat": {
             "returns": "float",
             "args": "min:Float, max:Float = 1, exclude:String = ''",
-            "documentation": ""
+            "documentation": "Randomizer that returns a float value.\n* `min` - Minimal number to randomize.\n* `max` *(Optional)* - Max number to randomize.\n* `exclude` *(Optional)* - Randomization exclusions, separated by commas.\n\n**Examples:**\n* `getRandomFloat(-45, 45)` - Chooses a random number between -45 and 45.\n* `getRandomFloat(-1.5, 1.5, '0')` - Chooses a random number between -1.5 and 1.5 that aren't 0."
         },
         "getRandomBool": {
             "returns": "boolean",
             "args": "chance:Float = 50",
-            "documentation": ""
+            "documentation": "Randomizer that returns either `true` or `false`.\n* `chance` - Ranges from 0 to 100. Defaults to 50%\n\n**Examples:**\n* `getRandomBool(75)` - 75% chance of being true."
         },
         "makeFlxAnimateSprite": {
             "returns": "void",
             "args": "tag:String, ?x:Float = 0, ?y:Float = 0, ?loadFolder:String = null",
-            "documentation": ""
+            "documentation": "Creates a Lua FlxAnimate Sprite.\n* `tag` - Lua FlxAnimate Sprite nametag.\n* `x` *(Optional)* - Defaults to 0.\n* `y` *(Optional)* - Defaults to 0.\n* `loadFolder` *(Optional)* - Loads the atlas from this path.\n\n**Examples:**\n* `makeFlxAnimateSprite('mySprite')` - Creates an Atlas sprite with no Animate Atlas loaded, which can be loaded later on with `loadAnimateAtlas`.\n* `makeFlxAnimateSprite('mySprite', 500, 300, 'characters/atlasTest')` - Loads the Atlas folder \"mods/My-Mod/images/characters/atlasTest\"."
         },
         "loadAnimateAtlas": {
             "returns": "void",
             "args": "tag:String, folderOrImg:String, ?spriteJson:String = null, ?animationJson:String = null",
-            "documentation": ""
+            "documentation": "Creates a Lua FlxAnimate Sprite.\n* `tag` - Lua FlxAnimate Sprite nametag.\n* `folderOrImg` - Spritemap .PNG file path.\n* `spriteJson` *(Optional)* - Spritemap .JSON file path, will use the value in `folderOrImg` if missing.\n* `animationJson` *(Optional)* - Animation .JSON file path, will use the value in `folderOrImg` if missing.\n\n**Examples:**\n* `loadAnimateAtlas('mySprite', 'characters/atlasTest')` - Loads the Atlas folder from \"mods/My-Mod/images/characters/atlasTest\".\n* `loadAnimateAtlas('mySprite', 'characters/atlasTest/spritemap1', 'characters/atlasTest/spritemap1', 'characters/atlasTest/Animation')` - This will load the following Animate Atlas files consecutively: `\"mods/My-Mod/images/characters/spritemap1.png\"`, `\"mods/My-Mod/images/characters/spritemap1.json\"`, `\"mods/My-Mod/images/characters/Animation.json.\"`"
         },
         "addAnimationBySymbol": {
             "returns": "boolean",
             "args": "tag:String, name:String, symbol:String, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0",
-            "documentation": ""
+            "documentation": "Adds an animation from a symbol.\n* `tag` - Lua FlxAnimate Sprite nametag.\n* `name` - Animation name.\n* `symbol` - Symbol name in Adobe Animate (Folder should be included in this!).\n* `framerate` *(Optional)* - Animation FPS.\n* `loop` *(Optional)* - Should the animation loop?\n* `matX` *(Optional)* - Matrix Offset X.\n* `matY` *(Optional)* - Matrix Offset Y.\n\n**Examples:**\n* `addAnimationBySymbol('mySprite', 'idle', 'Test Anim Idle')` - Adds an animation named `\"idle\"`, symbol is named `\"Test Anim Idle\"` on Animate, running at 24 FPS and `loop` disabled.\n* `addAnimationBySymbol('mySprite', 'spin', 'Test Spin', 30, true)` - Adds an animation named `\"spin\"`, symbol is named `\"Test Spin\"` on Animate, running at 30 FPS and `loop` enabled."
         },
         "addAnimationBySymbolIndices": {
             "returns": "boolean",
             "args": "tag:String, name:String, symbol:String, ?indices:Any = null, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0",
-            "documentation": ""
+            "documentation": "Adds an animation from a symbol.\n* `tag` - Lua FlxAnimate Sprite nametag.\n* `name` - Animation name.\n* `symbol` - Symbol name in Adobe Animate (Folder should be included in this!).\n* `indices` - Animation frames, can be formatted either as a string separated by commas or as a table.\n* `framerate` *(Optional)* - Animation FPS.\n* `loop` *(Optional)* - Should the animation loop?\n* `matX` *(Optional)* - Matrix Offset X.\n* `matY` *(Optional)* - Matrix Offset Y.\n\n**Examples:**\n* `addAnimationBySymbolIndices('mySprite', 'idle', 'Test Anim Idle', '0, 1, 2, 3, 4, 5, 6, 7')` - Adds `\"idle\"` using string indices.\n* `addAnimationBySymbolIndices('mySprite', 'idle', 'Test Anim Idle', {0, 1, 2, 3, 4, 5, 6, 7})` - Adds `\"idle\"` using table indices."
         },
         "getRunningScripts": {
             "returns": "array",
             "args": "",
-            "documentation": ""
+            "documentation": "Returns a table with the path of all Lua Scripts running."
         },
         "setOnScripts": {
             "returns": "void",
             "args": "varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null",
-            "documentation": ""
+            "documentation": "Saves/Overwrites a global variable to all Lua Script/HScript running currently. This differs from `setVar` because you won't need a function like `getVar` to get the variable and it will not have its value shared between scripts.\n* `varName` - Variable name to save.\n* `value` - Value to save to variable.\n* `ignoreSelf` *(Optional)* - Does not insert this variable into the current Script.\n* `exclusions` *(Optional)* - Scripts to ignore.\n\n**Examples:**\n* `setOnScripts('myCounter', 10)` - This will add a global called `\"myCounter\"` with value `10`. This can be accessed in lua through `if myCounter == 10 then`, for example."
         },
         "setOnHScript": {
             "returns": "void",
             "args": "varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null",
-            "documentation": ""
+            "documentation": "Structurally identical to `setOnScripts`, but it does not insert the variable into Lua Scripts running."
         },
         "setOnLuas": {
             "returns": "void",
             "args": "varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null",
-            "documentation": ""
+            "documentation": "Structurally identical to `setOnScripts`, but it does not insert the variable into HScripts running."
         },
         "callOnScripts": {
             "returns": "?",
             "args": "funcName:String, ?args:Array<Dynamic> = null, ?ignoreStops=false, ?ignoreSelf:Bool = true, ?excludeScripts:Array<String> = null, ?excludeValues:Array<Dynamic> = null",
-            "documentation": ""
+            "documentation": "Calls a function in all Lua Scripts and HScript running. Returns the value returned in the function, unless you add this value to `excludeValues`.\n* `funcName` - Function name to call.\n* `args` *(Optional)* - Optional table of arguments.\n* `ignoreStops` *(Optional)* - Ignore all `\"Function_Stop\"` variations.\n* `ignoreSelf` *(Optional)* - Does not call this function on itself, this is an infinite loop prevention in the case you accidentally call the same function that runs this.\n* `excludeScripts` *(Optional)* - Scripts not to call the function on.\n* `excludeValues` *(Optional)* - Values to ignore from returning.\n\n**Examples:**\n* `callOnScripts('customFunction', {1})` - This will call `customFunction(1)` on all Lua Scripts/HScript."
         },
         "callOnLuas": {
             "returns": "?",
             "args": "funcName:String, ?args:Array<Dynamic> = null, ?ignoreStops=false, ?ignoreSelf:Bool = true, ?excludeScripts:Array<String> = null, ?excludeValues:Array<Dynamic> = null",
-            "documentation": ""
+            "documentation": "Structurally identical to `callOnScripts`, but it does not call the function in HScripts."
         },
         "callOnHScript": {
             "returns": "?",
             "args": "funcName:String, ?args:Array<Dynamic> = null, ?ignoreStops=false, ?ignoreSelf:Bool = true, ?excludeScripts:Array<String> = null, ?excludeValues:Array<Dynamic> = null",
-            "documentation": ""
+            "documentation": "Structurally identical to `callOnScripts`, but it does not call the function in Lua Scripts."
         },
         "callScript": {
             "returns": "?",
             "args": "luaFile:String, funcName:String, ?args:Array<Dynamic> = null",
-            "documentation": ""
+            "documentation": "Calls a function only in a specific Lua Script. Returns the value returned by the function called (Could be literally anything depending on context).\n* `luaFile` - Lua Script path.\n* `funcName` - Function name to call.\n* `args` *(Optional)* - Optional table of arguments.\n\n**Examples:**\n* `callScript('mods/scripts/test.lua', 'customFunction', {0, 999})` - This will call `customFunction(0, 999)` in the script at `\"mods/scripts/test.lua\"`."
         },
         "isRunning": {
             "returns": "boolean",
             "args": "scriptFile:String",
-            "documentation": ""
+            "documentation": "Checks if a specific Lua Script/HScript is running.\n* `scriptFile` - Lua Script/HScript path.\n\n**Examples:**\n* `isRunning('mods/scripts/test.lua')` - For Lua Scripts.\n* `isRunning('mods/scripts/test.hx')` - For HScript.\n* `isRunning('scripts/test')` - Without absolute path, it could end up detecting any of both."
         },
         "setVar": {
             "returns": "?",
             "args": "varName:String, value:Dynamic",
-            "documentation": ""
+            "documentation": "Stores a variable, allowing all Lua Scripts and HScript to access it through `getVar`. Returns the value that was inserted.\n* `varName` - Variable name to save.\n* `value` - Value to save to variable.\n\n**Examples:**\n* `setVar('storedValue', 10.5)` - Saves `10.5` into a variable named `storedValue`."
         },
         "getVar": {
             "returns": "?",
             "args": "varName:String",
-            "documentation": ""
+            "documentation": "Returns the named stored variable.\n* `varName` - Variable name to get.\n\n**Examples:**\n* `getVar('storedValue')` - Returns the value saved from using `setVar`."
         },
         "addLuaScript": {
             "returns": "void",
             "args": "luaFile:String, ?ignoreAlreadyRunning:Bool = false",
-            "documentation": ""
+            "documentation": "Initializes a specific Lua Script found at the path.\n* `luaFile` - Lua Script path.\n* `ignoreAlreadyRunning` *(Optional)* - If true, it will allow you to run duplicates of the same script, although this might cause unexpected behavior in other functions, use it at your own risk!\n\n**Examples:**\n* `callScript('mods/scripts/disabled/test.lua')` - This will initialize the script at `\"mods/scripts/disabled/test.lua\"`."
         },
         "addHScript": {
             "returns": "void",
             "args": "scriptFile:String, ?ignoreAlreadyRunning:Bool = false",
-            "documentation": ""
+            "documentation": "Initializes a specific HScript found at the path.\n* `scriptFile` - HScript path.\n* `ignoreAlreadyRunning` *(Optional)* - If true, it will allow you to run duplicates of the same script, although this might cause unexpected behavior in other functions, use it at your own risk!\n\n**Examples:**\n* `callScript('mods/scripts/disabled/test.hx')` - This will initialize the script at `\"mods/scripts/disabled/test.hx\"`.\n* `callScript('scripts/disabled/test')` - Same as above, but without absolute path."
         },
         "removeLuaScript": {
             "returns": "boolean",
             "args": "luaFile:String",
-            "documentation": ""
+            "documentation": "Stops a specific Lua Script running. Returns true if the Script was found and was running.\n* `luaFile` - Lua Script path.\n\n**Examples:**\n* `removeLuaScript('mods/scripts/test.lua')` - Stops the Lua script at `\"mods/scripts/test.lua\"`.\n* `removeLuaScript('scripts/test')` - Same as above, but without absolute path."
         },
         "removeHScript": {
             "returns": "boolean",
             "args": "scriptFile:String",
-            "documentation": ""
+            "documentation": "Stops a specific HScript running. Returns true if the Script was found and was running.\n* `scriptFile` - HScript path.\n\n**Examples:**\n* `removeHScript('mods/scripts/test.hx')` - Stops HScript at `\"mods/scripts/test.hx\"`.\n* `removeHScript('scripts/test')` - Same as above, but without absolute path."
         },
         "loadSong": {
             "returns": "void",
             "args": "?name:String = null, ?difficultyNum:Int = -1",
-            "documentation": ""
+            "documentation": "Loads the chart for a song.\n* `name` *(Optional)* - Song Name (ex. \"Bopeebo\", \"Lit Up\").\n* `difficultyNum` *(Optional)* - Week's Difficulty Number (0 = Easy, 1 = Normal, 2 = Hard), use -1 to keep it the same as current."
         },
         "loadGraphic": {
             "returns": "void",
             "args": "variable:String, image:String, ?gridX:Int = 0, ?gridY:Int = 0",
-            "documentation": ""
+            "documentation": "Loads an image to a Lua Sprite, this image can be divided into frames in a consistently sized grid that doesn't require a .XML/.JSON/.TXT, which can be used as animation through `addAnimation`.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `image` - Image to display, don't include the extension!\n* `gridX` *(Optional)* - Defaults to 0.\n* `gridY` *(Optional)* - Defaults to 0.\n\n**Examples:**\n* `loadGraphic('mySprite', 'funkay')` - Sets graphic of the Lua Sprite named `\"mySprite\"` to `\"assets/shared/images/funkay.png\"`.\n* `loadGraphic('mySprite', 'icons/icon-bf', 150, 150)` - Loads BF's Health Icon sprite on a Lua Sprite as a 150x150 grid."
         },
         "loadFrames": {
             "returns": "void",
             "args": "variable:String, image:String, spriteType:String = 'auto'",
-            "documentation": ""
+            "documentation": "Loads a specific image and .XML/.JSON/.TXT to a Lua Sprite.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `image` - Image to display, don't include the extension!\n* `spriteType` *(Optional)* - Forces a spritesheet type, can be `\"sparrow\"` (.XML), `\"packer\"` (.TXT) or `\"aseprite\"` (.JSON). Defaults to `\"auto\"`.\n\n**Examples:**\n* `loadFrames('mySprite', 'logoBumpin')` - Loads `\"assets/shared/images/logoBumpin\"` to the Lua Sprite with tag `\"mySprite\"`, using its .PNG and .XML files.\n* `loadFrames('mySprite', 'aseprite-test', 'aseprite')` - Loads `\"mods/My-Mod/images/aseprite-test\"`, using its .PNG and .JSON files.\n\n*Note: [Follow these instructions to export properly from Aseprite](https://github.com/ShadowMario/FNF-PsychEngine/wiki/Export-and-Import-from-Aseprite).*"
         },
         "loadMultipleFrames": {
             "returns": "void",
             "args": "variable:String, images:Array<String>",
-            "documentation": ""
+            "documentation": "Loads multiple spritesheets to a Lua Sprite.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `images` - Table with spritesheet list, don't include the extension in the file names!\n\n**Examples:**\n* `loadMultipleFrames('mySprite', {'spritesheet1', 'spritesheet2', 'spritesheet3'})` - Loads 3 spritesheets in a single Lua Sprite named `\"mySprite\"`.\n* [Click here for a detailed use explanation.](https://pastebin.com/raw/GTTkxV2R)"
         },
         "getObjectOrder": {
             "returns": "int",
             "args": "obj:String, ?group:String = null",
-            "documentation": ""
+            "documentation": "Returns the object layer in the Scene or inside a group. Throws an error and returns -1 if the object or group couldn't be found.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `group` *(Optional)* - Variable name of the FlxTypedGroup/FlxSpriteGroup/Array.\n\n**Examples:**\n* `getObjectOrder('boyfriendGroup')` - Returns the object layer of the Player's Character Group.\n* `getObjectOrder('scoreTxt', 'uiGroup')` - Returns the object layer of the Score Text in its group."
         },
         "setObjectOrder": {
             "returns": "void",
             "args": "obj:String, position:Int, ?group:String = null",
-            "documentation": ""
+            "documentation": "Sets the object layer in the Scene or inside a group.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `position` - New position in the Scene/group.\n* `group` *(Optional)* - Variable name of the FlxTypedGroup/FlxSpriteGroup/Array.\n\n**Examples:**\n* `setObjectOrder('boyfriendGroup', getObjectOrder('gfGroup'))` - Sets the Player's Character Group to be a layer behind Girlfriend.\n* `setObjectOrder('iconP1', 0, 'uiGroup')` - Makes Player Icon a layer behind everything else."
         },
         "startTween": {
             "returns": "string",
             "args": "tag:String, vars:String, values:Any = null, duration:Float, ?options:Any = null",
-            "documentation": ""
+            "documentation": "Starts a complex tween and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `objTag` - Sprite variable name or Lua Sprite nametag.\n* `values` - A table with the properties to change and its target values at the end of the tween.\n* `duration` - Tween duration (in seconds).\n* `options` *(Optional)* - Tween options, it's a table with all optional values you can set: `type`, `ease`, `startDelay`, `loopDelay`, `onUpdate`, `onStart`, `onComplete`.\n\n**Examples:**\n* `startTween('someBFtween', 'boyfriend.scale', {x = 1.5, y = 1.5}, 0.5, {ease = 'sineOut'})` - Starts a tween for Player's Scale.\n* `startTween('mySpriteTween', 'mySprite', {x = 1000, y = 500}, 0.5, {ease = 'quadOut', onComplete = 'myTween'})` - Starts a tween on the Position of `\"mySprite\"` Lua Sprite, calls `function myTween('mySpriteTween', 'mySprite')` on complete.\n\n*Note: For optimization sake, if you're changing a single value, you should use the other tween functions when possible.*"
         },
         "doTweenX": {
             "returns": "string",
             "args": "tag:String, vars:String, value:Dynamic, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change the Sprite's X and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `objTag` - Sprite variable name or Lua Sprite nametag.\n* `value` - Target value at the end of the tween.\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `doTweenX('mySpriteTween', 'mySprite', 1000, 0.5, 'quadOut')` - Starts a tween on the X Position of `\"mySprite\"` Lua Sprite."
         },
         "doTweenY": {
             "returns": "string",
             "args": "tag:String, vars:String, value:Dynamic, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change the Sprite's Y and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `objTag` - Sprite variable name or Lua Sprite nametag.\n* `value` - Target value at the end of the tween.\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `doTweenY('mySpriteTween', 'mySprite', 500, 0.5, 'quadOut')` - Starts a tween on the Y Position of `\"mySprite\"` Lua Sprite."
         },
         "doTweenAngle": {
             "returns": "string",
             "args": "tag:String, vars:String, value:Dynamic, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change the Sprite's Angle and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `objTag` - Sprite variable name or Lua Sprite nametag.\n* `value` - Target value at the end of the tween. (In degrees)\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `doTweenAngle('mySpriteTween', 'mySprite', 90, 0.5, 'quadOut')` - Starts a tween on Angle of `\"mySprite\"` Lua Sprite to set it to 90°."
         },
         "doTweenAlpha": {
             "returns": "string",
             "args": "tag:String, vars:String, value:Dynamic, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change the Sprite's Alpha and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `objTag` - Sprite variable name or Lua Sprite nametag.\n* `value` - Target value at the end of the tween, ranges from 0.0 to 1.0\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `doTweenAlpha('mySpriteTween', 'mySprite', 0.25, 0.5, 'quadOut')` - Starts a tween on the Alpha of `\"mySprite\"` Lua Sprite."
         },
         "doTweenZoom": {
             "returns": "string",
             "args": "tag:String, camera:String, value:Dynamic, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change the Camera's Zoom and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `camera` - Can be `\"game\"`, `\"hud\"` or `\"other\"`.\n* `value` - Target value at the end of the tween.\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `doTweenZoom('testZoomTween', 'game', 1.5, 0.5, 'linear')`\n\n*Note: Use `setProperty('camZooming', false)` to disable the camera automatic zoom-in.`"
         },
         "doTweenColor": {
             "returns": "string",
             "args": "tag:String, vars:String, targetColor:String, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change the Camera's Color and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `objTag` - Sprite variable name or Lua Sprite nametag.\n* `targetColor` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html).\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `doTweenColor('mySpriteTween', 'mySprite', 'FF0000', 0.5, 'sineOut')` - Starts a tween on `\"mySprite\"` Lua Sprite to make it red.\n* `doTweenColor('mySpriteTween', 'mySprite', 'blue', 0.5, 'sineOut')` - Starts a tween on `\"mySprite\"` Lua Sprite to make it blue."
         },
         "noteTweenX": {
             "returns": "string",
             "args": "tag:String, note:Int, value:Dynamic, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change a Strum Note's X and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `note` - Strum Note ID (0-3 = Opponent, 4-7 = Player).\n* `value` - Target value at the end of the tween.\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `noteTweenX('mySpriteTween', 2, 600, 0.5, 'quadOut')` - Moves the Opponent's Up note.\n* `noteTweenX('mySpriteTween', 7, 600, 0.5, 'quadOut')` - Moves the Player's Right note."
         },
         "noteTweenY": {
             "returns": "string",
             "args": "tag:String, note:Int, value:Dynamic, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change a Strum Note's Y and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `note` - Strum Note ID (0-3 = Opponent, 4-7 = Player).\n* `value` - Target value at the end of the tween.\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `noteTweenY('mySpriteTween', 2, 300, 0.5, 'quadOut')` - Moves the Opponent's Up note.\n* `noteTweenY('mySpriteTween', 7, 300, 0.5, 'quadOut')` - Moves the Player's Right note."
         },
         "noteTweenAngle": {
             "returns": "string",
             "args": "tag:String, note:Int, value:Dynamic, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change a Strum Note's Angle and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `note` - Strum Note ID (0-3 = Opponent, 4-7 = Player).\n* `value` - Target value at the end of the tween. (In degrees)\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `noteTweenAngle('mySpriteTween', 2, 90, 0.5, 'quadOut')` - Sets the Rotation of Opponent's Up note to 90°.\n* `noteTweenAngle('mySpriteTween', 7, 150, 0.5, 'quadOut')` - Sets the Rotation of Player's Right note to 150°."
         },
         "noteTweenAlpha": {
             "returns": "string",
             "args": "tag:String, note:Int, value:Dynamic, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change a Strum Note's Alpha and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `note` - Strum Note ID (0-3 = Opponent, 4-7 = Player).\n* `value` - Target value at the end of the tween, ranges from 0 to 1.\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `noteTweenAlpha('mySpriteTween', 2, 0.25, 0.5, 'quadOut')` - Sets the Opponent's Up note opacity to 0.25.\n* `noteTweenAlpha('mySpriteTween', 7, 0.25, 0.5, 'quadOut')` - Sets the Player's Right note opacity to 0.25."
         },
         "noteTweenDirection": {
             "returns": "string",
             "args": "tag:String, note:Int, value:Dynamic, duration:Float, ?ease:String = 'linear'",
-            "documentation": ""
+            "documentation": "Starts a simple tween to change a Strum Note's Direction and call function `onTweenCompleted` when it ends. Returns the formatted Tween tag.\n* `twnTag` - Tween tag for the `onTweenCompleted` function, it should be unique or it will overwrite the previous one with the same name.\n* `note` - Strum Note ID (0-3 = Opponent, 4-7 = Player).\n* `value` - Target value at the end of the tween. (In degrees)\n* `duration` - Tween duration (in seconds).\n* `ease` *(Optional)* - [Tween ease](https://api.haxeflixel.com/flixel/tweens/FlxEase.html), defaults to `\"linear\"`.\n\n**Examples:**\n* `noteTweenDirection('mySpriteTween', 2, 180, 0.5, 'quadOut')` - Makes notes come sideways from the Opponent's Up note.\n* `noteTweenDirection('mySpriteTween', 7, 0, 0.5, 'quadOut')` - Makes notes come sideways from the Player's Right note."
         },
         "mouseClicked": {
             "returns": "boolean",
             "args": "?button:String = 'left'",
-            "documentation": ""
+            "documentation": "Returns whether the Mouse button just got clicked in this frame.\n* `button` - Can be: `\"left\"`, `\"middle\"` or `\"right\"`. Defaults to `\"left\"`\n\n**Examples:**\n* `mouseClicked()` - Checks for Left click.\n* `mouseClicked('right')` - Checks for Right click."
         },
         "mousePressed": {
             "returns": "boolean",
             "args": "?button:String = 'left'",
-            "documentation": ""
+            "documentation": "Returns whether the Mouse button is being held currently.\n* `button` - Can be: `\"left\"`, `\"middle\"` or `\"right\"`. Defaults to `\"left\"`"
         },
         "mouseReleased": {
             "returns": "boolean",
             "args": "?button:String = 'left'",
-            "documentation": ""
+            "documentation": "Returns whether the Mouse button was just released in this frame.\n* `button` - Can be: `\"left\"`, `\"middle\"` or `\"right\"`. Defaults to `\"left\"`"
         },
         "cancelTween": {
             "returns": "void",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Cancels a Tween created with any of the Tween functions.\n* `twnTag` - Tween's tag.\n\n**Examples:**\n* `cancelTween('myTween')` - Cancels the tween created with the Tween tag `\"myTween\"`."
         },
         "runTimer": {
             "returns": "string",
             "args": "tag:String, time:Float = 1, loops:Int = 1",
-            "documentation": ""
+            "documentation": "Starts a timer that calls `onTimerCompleted` when it ends. Returns the formatted Timer tag.\n* `tmrTag` - Timer tag for the `onTimerCompleted` function.\n* `time` *(Optional)* - How much time it should take per loop (in seconds).\n* `loops` *(Optional)* - How many times the Timer should loop, every loop calls `onTimerCompleted`, set to zero to repeat indefinitely.\n\n**Examples:**\n* `runTimer('myTimer')` - Creates a timer that lasts 1 second and calls `onTimerCompleted('myTimer', 1, 0)` when completed.\n* `runTimer('myTimer', 0.5, 3)` - Creates a timer that lasts a half second and repeats thrice."
         },
         "cancelTimer": {
             "returns": "void",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Cancels a Timer created with `runTimer`.\n* `tmrTag` - Timer's Lua name tag.\n\n**Examples:**\n* `cancelTimer('myTimer')` - Cancels the timer created with `runTimer('myTimer', 5.0)`."
         },
         "addScore": {
             "returns": "void",
             "args": "value:Int = 0",
-            "documentation": ""
+            "documentation": "Adds to the Score.\n* `value` - How much to add."
         },
         "addMisses": {
             "returns": "void",
             "args": "value:Int = 0",
-            "documentation": ""
+            "documentation": "Adds to the Misses count.\n* `value` - How much to add."
         },
         "addHits": {
             "returns": "void",
             "args": "value:Int = 0",
-            "documentation": ""
+            "documentation": "Adds to the Hit count.\n* `value` - How much to add."
         },
         "setScore": {
             "returns": "void",
             "args": "value:Int = 0",
-            "documentation": ""
+            "documentation": "Sets the Score.\n* `value` - New value."
         },
         "setMisses": {
             "returns": "void",
             "args": "value:Int = 0",
-            "documentation": ""
+            "documentation": "Sets the Misses count.\n* `value` - New value."
         },
         "setHits": {
             "returns": "void",
             "args": "value:Int = 0",
-            "documentation": ""
+            "documentation": "Sets the Hit count.\n* `value` - New value."
         },
         "setHealth": {
             "returns": "void",
             "args": "value:Float = 1",
-            "documentation": ""
+            "documentation": "Sets the Health value.\n* `value` - New health, 0 will kill you, 2 is full health."
         },
         "addHealth": {
             "returns": "void",
             "args": "value:Float = 0",
-            "documentation": ""
+            "documentation": "Heals the player. If the value is negative, the player is harmed instead.\n* `value` - How much to add."
         },
         "getHealth": {
             "returns": "float",
             "args": "",
-            "documentation": ""
+            "documentation": "Returns current health, max of 2 (Which is 100% health). "
         },
         "FlxColor": {
             "returns": "int",
             "args": "color:String",
-            "documentation": ""
+            "documentation": "Turns a color string/hexadecimal into an Integer value usable in `setProperty` and other functions.\n* `color` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html).\n\n**Examples:**\n* `FlxColor('BLUE')` - Returns blue color.\n* `FlxColor('#FFFF0000')` - Returns Red color through hexadecimal in ARGB format, notice how it starts with \"#\"."
         },
         "getColorFromName": {
             "returns": "int",
             "args": "color:String",
-            "documentation": ""
+            "documentation": "Alias for `FlxColor`.\n* `color` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html)."
         },
         "getColorFromString": {
             "returns": "int",
             "args": "color:String",
-            "documentation": ""
+            "documentation": "Alias for `FlxColor`.\n* `color` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html)."
         },
         "getColorFromHex": {
             "returns": "int",
             "args": "color:String",
-            "documentation": ""
+            "documentation": "Turns a color hexadecimal into an Integer value usable in `setProperty` and other functions. This differs from `FlxColor` because it doesn't accept color names and doesn't require a \"#\" before the value.\n* `color` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html).\n\n**Examples:**\n* `getColorFromHex('7F7F7F')` - Returns gray color.\n* `getColorFromHex('FF0000')` - Returns red color."
         },
         "addCharacterToList": {
             "returns": "void",
             "args": "name:String, type:String",
-            "documentation": ""
+            "documentation": "Precaches a character, best used in conjunction with `triggerEvent` of \"Change Character\" to allow you to change characters through a Lua Script for custom mechanics.\n* `name` - Character .JSON name.\n* `type` - Character type: `\"bf\"`, `\"dad\"` or `\"gf\"`.\n\n**Examples:**\n* `addCharacterToList('pico-playable', 'bf')` - Precaches `\"pico-playable\"` as a Player Character.\n* `addCharacterToList('tankman', 'dad')` - Precaches `\"tankman\"` as an Opponent Character.\n* `addCharacterToList('gf-pixel', 'gf')` - Precaches `\"gf-pixel\"` as a GF Character."
         },
         "precacheImage": {
             "returns": "void",
             "args": "name:String, ?allowGPU:Bool = true",
-            "documentation": ""
+            "documentation": "Precaches a file in \"images/\" folder.\n* `file` - File name path, don't include the extension!\n* `allowGPU` *(Optional)* - Force disable GPU Caching if you set to false.\n\n**Examples:**\n* `precacheImage('myImage')` - Precaches \"mods/My-Mod/images/myImage.png\".\n* `precacheImage('myImage', false)` - The same as above, but it disables GPU Caching, this is necessary for specific shaders or it might display as a black box."
         },
         "precacheSound": {
             "returns": "void",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Precaches a .OGG sound file in \"sounds/\" folder.\n* `file` - File name path, don't include the extension!\n\n**Examples:**\n* `precacheMusic('mySound')` - Precaches \"mods/My-Mod/sounds/mySound.ogg\"."
         },
         "precacheMusic": {
             "returns": "void",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Precaches a .OGG sound file in \"music/\" folder.\n* `file` - File name path, don't include the extension!\n\n**Examples:**\n* `precacheMusic('myMusic')` - Precaches \"mods/My-Mod/music/myMusic.ogg\"."
         },
         "triggerEvent": {
             "returns": "boolean",
             "args": "name:String, ?value1:String = '', ?value2:String = ''",
-            "documentation": ""
+            "documentation": "Calls an event and uses two arguments for it, exactly like the Chart Editor does. Should always return `true`.\n* `name` - Event Name.\n* `value1` *(Optional)* - Does the same as what the Event says in the Chart Editor.\n* `value2` *(Optional)* - Does the same as what the Event says in the Chart Editor.\n\n**Examples:**\n* `triggerEvent('Hey!', 'BF', 0.6)` - Calls `\"Hey!\"` event."
         },
         "startCountdown": {
             "returns": "boolean",
             "args": "",
-            "documentation": ""
+            "documentation": "Starts the countdown, should be used after finishing your Pre-Song Cutscene."
         },
         "endSong": {
             "returns": "boolean",
             "args": "",
-            "documentation": ""
+            "documentation": "Ends the song, can be cancelled through the Lua/HScript callback `onEndSong` to make cutscenes."
         },
         "restartSong": {
             "returns": "boolean",
             "args": "?skipTransition:Bool = false",
-            "documentation": ""
+            "documentation": "Restarts the Song, pretty self explanatory.\n* `skipTransition` *(Optional)* - Skips fade in/out transition, defaults to false."
         },
         "exitSong": {
             "returns": "boolean",
             "args": "?skipTransition:Bool = false",
-            "documentation": ""
+            "documentation": "Quits the Song and goes back to Freeplay/Story Mode based on where you started.\n* `skipTransition` *(Optional)* - Skips fade in/out transition, defaults to false."
         },
         "getSongPosition": {
             "returns": "float",
             "args": "",
-            "documentation": ""
+            "documentation": "Returns the current song position, in milliseconds."
         },
         "getCharacterX": {
             "returns": "float",
             "args": "type:String",
-            "documentation": ""
+            "documentation": "Returns a Character Group's X, this will affect all character positions, even if you use \"Change Character\" event.\n* `character` - `\"bf\"`, `\"dad\"` or `\"gf\"`."
         },
         "setCharacterX": {
             "returns": "void",
             "args": "type:String, value:Float",
-            "documentation": ""
+            "documentation": "Sets a Character Group's X, this will affect all character positions, even if you use \"Change Character\" event.\n* `character` - `\"bf\"`, `\"dad\"` or `\"gf\"`."
         },
         "getCharacterY": {
             "returns": "float",
             "args": "type:String",
-            "documentation": ""
+            "documentation": "Returns a Character Group's Y, this will affect all character positions, even if you use \"Change Character\" event.\n* `character` - `\"bf\"`, `\"dad\"` or `\"gf\"`."
         },
         "setCharacterY": {
             "returns": "void",
             "args": "type:String, value:Float",
-            "documentation": ""
+            "documentation": "Sets a Character Group's Y, this will affect all character positions, even if you use \"Change Character\" event.\n* `character` - `\"bf\"`, `\"dad\"` or `\"gf\"`."
         },
         "cameraSetTarget": {
             "returns": "void",
             "args": "target:String",
-            "documentation": ""
+            "documentation": "Changes the Follow Point to target a character.\n* `character` - Can be `\"bf\"`, `\"gf\"`, or `\"dad\"` (`\"opponent\"` alternatively).\n\n**Examples:**\n* `cameraSetTarget('opponent')` - Sets camera follow point to Opponent."
         },
         "setCameraScroll": {
             "returns": "void",
             "args": "x:Float, y:Float",
-            "documentation": ""
+            "documentation": "Set the Game Camera's current scroll position.\n\n**Examples:**\n* `setCameraScroll(0.0, 0.0)` - Camera Scroll position is set to X: 0 and Y: 0."
         },
         "setCameraFollowPoint": {
             "returns": "void",
             "args": "x:Float, y:Float",
-            "documentation": ""
+            "documentation": "Set the Game Camera's follow point position.\n\n**Examples:**\n* `setCameraFollowPoint(-150.0, 150.0)` - Camera Follow point is set to 150 units to the left and 150 units down."
         },
         "addCameraScroll": {
             "returns": "void",
             "args": "?x:Float = 0, ?y:Float = 0",
-            "documentation": ""
+            "documentation": "Adds X/Y to the Game Camera's current scroll position. All values are optional and defaults to zero.\n\n**Examples:**\n* `addCameraScroll(200.0, -100.0)` - Camera Scroll moves 200 units to the right and 100 units up."
         },
         "addCameraFollowPoint": {
             "returns": "void",
             "args": "?x:Float = 0, ?y:Float = 0",
-            "documentation": ""
+            "documentation": "Adds X/Y to the Game Camera's follow point position. All values are optional and defaults to zero.\n\n**Examples:**\n* `addCameraFollowPoint(-600.0, -200.0)` - Camera Follow point moves 600 units to the left and 200 units up."
         },
         "getCameraScrollX": {
             "returns": "float",
             "args": "",
-            "documentation": ""
+            "documentation": "Returns Game Camera's current scroll X value."
         },
         "getCameraScrollY": {
             "returns": "float",
             "args": "",
-            "documentation": ""
+            "documentation": "Returns Game Camera's current scroll Y value."
         },
         "getCameraFollowX": {
             "returns": "float",
             "args": "",
-            "documentation": ""
+            "documentation": "Returns Game Camera's current follow X value."
         },
         "getCameraFollowY": {
             "returns": "float",
             "args": "",
-            "documentation": ""
+            "documentation": "Returns Game Camera's current follow Y value."
         },
         "cameraShake": {
             "returns": "void",
             "args": "camera:String, intensity:Float, duration:Float",
-            "documentation": ""
+            "documentation": "Shakes an identified camera.\n* `camera` - Can be `\"game\"`, `\"hud\"` or `\"other\"`.\n* `intensity` - Shake intensity.\n* `duration` - How much time the shake lasts for (in seconds).\n\n**Examples:**\n* `cameraShake('game', 0.025, 0.35)` - Shakes Game Camera for 0.35 seconds, intensity 0.025."
         },
         "cameraFlash": {
             "returns": "void",
             "args": "camera:String, color:String, duration:Float,forced:Bool",
-            "documentation": ""
+            "documentation": "Flashes an identified camera.\n* `camera` - Can be `\"game\"`, `\"hud\"` or `\"other\"`.\n* `color` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html).\n* `duration` - How much time the shake lasts for (in seconds).\n* `forceReset` - If false, won't flash if there's still a previous flash active.\n\n**Examples:**\n* `cameraFlash('game', 'FFFFFF', 0.5, true)` - Flashbangs you, lasts for 0.5 seconds, color #FFFFFF (White).\n* `cameraFlash('game', 'red', 0.25, true)` - Flashes red, lasts for 0.25 seconds."
         },
         "cameraFade": {
             "returns": "void",
             "args": "camera:String, color:String, duration:Float, forced:Bool, ?fadeOut:Bool = false",
-            "documentation": ""
+            "documentation": "Flashes an identified camera.\n* `camera` - Can be `\"game\"`, `\"hud\"` or `\"other\"`.\n* `color` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html).\n* `duration` - How much time the shake lasts for (in seconds).\n* `forceReset` - If false, won't flash if there's still a previous flash active.\n* `fadeOut` *(Optional)* - Fade in/out toggle.\n\n**Examples:**\n* `cameraFade('game', 'FFFFFF', 0.35, true)` - Fade in to white in 0.35 seconds.\n* `cameraFade('game', 'FFFFFF', 0.35, true, true)` - Fade out to white in 0.35 seconds."
         },
         "setRatingPercent": {
             "returns": "void",
             "args": "value:Float",
-            "documentation": ""
+            "documentation": "Changes Rating Percentage.\n* `value` - Sets Rating percent (normally ranges from 0 to 1).\n\n*Note: For optimization sake, you have to call `updateScoreText()` after changing it.*"
         },
         "setRatingName": {
             "returns": "void",
             "args": "value:String",
-            "documentation": ""
+            "documentation": "Changes Rating Name (Good, Meh, Shit, etc.)\n* `value` - Sets Rating name.\n\n*Note: For optimization sake, you have to call `updateScoreText()` after changing it.*"
         },
         "setRatingFC": {
             "returns": "void",
             "args": "value:String",
-            "documentation": ""
+            "documentation": "Changes Rating FC (Clear, SDCB, FC, GFC, SFC).\n* `value` - Sets Rating FC string.\n\n*Note: For optimization sake, you have to call `updateScoreText()` after changing it.*"
         },
         "updateScoreText": {
             "returns": "void",
             "args": "",
-            "documentation": ""
+            "documentation": "Updates displayed score text.\n\n*Note: Avoid using it in functions that are executed very frequently!`"
         },
         "getMouseX": {
             "returns": "float",
             "args": "?camera:String = 'game'",
-            "documentation": ""
+            "documentation": "Returns Mouse's Screen X from a Camera.\n* `camera` - Can be `\"game\"`, `\"hud\"` or `\"other\"`.\n\n**Examples:**\n* `getMouseX()` - Mouse X on Game Camera.\n* `getMouseX('hud')` - Mouse X on HUD Camera."
         },
         "getMouseY": {
             "returns": "float",
             "args": "?camera:String = 'game'",
-            "documentation": ""
+            "documentation": "Returns Mouse's Screen Y from a Camera.\n* `camera` - Can be `\"game\"`, `\"hud\"` or `\"other\"`.\n\n**Examples:**\n* `getMouseY()` - Mouse Y on Game Camera.\n* `getMouseY('hud')` - Mouse Y on HUD Camera."
         },
         "getMidpointX": {
             "returns": "float",
             "args": "variable:String",
-            "documentation": ""
+            "documentation": "Returns the X of the center point of an Object.\n* `tag` - Variable name of the instance or Lua Object nametag."
         },
         "getMidpointY": {
             "returns": "float",
             "args": "variable:String",
-            "documentation": ""
+            "documentation": "Returns the Y of the center point of an Object.\n* `tag` - Variable name of the instance or Lua Object nametag."
         },
         "getGraphicMidpointX": {
             "returns": "float",
             "args": "variable:String",
-            "documentation": ""
+            "documentation": "Returns the Object's Graphic center X.\n* `tag` - Variable name of the instance or Lua Object nametag."
         },
         "getGraphicMidpointY": {
             "returns": "float",
             "args": "variable:String",
-            "documentation": ""
+            "documentation": "Returns the Object's Graphic center Y.\n* `tag` - Variable name of the instance or Lua Object nametag."
         },
         "getScreenPositionX": {
             "returns": "float",
             "args": "variable:String, ?camera:String = 'game'",
-            "documentation": ""
+            "documentation": "Returns the Object's On-Camera X Position.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `camera` *(Optional)* - Can be `\"game\"`, `\"hud\"` or `\"other\"`, defaults to `\"game\"`.\n\n**Examples:**\n* `getScreenPositionX('mySprite')` - Object X position on Game Camera.\n* `getScreenPositionX('mySprite', 'hud')` - Object X position on HUD Camera."
         },
         "getScreenPositionY": {
             "returns": "float",
             "args": "variable:String, ?camera:String = 'game'",
-            "documentation": ""
+            "documentation": "Returns the Object's On-Camera Y Position.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `camera` *(Optional)* - Can be `\"game\"`, `\"hud\"` or `\"other\"`, defaults to `\"game\"`.\n\n**Examples:**\n* `getScreenPositionY('mySprite')` - Object Y position on Game Camera.\n* `getScreenPositionY('mySprite', 'hud')` - Object Y position on HUD Camera."
         },
         "characterDance": {
             "returns": "void",
             "args": "character:String",
-            "documentation": ""
+            "documentation": "Makes a character play their idle animation if possible. This is different from `playAnim` because it cycles through \"danceLeft\" and \"danceRight\" animations automatically for characters.\n* `character` - `\"bf\"`, `\"dad\"` or `\"gf\"`."
         },
         "makeLuaSprite": {
             "returns": "void",
             "args": "tag:String, ?image:String = null, ?x:Float = 0, ?y:Float = 0",
-            "documentation": ""
+            "documentation": "Creates a Lua Sprite with a specific image and store it as the name input in `\"tag\"`.\n* `tag` - Lua Sprite nametag to save.\n* `image` *(Optional)* - Image to display, don't include the extension!\n* `x` *(Optional)* - Defaults to 0.\n* `y` *(Optional)* - Defaults to 0.\n\n**Examples:**\n* `makeLuaSprite('mySprite', 'funkay')` - Create a Lua Sprite with tag `\"mySprite\"` displaying image \"assets/shared/images/funkay.png\".\n* `makeLuaSprite('mySprite', 'myStage/myImage')` - Create a Lua Sprite with tag `\"mySprite\"` displaying image \"mods/My-Mod/images/myStage/myImage.png\".\n\n*Note: You will still have to add the Lua Sprite to the scene with addLuaSprite or it won't be visible.*"
         },
         "makeAnimatedLuaSprite": {
             "returns": "void",
             "args": "tag:String, ?image:String = null, ?x:Float = 0, ?y:Float = 0, ?spriteType:String = 'auto'",
-            "documentation": ""
+            "documentation": "Creates an animated Lua Sprite with a specific image and .XML/.JSON/.TXT, then store it as the name input in `\"tag\"`.\n* `tag` - Lua Sprite nametag to save.\n* `image` *(Optional)* - Image to display, don't include the extension!\n* `x` *(Optional)* - Defaults to 0.\n* `y` *(Optional)* - Defaults to 0.\n* `spriteType` *(Optional)* - Forces a spritesheet type, can be `\"sparrow\"` (.XML), `\"packer\"` (.TXT) or `\"aseprite\"` (.JSON). Defaults to `\"auto\"`.\n\n**Examples:**\n* `makeAnimatedLuaSprite('mySprite', 'logoBumpin')` - Create a Lua Sprite with tag `\"mySprite\"` displaying \"assets/shared/images/logoBumpin\", using its .PNG and .XML files.\n* `makeAnimatedLuaSprite('mySprite', 'aseprite-test', 0, 0, 'aseprite')` - Create a Lua Sprite with tag `\"mySprite\"` displaying \"mods/My-Mod/images/aseprite-test\", using its .PNG and .JSON files.\n\n*Note: You will still have to add the Lua Sprite to the scene with addLuaSprite or it won't be visible.*\n*Note 2: [Follow these instructions to export properly from Aseprite.](https://github.com/ShadowMario/FNF-PsychEngine/wiki/Export-and-Import-from-Aseprite)*"
         },
         "makeGraphic": {
             "returns": "void",
             "args": "obj:String, width:Int = 256, height:Int = 256, color:String = 'FFFFFF'",
-            "documentation": ""
+            "documentation": "Generates a solid color square as graphic for a Lua Sprite.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `width` *(Optional)* - Graphic width in pixels. Defaults to 256.\n* `height` *(Optional)* - Graphic height in pixels. Defaults to 256.\n* `color` *(Optional)* - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html).\n\n**Examples:**\n* `makeGraphic('mySprite', 500, 500, 'FF0000')` - Turns Lua Sprite with tag `\"mySprite\"` into a 500x500 red square.\n* `makeGraphic('mySprite', 1000, 200, 'green')` - Turns Lua Sprite with tag `\"mySprite\"` into a 1000x200 green square."
         },
         "addAnimationByPrefix": {
             "returns": "boolean",
             "args": "obj:String, name:String, prefix:String, framerate:Float = 24, loop:Bool = true",
-            "documentation": ""
+            "documentation": "Adds an animation from a symbol. Returns true if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `name` - Animation name.\n* `prefix` - Animation name in Adobe Animate/Aseprite.\n* `framerate` *(Optional)* - Animation FPS.\n* `loop` *(Optional)* - Should the animation loop?\n\n**Examples:**\n* `addAnimationByPrefix('mySprite', 'idle', 'Test Anim Idle')` - Adds an animation named `\"idle\"`, symbol is named `\"Test Anim Idle\"` on Animate, running at 24 FPS and `loop` disabled.\n* `addAnimationByPrefix('mySprite', 'spin', 'Test Spin', 30, true)` - Adds an animation named `\"spin\"`, symbol is named `\"Test Spin\"` on Animate, running at 30 FPS and `loop` enabled."
         },
         "addAnimation": {
             "returns": "boolean",
             "args": "obj:String, name:String, frames:Any, framerate:Float = 24, loop:Bool = true",
-            "documentation": ""
+            "documentation": "Adds an animation from a grid done with `loadGraphic`, playing only the specified frames. Returns true if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `name` - Animation name.\n* `frames` - Animation frames, can be formatted either as a string separated by commas or as a table.\n* `framerate` *(Optional)* - Animation FPS.\n* `loop` *(Optional)* - Should the animation loop?\n\n**Examples:**\n* `addAnimation('mySprite', 'idle', '0, 1, 2')` - Adds `\"idle\"` using string indices.\n* `addAnimation('mySprite', 'idle', {0, 1, 2})` - Adds `\"idle\"` using table indices."
         },
         "addAnimationByIndices": {
             "returns": "boolean",
             "args": "obj:String, name:String, prefix:String, indices:Any, framerate:Float = 24, loop:Bool = false",
-            "documentation": ""
+            "documentation": "Adds an animation from a symbol, playing only the specified frames. Returns true if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `name` - Animation name.\n* `prefix` - Animation name in Adobe Animate/Aseprite.\n* `indices` - Animation frames, can be formatted either as a string separated by commas or as a table.\n* `framerate` *(Optional)* - Animation FPS.\n* `loop` *(Optional)* - Should the animation loop?\n\n**Examples:**\n* `addAnimationByIndices('mySprite', 'idle', 'Test Anim Idle', '0, 1, 2, 3, 4, 5, 6, 7')` - Adds `\"idle\"` using string indices.\n* `addAnimationByIndices('mySprite', 'idle', 'Test Anim Idle', {0, 1, 2, 3, 4, 5, 6, 7})` - Adds `\"idle\"` using table indices."
         },
         "playAnim": {
             "returns": "boolean",
             "args": "obj:String, name:String, ?forced:Bool = false, ?reverse:Bool = false, ?startFrame:Int = 0",
-            "documentation": ""
+            "documentation": "Plays animation on a Sprite and updates offsets set with `addOffset`. Returns true if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `name` - Animation name.\n* `forced` *(Optional)* - When false, playing the same animation again will only reset it if the animation is finished. Defaults to false.\n* `reverse` *(Optional)* - Animation plays backwards. Defaults to false.\n* `startFrame` *(Optional)* - Start animation at a specific frame. Defaults to 0.\n\n**Examples:**\n* `playAnim('mySprite', 'idle', true)` - Forces `\"mySprite\"` to play the `\"idle\"` animation."
         },
         "addOffset": {
             "returns": "boolean",
             "args": "obj:String, anim:String, x:Float, y:Float",
-            "documentation": ""
+            "documentation": "Adds an offset for the animation, offsets change automatically when you use `playAnim`. Returns true if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `name` - Animation name.\n* `x` - Offset X.\n* `y` - Offset Y.\n\n**Examples:**\n* `addOffset('mySprite', 'idle', 50, 38)` - Add offsets (X: 50, Y: 38) to `\"idle\"` animation."
         },
         "setScrollFactor": {
             "returns": "void",
             "args": "obj:String, scrollX:Float, scrollY:Float",
-            "documentation": ""
+            "documentation": "Changes the [parallax](https://en.wikipedia.org/wiki/Parallax) of an Object.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `scrollX` - 1 = Normal parallax.\n* `scrollY` - 1 = Normal parallax.\n\n**Examples:**\n* `setScrollFactor('mySprite', 0, 0)` - Object will look like it's immobile/never gets displaced."
         },
         "addLuaSprite": {
             "returns": "void",
             "args": "tag:String, ?inFront:Bool = false",
-            "documentation": ""
+            "documentation": "Adds the Lua Sprite to the scene.\n* `tag` - Lua Sprite nametag.\n* `inFront` *(Optional)* - If true, the instance is added at the top of everything in its camera, if false, it will be added behind all characters.\n\n**Examples:**\n* `addLuaSprite('mySprite', true)` - Adds a Lua Sprite with the tag `\"mySprite\"` at the top of everything."
         },
         "setGraphicSize": {
             "returns": "void",
             "args": "obj:String, x:Float, y:Float = 0, updateHitbox:Bool = true",
-            "documentation": ""
+            "documentation": "Scales an Object by a ratio.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `x` - Width in pixels.\n* `y` *(Optional)* - Height in pixels, set to 0 to keep its size constraint to the Width. Defaults to 0.\n* `updateHitbox` *(Optional)* - Calls `updateHitbox()` on the object after scaling.\n\n**Examples:**\n* `setGraphicSize('mySprite', 300, 300)` - Object will be 300 pixels wide and 300 pixels tall.\n* `setGraphicSize('mySprite', 500)` - Object will be 500 pixels wide, height will be scaled keeping its size constraint."
         },
         "scaleObject": {
             "returns": "void",
             "args": "obj:String, x:Float, y:Float, updateHitbox:Bool = true",
-            "documentation": ""
+            "documentation": "Scales an Object by a ratio.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `x` - Scale ratio X.\n* `y` - Scale ratio Y.\n* `updateHitbox` *(Optional)* - Updates Hitbox after scaling.\n\n**Examples:**\n* `scaleObject('mySprite', 1.5, 2)` - Object gets stretched 1.5x larger horizontally and 2x larger vertically."
         },
         "updateHitbox": {
             "returns": "void",
             "args": "obj:String",
-            "documentation": ""
+            "documentation": "Updates the Width/Height hitboxes and the Offset of an Object, used after scaling operations.\n* `tag` - Variable name of the instance or Lua Object nametag."
         },
         "removeLuaSprite": {
             "returns": "void",
             "args": "tag:String, destroy:Bool = true, ?group:String = null",
-            "documentation": ""
+            "documentation": "Removes a Lua Sprite from the scene.\n* `tag` - Lua Sprite nametag.\n* `destroy` *(Optional)* - If enabled, clears the sprite object from memory once removed, do not disable unless you know what you're doing.\n* `group` *(Optional)* - Group variable name to remove the sprite from.\n\n**Examples:**\n* `removeLuaSprite('mySprite')` - Removes the Lua Sprite with the tag `\"mySprite\"`."
         },
         "luaSpriteExists": {
             "returns": "boolean",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Returns whether a Lua Sprite with a specific tag exists.\n* `tag` - Lua Sprite nametag."
         },
         "luaTextExists": {
             "returns": "boolean",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Returns whether a Lua Text with a specific tag exists.\n* `tag` - Lua Text nametag."
         },
         "luaSoundExists": {
             "returns": "boolean",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Returns whether a Lua Sound with a specific tag exists.\n* `tag` - Lua Sound nametag."
         },
         "setHealthBarColors": {
             "returns": "void",
             "args": "left:String, right:String",
-            "documentation": ""
+            "documentation": "Changes Health Bar colors.\n* `left` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html) for the left side of the bar.\n* `right` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html) for the right side of the bar.\n\n**Examples:**\n* `setHealthBarColors('FF0000', '00FF00')` - Makes left side red and right side lime.\n* `setHealthBarColors('red', 'lime')` - Same as above, but using color names."
         },
         "setTimeBarColors": {
             "returns": "void",
             "args": "left:String, right:String",
-            "documentation": ""
+            "documentation": "Changes Time Bar colors.\n* `left` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html) for the left side of the bar.\n* `right` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html) for the right side of the bar.\n\n**Examples:**\n* `setTimeBarColors('FF0000', '00FF00')` - Makes left side red and right side lime.\n* `setTimeBarColors('red', 'lime')` - Same as above, but using color names."
         },
         "setObjectCamera": {
             "returns": "boolean",
             "args": "obj:String, camera:String = 'game'",
-            "documentation": ""
+            "documentation": "Changes the Object's Draw Camera. Returns whether the operation was successful.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `camera` *(Optional)* - Can be `\"game\"`, `\"hud\"` or `\"other\"`, defaults to `\"game\"`.\n\n**Examples:**\n* `setObjectCamera('mySprite', 'hud')` - Moves Object named `\"mySprite\"` to HUD Camera."
         },
         "setBlendMode": {
             "returns": "boolean",
             "args": "obj:String, blend:String = ''",
-            "documentation": ""
+            "documentation": "Changes the Blend Mode of an object, similarly to various image editors. Returns whether the operation was successful.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `blend` - [Blend mode name](https://api.haxeflixel.com/flash/display/BlendMode.html), leave empty for using the default blend mode.\n\n**Examples:**\n* `setBlendMode('mySprite', 'add')` - Changes Blend Mode to `ADD`.\n\n*Note: Some blend modes like \"OVERLAY\" just seem to not work at all!*"
         },
         "screenCenter": {
             "returns": "void",
             "args": "obj:String, pos:String = 'xy'",
-            "documentation": ""
+            "documentation": "Centers an Object to the Screen on the specified axis.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `axis` *(Optional)* - can be `\"X\"`, `\"Y\"` or `\"XY\"`, defaults to `\"XY\"`.\n\n**Examples:**\n* `screenCenter('mySprite', 'x')` - Objects gets only centered horizontally.\n* `screenCenter('mySprite', 'y')` - Objects gets only centered vertically.\n* `screenCenter('mySprite', 'xy')` - Objects gets centered on both axis."
         },
         "objectsOverlap": {
             "returns": "boolean",
             "args": "obj1:String, obj2:String",
-            "documentation": ""
+            "documentation": "Returns whether two Object hitboxes are overlapping each other, useful for collision checking.\n* `obj1` - Variable name of the instance or Lua Object nametag of the first object.\n* `obj2` - Variable name of the instance or Lua Object nametag of the second object.\n\n**Examples:**\n* `objectsOverlap('mySprite1', 'mySprite2')` - Checks if two Lua Sprites are colliding against each other's hitboxes."
         },
         "getPixelColor": {
             "returns": "int",
             "args": "obj:String, x:Int, y:Int",
-            "documentation": ""
+            "documentation": "Gets the color of a pixel in a Sprite's Graphic. Returns the color's integer value, if invalid, it returns black.\n* `tag` - Variable name of the instance or Lua Object nametag.\n* `x` - Pixel X of the Graphic.\n* `y` - Pixel Y of the Graphic.\n\n*Note: Sprites will require to have their GPU Caching (in `precacheImage`) turned off for it to work.*"
         },
         "startDialogue": {
             "returns": "boolean",
             "args": "dialogueFile:String, ?music:String = null",
-            "documentation": ""
+            "documentation": "Loads a Dialogue .JSON inside the Chart folder, handles translation loading automatically.\n* `dialogueFile` - Dialogue file .JSON name.\n* `music` *(Optional)* - Plays a background music inside \"music/\" folder.\n\n**Examples:**\n* `startDialogue('dialogue')` - Loads \"dialogue.json\" inside the chart folder, will prefer \"dialogue_pt-BR.json\" if you're playing on Portuguese (Brazil).\n* `startDialogue('dialogue', 'breakfast')` - Same as above, but plays \"Breakfast\" as background music."
         },
         "startVideo": {
             "returns": "boolean",
             "args": "videoFile:String, ?canSkip:Bool = true, ?forMidSong:Bool = false, ?shouldLoop:Bool = false, ?playOnLoad:Bool = true",
-            "documentation": ""
+            "documentation": "Plays a Video Cutscene.\n* `videoFile` - Video .MP4 file located inside \"videos/\" folder, don't include the extension!\n* `canSkip` *(Optional)* - Allows the video to be skipped by holding down Enter for a second. Defaults to true.\n* `forMidSong` *(Optional)* - Doesn't start/finish song after the video ends, needed for mid-song cutscenes. Defaults to false.\n* `shouldLoop` *(Optional)* - Video will repeat once finished. Defaults to false.\n* `playOnLoad` *(Optional)* - Videos plays instantly after loading. Defaults to true.\n\n**Examples:**\n* `startVideo('test_video')` - Plays the video \"mods/My-Mod/videos/test_video.mp4\"."
         },
         "playMusic": {
             "returns": "void",
             "args": "sound:String, ?volume:Float = 1, ?loop:Bool = false",
-            "documentation": ""
+            "documentation": "Plays a music, used for Pre/Post Song cutscenes.\n* `music` - Music path inside \"music/\" folder, don't include the extension!\n* `volume` *(Optional)* - Ranges from 0 to 1, defaults to 1.\n* `loop` *(Optional)* - Should sound loop indefinitely?\n\n**Examples:**\n* `playMusic('breakfast')` - Plays \"assets/shared/music/breakfast.ogg\"."
         },
         "playSound": {
             "returns": "string",
             "args": "sound:String, ?volume:Float = 1, ?tag:String = null, ?loop:Bool = false",
-            "documentation": ""
+            "documentation": "Plays a sound, set a Tag to be able to use any functions on it. Calls function `onSoundFinished(tag)` when it finishes if `tag` isn't null. Returns the Sound's formatted Tag if tag isn't null, otherwise returns null.\n* `sound` - Sound path inside \"sounds/\" folder, don't include the extension!\n* `volume` *(Optional)* - Ranges from 0 to 1, defaults to 1.\n* `tag` *(Optional)* - Lua Sound nametag to save.\n* `loop` *(Optional)* - Should sound loop indefinitely?\n\n**Examples:**\n* `playSound('confirmMenu', 0.4)` - Plays \"assets/shared/sounds/confirmMenu.ogg\".\n* `playSound('custom_sound', 0.4, 'mySound')` - Plays \"mods/My-Mod/sounds/custom_sound.ogg\" and save it to `\"mySound\"` tag."
         },
         "stopSound": {
             "returns": "void",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Interrupts and clears a Lua Sound with a specific tag.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`."
         },
         "pauseSound": {
             "returns": "void",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Pauses a Lua Sound with a specific tag.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`."
         },
         "resumeSound": {
             "returns": "void",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Resumes a Lua Sound with a specific tag.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`."
         },
         "soundFadeIn": {
             "returns": "void",
             "args": "tag:String, duration:Float, fromValue:Float = 0, toValue:Float = 1",
-            "documentation": ""
+            "documentation": "Tweens the volume from a Lua Sound with a specific tag doing a Fade In.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`.\n* `duration` - Tween duration (in seconds).\n* `fromValue` - Tween initial volume, ranges from 0 to 1.\n* `toValue` - Tween target volume, ranges from 0 to 1.\n\n**Examples:**\n* `soundFadeIn('mySound', 0.5)` - Fades `\"mySound\"` Lua Sound in 0.5 seconds.\n* `soundFadeIn(_, 0.5)` - Fades background music in 0.5 seconds."
         },
         "soundFadeOut": {
             "returns": "void",
             "args": "tag:String, duration:Float, toValue:Float = 0",
-            "documentation": ""
+            "documentation": "Tweens the volume from a Lua Sound with a specific tag doing a Fade Out.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`.\n* `duration` - Tween duration (in seconds).\n* `toValue` - Tween target volume, ranges from 0 to 1."
         },
         "soundFadeCancel": {
             "returns": "void",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Stops the Fade In/Out of a Lua Sound with a specific tag.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`."
         },
         "getSoundVolume": {
             "returns": "float",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Returns a Lua Sound's volume, if missing, it returns 0.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`."
         },
         "setSoundVolume": {
             "returns": "void",
             "args": "tag:String, value:Float",
-            "documentation": ""
+            "documentation": "Sets a Lua Sound's volume.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`.\n* `value` - Volume to set it to, ranges from 0 to 1."
         },
         "getSoundTime": {
             "returns": "float",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Returns a Lua Sound's time position (in milliseconds), if missing, it returns 0.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`."
         },
         "setSoundTime": {
             "returns": "void",
             "args": "tag:String, value:Float",
-            "documentation": ""
+            "documentation": "Sets a Lua Sound's time position.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`.\n* `value` - Time to set it to, in milliseconds."
         },
         "getSoundPitch": {
             "returns": "float",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Returns a Lua Sound's pitch shift, if missing, it returns 1.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`."
         },
         "setSoundPitch": {
             "returns": "void",
             "args": "tag:String, value:Float, ?doPause:Bool = false",
-            "documentation": ""
+            "documentation": "Sets a Lua Sound's pitch shift.\n* `tag` - Lua Sound nametag, use \"null\" for the Music from `playMusic`.\n* `value - Pitch to set it to.\n* `doPause` *(Optional)* - Pauses and resumes sound while changing pitch, might be needed to update the Pitch properly unless the sound is already paused."
         },
         "getModSetting": {
             "returns": "?",
             "args": "saveTag:String, ?modName:String = null",
-            "documentation": ""
+            "documentation": "Returns the value saved for a Mod Setting from a properly configured \"settings.json\".\n* `saveTag` - In settings.json, this is the \"save\" key in your Custom Setting.\n* `modName` *(Optional)* - Gives access to the Settings of another Mod, set to null to use the Mod this Lua Script is from.\n\n**Examples:**\n* `getModSetting('testbool')` - Returns the value from `testbool` setting, which is a boolean, returning either true or false.\n* `getModSetting('testnumber')` - Returns the value from `testnumber` setting, which is an integer, returning a number.\n* `getModSetting('testkey')` - Returns the keys from `testkey`, which is a table value with Gamepad and Keyboard inputs, [check this snippet for using it properly](https://drive.google.com/file/d/1cdT9zqzuAA72xWIA26XRFS_ujlrVOLE-/view?usp=sharing)."
         },
         "debugPrint": {
             "returns": "void",
             "args": "text:Dynamic = '', color:String = 'WHITE'",
-            "documentation": ""
+            "documentation": "Shows a colorable text at the top left corner of the screen that fades out after 5 seconds, used for quick debugging purposes.\n* `text` - Text to display.\n* `color` *(Optional)* - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html).\n\n**Examples:**\n* `debugPrint('Hello World!')` - Shows \"Hello World!\" at the top left corner of the screen.\n* `debugPrint('ERROR MESSAGE: Boo!', 'FF0000')` - Shows a red text at the top left corner of the screen."
         },
         "close": {
             "returns": "boolean",
             "args": "",
-            "documentation": ""
+            "documentation": "Stops this script."
         },
         "runHaxeCode": {
             "returns": "?",
             "args": "codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null",
-            "documentation": ""
+            "documentation": "Runs HScript code inside a Lua Script by initializing a HScript Interpreter for the Lua Script.\n* `codeToRun` - Variable name to save.\n* `varsToBring` *(Optional)* - Table with values to bring to the code.\n* `funcToRun` *(Optional)* - Function to run once the code is initialized.\n* `funcArgs` *(Optional)* - Table with arguments for the previously mentioned function.\n\n**Examples:**\n* `runHaxeCode('game.boyfriend.color = FlxColor.RED;')` - Simple HScript code to make the Player get red.\n* `runHaxeCode('game.boyfriend.scale.y = myValue;', {myValue = 1.5})` - Brings `\"myValue\"` to the Haxe Code and use it to change Player's Scale Y.\n\n*Note: Do not use `runHaxeCode` every frame! Instead, put your code in functions and call them with `runHaxeFunction` after running runHaxeCode atleast once.*"
         },
         "runHaxeFunction": {
             "returns": "?",
             "args": "funcToRun:String, ?funcArgs:Array<Dynamic> = null",
-            "documentation": ""
+            "documentation": "Calls a function inside a code ran previously with `runHaxeCode`.\n* `funcToRun` - Function to run.\n* `funcArgs` *(Optional)* - Table with arguments for the function.\n\n**Examples:**\n* `runHaxeFunction('myFunction', {1, 999})` - Will call `function myFunction(1, 999)` in the Haxe Code."
         },
         "addHaxeLibrary": {
             "returns": "void",
             "args": "libName:String, ?libPackage:String = ''",
-            "documentation": ""
+            "documentation": "Imports a Haxe class to the HScript interpreter.\n* `libName` - Class name.\n* `libPackage` *(Optional)* - The package path of the class.\n\n**Examples:**\n* `addHaxeLibrary('StringTools')` - Imports \"StringTools\" class.\n* `addHaxeLibrary('FlxMath', 'flixel.math')` - Imports \"flixel.math.FlxMath\" class."
         },
         "getProperty": {
             "returns": "?",
             "args": "variable:String, ?allowMaps:Bool = false",
-            "documentation": ""
+            "documentation": "Returns the value of a property or variable inside PlayState, a variable saved through `setVar` or a Lua Sprite/Text.\n* `variable` - Variable or Property.\n* `allowMaps` *(Optional)* - Allows for Map access in properties, disabled by default for optimization.\n\n**Examples:**\n* `getProperty('dad.scale.x')` - Can return `1.0`, for example.\n* `getProperty('singAnimations[0]')` - Normally returns `\"singLEFT\"`.\n* `getProperty('boyfriend.animOffsets.idle', true)` - Can return a table of `{0, 0}`, for example."
         },
         "setProperty": {
             "returns": "?",
             "args": "variable:String, value:Dynamic, ?allowMaps:Bool = false, ?allowInstances:Bool = false",
-            "documentation": ""
+            "documentation": "Sets the value of a property or variable inside PlayState, a variable saved through `setVar` or a Lua Sprite/Text. Returns \"value\".\n* `variable` - Variable or Property.\n* `value` - Value to set.\n* `allowMaps` *(Optional)* - Allows for Map access in properties, disabled by default for optimization.\n* `allowInstances` *(Optional)* - Allows usage of `instanceArg` for properties, disabled by default for optimization.\n\n**Examples:**\n* `setProperty('boyfriend.stunned', true)` - Stuns player.\n* `setProperty('singAnimations[3]', 'singLEFT')` - Will force Right sing animation to be `\"singLEFT\"`.\n* `setProperty('boyfriend.animOffsets.idle', {-200, 100}, true)` - Changes Player's Idle offsets to X -200, Y 100."
         },
         "getPropertyFromClass": {
             "returns": "?",
             "args": "classVar:String, variable:String, ?allowMaps:Bool = false",
-            "documentation": ""
+            "documentation": "Returns the value of a property inside a class.\n* `classVar` - Class variable based on the source folder structure.\n* `variable` - Variable or Property.\n* `allowMaps` *(Optional)* - Allows for Map access in properties, disabled by default for optimization.\n\n**Examples:**\n* `getPropertyFromClass('backend.ClientPrefs', 'data.downScroll')` - Will return the current Downscroll option value, either `true` or `false`.\n* `getPropertyFromClass('states.PlayState', 'SONG.player1')` - Will return the Player character's name from the Chart, which is a string."
         },
         "setPropertyFromClass": {
             "returns": "?",
             "args": "classVar:String, variable:String, value:Dynamic, ?allowMaps:Bool = false, ?allowInstances:Bool = false",
-            "documentation": ""
+            "documentation": "Sets the value of a property inside a class. Returns \"value\".\n* `classVar` - Class variable based on the source folder structure.\n* `variable` - Variable or Property.\n* `value` - Value to set.\n* `allowMaps` *(Optional)* - Allows for Map access in properties, disabled by default for optimization.\n* `allowInstances` *(Optional)* - Allows usage of `instanceArg` for properties, disabled by default for optimization.\n\n**Examples:**\n* `setPropertyFromClass('states.PlayState', 'SONG.player1', 'pico-playable')` - Force set Player character to `\"pico-playable\"`."
         },
         "getPropertyFromGroup": {
             "returns": "?",
             "args": "group:String, index:Int, variable:Dynamic, ?allowMaps:Bool = false",
-            "documentation": ""
+            "documentation": "Returns the value of a property of a member inside a FlxTypedGroup/FlxSpriteGroup.\n* `variable` - Group variable.\n* `index` - Index of a member of the group you put in the previous argument.\n* `property` - Property of the selected member of the group.\n* `allowMaps` *(Optional)* - Allows for Map access in properties, disabled by default for optimization.\n\n**Examples:**\n* `getPropertyFromGroup('playerStrums', 1, 'animation.curAnim.name')` - Will return the current animation name of the Player's Down Note.\n* `getPropertyFromGroup('unspawnNotes', 0, 'extraData.testVar', true)` - Lua equivalent of `unspawnNotes[0].extraData.get('testVar')`."
         },
         "setPropertyFromGroup": {
             "returns": "?",
             "args": "group:String, index:Int, variable:Dynamic, value:Dynamic, ?allowMaps:Bool = false, ?allowInstances:Bool = false",
-            "documentation": ""
+            "documentation": "Returns the value of a property inside a class.\n* `classVar` - Class variable based on the source folder structure.\n* `variable` - Variable or Property.\n* `allowMaps` *(Optional)* - Allows for Map access in properties, disabled by default for optimization.\n\n**Examples:**\n* `getPropertyFromClass('backend.ClientPrefs', 'data.downScroll')` - Will return the current Downscroll option value, either `true` or `false`.\n* `getPropertyFromClass('states.PlayState', 'SONG.player1')` - Will return the Player character's name from the Chart, which is a string."
         },
         "addToGroup": {
             "returns": "void",
             "args": "group:String, tag:String, ?index:Int = -1",
-            "documentation": ""
+            "documentation": "Adds an object to a group.\n* `group` - Variable name of the FlxTypedGroup/FlxSpriteGroup/Array.\n* `tag` - Variable name of the instance or Lua Object nametag.\n *`index` *(Optional)* - Position in the group, -1 is top, defaults to -1.\n\n**Examples:**\n* `addToGroup('uiGroup', 'mySprite')` - Adds Lua Object `\"mySprite\"` to the top of UI Group.\n* `addToGroup('uiGroup', 'mySprite', 0)` - Adds Lua Object `\"mySprite\"` to the bottom of UI Group."
         },
         "removeFromGroup": {
             "returns": "void",
             "args": "group:String, ?index:Int = -1, ?tag:String = null, ?destroy:Bool = true",
-            "documentation": ""
+            "documentation": "Removes an object from a group.\n* `group` - Variable name of the FlxTypedGroup/FlxSpriteGroup/Array.\n* `index` *(Optional)* - Position in the group, ignored if `tag` is not null, defaults to -1.\n* `tag` *(Optional)* - Variable name of the instance or Lua Object nametag.\n* `destroy` *(Optional)* - If enabled, clears the object from memory once removed, do not disable unless you know what you're doing.\n\n**Examples:**\n* `removeFromGroup('groupName', _, 'mySprite')` - Removes Object named `\"mySprite\"` from the UI Group.\n* `removeFromGroup('groupName', 0)` - Removes the object at the bottom of the UI Group."
         },
         "callMethod": {
             "returns": "?",
             "args": "funcToRun:String, ?args:Array<Dynamic>",
-            "documentation": ""
+            "documentation": "Calls a function and returns its value.\n* `funcToRun` - Name of the function you want to run.\n* `args` *(Optional)* - Optional table of arguments.\n\n**Examples:**\n* `callMethod('KillNotes')` - Clear all notes.\n* `callMethod('boyfriend.isAnimationNull')` - Returns `true` or `false` about if the Player's Animation is null.\n* `callMethod('iconP1.changeIcon', {'bf-old'})` - Change Player's icon to `\"bf-old\"`."
         },
         "callMethodFromClass": {
             "returns": "?",
             "args": "className:String, funcToRun:String, ?args:Array<Dynamic>",
-            "documentation": ""
+            "documentation": "Calls a function inside a Class and returns its value.\n* `classVar` - Class variable based on the source folder structure.\n* `funcToRun` - Name of the function you want to run.\n* `args` *(Optional)* - Optional table of arguments.\n\n**Examples:**\n* `callMethodFromClass('backend.CoolUtil', 'browserLoad', {'https://ko-fi.com/shadowmario'})` - Opens ShadowMario's Ko-Fi page in browser, give me money.\n* `callMethodFromClass('backend.CoolUtil', 'browserLoad', {'https://sniro.boo'})` - Opens Snirozu's Very Cool page in browser, give me clicks."
         },
         "createInstance": {
             "returns": "boolean",
             "args": "variableToSave:String, className:String, ?args:Array<Dynamic>",
-            "documentation": ""
+            "documentation": "Creates an instance of a Class and saves it to a lua variable nametag that allows you to use `setProperty` and other functions on it. Returns `true` or `false` for if it was created successfully.\n* `variableToSave` - Variable name to save the created instance to.\n* `classVar` - Class variable based on the source folder structure.\n* `args` *(Optional)* - Optional table of arguments.\n\n**Examples:**\n* `createInstance('testIcon', 'objects.HealthIcon', {'gf'})` - Creates a GF Health Icon.\n\n*Note: In most cases you still have to add the created instance with `addInstance`.*"
         },
         "addInstance": {
             "returns": "void",
             "args": "objectName:String, ?inFront:Bool = false",
-            "documentation": ""
+            "documentation": "Adds the instance to the scene.\n* `objectName` - Variable name of the instance.\n* `inFront` *(Optional)* - If `true`, the instance is added at the top of everything in its camera, if `false`, it will be added behind all characters.\n\n**Examples:**\n* `addInstance('testIcon', true)` - Adds an instance with the tag `\"testIcon\"` at the top of everything.\n\n*Note: As of 1.0, this function is redundant as it does nearly the same thing as `addLuaSprite`*"
         },
         "instanceArg": {
             "returns": "string",
             "args": "instanceName:String, ?className:String = null",
-            "documentation": ""
+            "documentation": "Meant to be used with `callMethod`, `callMethodFromClass`, `createInstance`, `setProperty`, `setPropertyFromGroup`, `setPropertyFromClass` and `setVar`. Formats a String in a specific way to tell the previously mentioned functions that the string is meant to be an instance.\n* `instanceName` - Self explanatory.\n* `classVar` *(Optional)* - Class variable based on the source folder structure.\n\n**Examples:**\n* `callMethod('spawnNoteSplashOnNote', {instanceArg('notes.members[0]')})` - Will spawn a Note splash in the first note on screen.\n* `setVar('leftStrum', instanceArg('playerStrums.members[0]'))` - Creates a shortcut to Player's Left Note."
         },
         "initLuaShader": {
             "returns": "boolean",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Preloads a Shader .vert/.frag inside \"shaders/\" folder, might be good for intensive shaders but it's generally not needed. Returns `true` if the operation was successful.\n* `name` - Shader .vert/.frag name, don't include the extension!\n\n**Examples:**\n* `initLuaShader('pixelate')` - Preloads \"mods/My-Mod/shaders/pixelate.frag\"."
         },
         "setSpriteShader": {
             "returns": "boolean",
             "args": "obj:String, shader:String",
-            "documentation": ""
+            "documentation": "Sets a Sprite's Shader to a .frag/.vert file inside \"shaders/\" folder. Returns `true` if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `shaderName` - Shader .vert/.frag name, don't include the extension!\n\n**Examples:**\n* `setSpriteShader('mySprite', 'pixelate')` - Sets Lua Sprite with tag `\"mySprite\"` to use \"mods/My-Mod/shaders/pixelate.frag\" shader."
         },
         "removeSpriteShader": {
             "returns": "boolean",
             "args": "obj:String",
-            "documentation": ""
+            "documentation": "Sets a Sprite's Shader to a .frag/.vert file inside \"shaders/\" folder. Returns `true` if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n\n**Examples:**\n* `removeSpriteShader('mySprite')` - Removes Shader from the Lua Sprite with tag `\"mySprite\"`."
         },
         "getShaderBool": {
             "returns": "boolean",
             "args": "obj:String, prop:String",
-            "documentation": ""
+            "documentation": "Returns an `uniform bool` shader variable's value.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name.\n\n**Examples:**\n* `getShaderBool('mySprite', 'iVar')` - Returns the value of an uniform variable named `iVar` from a Lua Sprite named `\"mySprite\"`."
         },
         "getShaderBoolArray": {
             "returns": "array",
             "args": "obj:String, prop:String",
-            "documentation": ""
+            "documentation": "Returns an `uniform bool` shader variable's array values.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name."
         },
         "getShaderInt": {
             "returns": "int",
             "args": "obj:String, prop:String",
-            "documentation": ""
+            "documentation": "Returns an `uniform int` shader variable's value.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name."
         },
         "getShaderIntArray": {
             "returns": "array",
             "args": "obj:String, prop:String",
-            "documentation": ""
+            "documentation": "Returns an `uniform int` shader variable's array values.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name."
         },
         "getShaderFloat": {
             "returns": "float",
             "args": "obj:String, prop:String",
-            "documentation": ""
+            "documentation": "Returns an `uniform float` shader variable's value.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name."
         },
         "getShaderFloatArray": {
             "returns": "array",
             "args": "obj:String, prop:String",
-            "documentation": ""
+            "documentation": "Returns an `uniform float` shader variable's array values.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name."
         },
         "setShaderBool": {
             "returns": "boolean",
             "args": "obj:String, prop:String, value:Bool",
-            "documentation": ""
+            "documentation": "Sets an `uniform bool` shader variable's value. Returns `true` if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name.\n* `value` - Value to set.\n\n**Examples:**\n* `setShaderBool('mySprite', 'iVar', true)` - Sets the value of an uniform variable named `iVar` from a Lua Sprite named `\"mySprite\"` to `true`."
         },
         "setShaderBoolArray": {
             "returns": "boolean",
-            "args": "obj:String, prop:String, values:Dynamic",
-            "documentation": ""
+            "args": "obj:String, prop:String, value:Dynamic",
+            "documentation": "Sets an `uniform bool` shader variable's array values. Returns `true` if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name.\n* `value` - Value to set.\n\n**Examples:**\n* `setShaderBoolArray('mySprite', 'iVar', {true, false, true})` - Sets the value of an uniform variable named `iVar` from a Lua Sprite named `\"mySprite\"` to an Array of `[true, false, true]`."
         },
         "setShaderInt": {
             "returns": "boolean",
             "args": "obj:String, prop:String, value:Int",
-            "documentation": ""
+            "documentation": "Sets an `uniform int` shader variable's value. Returns `true` if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name.\n* `value` - Value to set."
         },
         "setShaderIntArray": {
             "returns": "boolean",
-            "args": "obj:String, prop:String, values:Dynamic",
-            "documentation": ""
+            "args": "obj:String, prop:String, value:Dynamic",
+            "documentation": "Sets an `uniform int` shader variable's array values. Returns `true` if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name.\n* `value` - Value to set."
         },
         "setShaderFloat": {
             "returns": "boolean",
             "args": "obj:String, prop:String, value:Float",
-            "documentation": ""
+            "documentation": "Sets an `uniform float` shader variable's value. Returns `true` if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name.\n* `value` - Value to set."
         },
         "setShaderFloatArray": {
             "returns": "boolean",
-            "args": "obj:String, prop:String, values:Dynamic",
-            "documentation": ""
+            "args": "obj:String, prop:String, value:Dynamic",
+            "documentation": "Sets an `uniform float` shader variable's array values. Returns `true` if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name.\n* `value` - Value to set."
         },
         "setShaderSampler2D": {
             "returns": "boolean",
             "args": "obj:String, prop:String, bitmapdataPath:String",
-            "documentation": ""
+            "documentation": "Imports a Bitmap to an `uniform sampler2D` shader variable. Returns `true` if the operation was successful.\n* `tag` - Sprite variable name or Lua Sprite nametag.\n* `prop` - Uniform variable name.\n* `bitmapPath` - Image path, don't include the extension!\n\n**Examples:**\n* `setShaderBool('mySprite', 'iVar', 'myImage')` - Imports \"mods/My-Mod/images/myImage.png\" to the Sampler2D variable."
         },
         "makeLuaText": {
             "returns": "void",
             "args": "tag:String, ?text:String = '', ?width:Int = 0, ?x:Float = 0, ?y:Float = 0",
-            "documentation": ""
+            "documentation": "Creates a Lua Text and store it as the name input in `tag`.\n* `tag` - Lua Text nametag to save.\n* `text` *(Optional)* - Text to display.\n* `width` *(Optional)* - Set to zero to make it automatic, but will cause memory leaks if you change the text constantly, defaults to 0.\n* `x` *(Optional)* - Defaults to 0.\n* `y` *(Optional)* - Defaults to 0.\n\n**Examples:**\n* `makeLuaText('myText', 'This is a Test')` - Create a simple text displaying \"This is a Test\".\n* `makeLuaText('myText', 'Hello World!', 300, 400, 320)` - Creates a text displaying \"Hello World!\" with a defined width, X and Y.\n\n*Note: You will still have to add the Lua Text to the scene with `addLuaText` or it won't be visible.*"
         },
         "setTextString": {
             "returns": "boolean",
             "args": "tag:String, text:String",
-            "documentation": ""
+            "documentation": "Changes a Text's string. Returns `true` if the operation was successful, throws an error if text object is missing and returns `false`.\n* `tag` - Text instance variable/Lua Text nametag.\n* `text` - Text to set.\n\n**Examples:**\n* `setTextString('myText', 'Goodbye World!')` - Changes the Lua Text's text to \"Goodbye World!\"."
         },
         "setTextSize": {
             "returns": "boolean",
             "args": "tag:String, size:Int",
-            "documentation": ""
+            "documentation": "Changes a Text's Font size. Returns `true` if the operation was successful, throws an error if text object is missing and returns `false`.\n* `tag` - Text instance variable/Lua Text nametag.\n* `size` - New font size.\n\n**Examples:**\n* `setTextSize('myText', 32)` - Make the text really big.\n* `setTextSize('myText', 4)` - Make the text really small."
         },
         "setTextWidth": {
             "returns": "boolean",
             "args": "tag:String, width:Float",
-            "documentation": ""
+            "documentation": "Changes a Text's max width per line (in pixels). Returns `true` if the operation was successful, throws an error if text object is missing and returns `false`.\n* `tag` - Text instance variable/Lua Text nametag.\n* `size` - New width, set to 0 to make it automatic.\n\n**Examples:**\n* `setTextWidth('myText', 150)` - Make the text's max width be 150 pixels."
         },
         "setTextHeight": {
             "returns": "boolean",
             "args": "tag:String, height:Float",
-            "documentation": ""
+            "documentation": "Changes a Text's max height (in pixels). Returns `true` if the operation was successful, throws an error if text object is missing and returns `false`.\n* `tag` - Text instance variable/Lua Text nametag.\n* `size` - New height, set to 0 to make it automatic.\n\n**Examples:**\n* `setTextHeight('myText', 50)` - Make the text's max height be 50 pixels."
         },
         "setTextAutoSize": {
             "returns": "boolean",
             "args": "tag:String, value:Bool",
-            "documentation": ""
+            "documentation": "Changes a Text's Auto Size property. Returns `true` if the operation was successful, throws an error if text object is missing and returns `false`.\n* `tag` - Text instance variable/Lua Text nametag.\n* `value` - Value to set it to.\n\n**Examples:**\n* `setTextAutoSize('myText', false)` - Disable auto-size.`"
         },
         "setTextBorder": {
             "returns": "boolean",
             "args": "tag:String, size:Float, color:String, ?style:String = 'outline'",
-            "documentation": ""
+            "documentation": "Changes a Text's Border properties. Returns `true` if the operation was successful, throws an error if text object is missing and returns `false`.\n* `tag` - Text instance variable/Lua Text nametag.\n* `size` - Border thickness.\n* `color` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html).\n* `style` *(Optional)* - Can be: `\"none\"`, `\"outline\"`, `\"outline_fast\"`, `\"shadow\"`.\n\n**Examples:**\n* `setTextBorder('myText', 3, 'black')` - Sets a thick black outline to the text.\n* `setTextBorder('myText', 1, 'FF0000', 'outline_fast')` - Sets a Fast/Optimized thin red outline to the text."
         },
         "setTextColor": {
             "returns": "boolean",
             "args": "tag:String, color:String",
-            "documentation": ""
+            "documentation": "Changes a Text's color. Returns `true` if the operation was successful, throws an error if text object is missing and returns `false`.\n* `tag` - Text instance variable/Lua Text nametag.\n* `color` - Color hexadecimal string or [color name](https://api.haxeflixel.com/flixel/util/FlxColor.html).\n\n**Examples:**\n* `setTextColor('myText', '7F7F7F')` - Makes text gray.\n* `setTextColor('myText', 'red')` - Makes text red."
         },
         "setTextFont": {
             "returns": "boolean",
             "args": "tag:String, newFont:String",
-            "documentation": ""
+            "documentation": "Changes a Text's font. Returns `true` if the operation was successful, throws an error if text object is missing and returns `false`.\n* `tag` - Text instance variable/Lua Text nametag.\n* `font` - Text font path.\n\n**Examples:**\n* `setTextFont('myText', 'comicSans.ttf')` - Loads font from \"mods/My-Mod/fonts/comicSans.ttf\" into `\"myText\"` Lua Text."
         },
         "setTextItalic": {
             "returns": "boolean",
             "args": "tag:String, italic:Bool",
-            "documentation": ""
+            "documentation": "Toggles Italic in a Text. Returns `true` if the operation was successful, throws an error if text object is missing and returns `false`.\n* `tag` - Text instance variable/Lua Text nametag.\n* `italic` - Value to set it to.\n\n**Examples:**\n* `setTextItalic('myText', true)` - Toggle on Italic in a Lua Text."
         },
         "setTextAlignment": {
             "returns": "boolean",
             "args": "tag:String, alignment:String = 'left'",
-            "documentation": ""
+            "documentation": "Changes a Text's Alignment. Returns `true` if the operation was successful, throws an error if text object is missing and returns `false`.\n* `tag` - Text instance variable/Lua Text nametag.\n* `alignment` - Can be: `\"left\"`, `\"right\"`, `\"center\"`, `\"justify\"`. Defaults to `\"left\"`.\n\n**Examples:**\n* `setTextAlignment('myText', 'center')` - Makes a Lua Text centered."
         },
         "getTextString": {
             "returns": "string",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Returns the Text's string. Throws an error if the text object is missing and returns null.\n* `tag` - Text instance variable/Lua Text nametag.\n\n**Examples:**\n* `getTextString('myText')` - Returns the Text string from a Lua Text named `\"myText\"`."
         },
         "getTextSize": {
             "returns": "int",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Returns the Text's font size. Throws an error if the text object is missing and returns -1.\n* `tag` - Text instance variable/Lua Text nametag."
         },
         "getTextFont": {
             "returns": "string",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Returns the Text's font path. Throws an error if the text object is missing and returns null.\n* `tag` - Text instance variable/Lua Text nametag."
         },
         "getTextWidth": {
             "returns": "float",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Returns the Text's max width. Throws an error if the text object is missing and returns 0.\n* `tag` - Text instance variable/Lua Text nametag."
         },
         "addLuaText": {
             "returns": "void",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Adds a previously created Lua Text to the top of the scene.\n* `tag` - Lua Text nametag.\n\n**Examples:**\n* `addLuaText('myText')` - Adds to the scene a Lua Text created with `makeLuaText('myText', 'This is a Test')`."
         },
         "removeLuaText": {
             "returns": "void",
             "args": "tag:String, destroy:Bool = true",
-            "documentation": ""
+            "documentation": "Removes a previously added Lua Text.\n* `tag` - Lua Text nametag.\n* `destroy` *(Optional)* - If enabled, clears the text object from memory once removed, do not disable unless you know what you're doing.\n\n**Examples:**\n* `removeLuaText('myText')` - Removes a Lua Text created with `makeLuaText('myText', 'This is a Test')`."
         }
     },
     "variables": {
         "Function_StopLua": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "If this is returned in a event function, other Lua scripts will not have this event received."
         },
         "Function_StopHScript": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "If this is returned in a event function, other HScript scripts will not have this event received."
         },
         "Function_StopAll": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "If this is returned in a event function, other HScript and Lua scripts will not have this event received. (This doesn't stop the internal code execution, check `Function_Stop`)"
         },
         "Function_Stop": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "If this is returned in a event function, the internal code for that event doesn't continue it's execution."
         },
         "Function_Continue": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Does nothing."
         },
         "luaDebugMode": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "If true, errors are displayed in game.\n\n(Defaults to false)"
         },
         "luaDeprecatedWarnings": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "If true, and `luaDebugMode` is true, deprecated API function errors are displayed in game.\n\n(Defaults to true)"
         },
         "version": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the current Psych Engine version."
         },
         "modFolder": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the mod directory of this script."
         },
         "curBpm": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the current Music BPM."
         },
         "bpm": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the song BPM, defined in the song .JSON file."
         },
         "scrollSpeed": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the song scroll speed, defined in the song .JSON file."
         },
         "crochet": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the elapsed time between beats, in milliseconds."
         },
         "stepCrochet": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the elapsed time between steps, in milliseconds."
         },
         "songLength": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the current Music length, in milliseconds."
         },
         "songName": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the song name, defined in the song .JSON file."
         },
         "songPath": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the `songName` but formatted to be valid for the file system."
         },
         "loadedSongName": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the song name of the last song data that was loaded by a function."
         },
         "loadedSongPath": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the formatted song name of the last song data that was loaded by a function."
         },
         "chartPath": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the song chart path of the last song data that was loaded by a function."
         },
         "startedCountdown": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if the song countdown has started."
         },
         "curStage": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the stage name, defined in the song .JSON file."
         },
         "isStoryMode": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if the player is in Story Mode."
         },
         "difficulty": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the index of the current difficulty in the internal difficulty list."
         },
         "difficultyName": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the difficulty name."
         },
         "difficultyPath": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Formatted difficulty name to be valid for the file system."
         },
         "difficultyNameTranslation": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Difficulty name but translated."
         },
         "weekRaw": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "A number corresponding to the current week."
         },
         "week": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the week name."
         },
         "seenCutscene": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true right before the first `onStartCountdown` event."
         },
         "hasVocals": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns the `needsVoices` from the song data. This doesn't determine whether or not the vocals are actually present."
         },
         "screenWidth": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the window width, in pixels."
         },
         "screenHeight": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the window height, in pixels."
         },
         "curSection": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the current section number."
         },
         "curBeat": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the current beat number."
         },
         "curStep": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the current step number."
         },
         "curDecBeat": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the current beat number, with decimals."
         },
         "curDecStep": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the current step number, with decimals."
         },
         "score": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the current score value."
         },
         "misses": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the current misses count."
         },
         "hits": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the current hits count."
         },
         "combo": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the current combo value."
         },
         "deaths": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the player's gameover retry count."
         },
         "rating": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the current accuracy percent, in range of 0 to 1."
         },
         "ratingName": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the current rating name."
         },
         "ratingFC": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the current full combo rating name."
         },
         "totalPlayed": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns how many notes has the player missed or hit."
         },
         "totalNotesHit": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns how many notes has the player hit."
         },
         "inGameOver": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns whether or not the player is in gameover state."
         },
         "mustHitSection": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if the game camera is focused on the player."
         },
         "altAnim": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if the current section uses alt animation for characters."
         },
         "gfSection": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Whether or not the current `mustHitSection` focused character pose animations are being played by the girlfriend instead."
         },
         "healthGainMult": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "The current multiplier of how much health is being gained from notes."
         },
         "healthLossMult": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "The current multiplier of how much health is being lost from notes."
         },
         "playbackRate": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "The current music playback rate."
         },
         "guitarHeroSustains": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if missing a sustain note results in the rest of the sustain tail being count as missed."
         },
         "instakillOnMiss": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if missing a note results in death."
         },
         "botPlay": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if the game is playing for the player."
         },
         "practice": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if practice mode is enabled."
         },
         "defaultPlayerStrumX0": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial X position of the left player note."
         },
         "defaultPlayerStrumX1": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial X position of the down player note."
         },
         "defaultPlayerStrumX2": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial X position of the up player note."
         },
         "defaultPlayerStrumX3": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial X position of the right player note."
         },
         "defaultPlayerStrumY0": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial Y position of the left player note."
         },
         "defaultPlayerStrumY1": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial Y position of the down player note."
         },
         "defaultPlayerStrumY2": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial Y position of the up player note."
         },
         "defaultPlayerStrumY3": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial Y position of the right player note."
         },
         "defaultOpponentStrumX0": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial X position of the left opponent note."
         },
         "defaultOpponentStrumX1": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial X position of the down opponent note."
         },
         "defaultOpponentStrumX2": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial X position of the up opponent note."
         },
         "defaultOpponentStrumX3": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial X position of the right opponent note."
         },
         "defaultOpponentStrumY0": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial Y position of the left opponent note."
         },
         "defaultOpponentStrumY1": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial Y position of the down opponent note."
         },
         "defaultOpponentStrumY2": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial Y position of the up opponent note."
         },
         "defaultOpponentStrumY3": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the initial Y position of the right opponent note."
         },
         "defaultBoyfriendX": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the X position of the boyfriend stage character."
         },
         "defaultBoyfriendY": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the Y position of the boyfriend stage character."
         },
         "defaultOpponentX": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the X position of the opponent stage character."
         },
         "defaultOpponentY": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the Y position of the opponent stage character."
         },
         "defaultGirlfriendX": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the X position of the girlfriend stage character."
         },
         "defaultGirlfriendY": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the Y position of the girlfriend stage character."
         },
         "boyfriendName": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the name of the player character."
         },
         "dadName": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the name of the opponent character."
         },
         "gfName": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the name of the girlfriend character."
         },
         "downscroll": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if notes will be going in the opposite direction of the strum."
         },
         "middlescroll": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if strum notes are initialized in the center position on the screen."
         },
         "framerate": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the maximum game framerate."
         },
         "ghostTapping": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if pressing the strum note key when no note is in range does nothing, otherwise the game counts it as miss."
         },
         "hideHud": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if most of the game HUD is hidden."
         },
         "timeBarType": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the timebar display type. Can be either: `\"Song Name\"`, `\"Time Elapsed\"`, `\"Time Left\"` or `\"Disabled\"`."
         },
         "scoreZoom": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if the score text does a bop when a note is hit."
         },
         "cameraZoomOnBeat": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Whether or not the camera zooms on a beat."
         },
         "flashingLights": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true if flashing lights are preferred by the player to be off."
         },
         "noteOffset": {
             "returns": "int",
-            "documentation": ""
+            "documentation": "Returns the current note offset from the audio."
         },
         "healthBarAlpha": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the current health bar opacity, ranging from 0 to 1."
         },
         "noResetButton": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true, if the RESET button is disabled by the player."
         },
         "lowQuality": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true, if the player prefers to have more performant gameplay by reducing the visual effects or not including some heavy sprites."
         },
         "shadersEnabled": {
             "returns": "boolean",
-            "documentation": ""
+            "documentation": "Returns true, if the player has enabled the shaders functionality."
         },
         "scriptName": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the current script path."
         },
         "currentModDirectory": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the mod directory that was loaded as of initializing this script."
         },
         "noteSkin": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the name of the current note skin."
         },
         "noteSkinPostfix": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the name of the current note skin, but formatted to be valid for the file system."
         },
         "splashSkin": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the name of the current note splash skin."
         },
         "splashSkinPostfix": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the name of the current note splash skin, but formatted to be valid for the file system."
         },
         "splashAlpha": {
             "returns": "float",
-            "documentation": ""
+            "documentation": "Returns the opacity of the note splashes, ranging from 0 to 1."
         },
         "buildTarget": {
             "returns": "string",
-            "documentation": ""
+            "documentation": "Returns the current build target. Can be either: `\"windows\"`, `\"windows_x86\"`, `\"linux\"`, `\"mac\"`, `\"browser\"`, `\"android\"`, `\"switch\"` or `\"unknown\"`."
         }
     },
     "events": {
         "onCustomSubstateCreate": {
             "returns": "void",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Called when a new custom scripted substate is being initialized."
         },
         "onCustomSubstateCreatePost": {
             "returns": "void",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Called when custom substate has been fully initialized."
         },
         "onCustomSubstateUpdate": {
             "returns": "void",
             "args": "name:String, elapsed:Float",
-            "documentation": ""
+            "documentation": "Called when custom substate updates into another frame."
         },
         "onCustomSubstateUpdatePost": {
             "returns": "void",
             "args": "name:String, elapsed:Float",
-            "documentation": ""
+            "documentation": "Called when custom substate has updated itself into another frame."
         },
         "onCustomSubstateDestroy": {
             "returns": "void",
             "args": "name:String",
-            "documentation": ""
+            "documentation": "Called when custom substate has been destroyed."
         },
         "onCreatePost": {
             "returns": "void",
             "args": "",
-            "documentation": ""
+            "documentation": "Called when the play state has been fully initialized."
         },
         "onStartCountdown": {
             "returns": "?",
             "args": "",
-            "documentation": ""
+            "documentation": "Called right before the countdown starts.\n\nReturning `Function_Stop` stops the further execution of this function, leading to no start of the countdown."
         },
         "onCountdownStarted": {
             "returns": "void",
-            "args": "",
+            "args": "Called when the countdown has started.",
             "documentation": ""
         },
         "preUpdateScore": {
             "returns": "?",
             "args": "miss:Bool",
-            "documentation": ""
+            "documentation": "Called right before the score text is updated.\n\nReturning `Function_Stop` stops the further execution of this function, leading to no update of the score text."
         },
         "onUpdateScore": {
             "returns": "void",
             "args": "miss:Bool",
-            "documentation": ""
+            "documentation": "Called after the score text updates."
         },
         "onNextDialogue": {
             "returns": "void",
             "args": "dialogueCount:Int",
-            "documentation": ""
+            "documentation": "Called when the player goes forward on the dialogue box."
         },
         "onSkipDialogue": {
             "returns": "void",
             "args": "dialogueCount:Int",
-            "documentation": ""
+            "documentation": "Called when the player skips the dialogue box cutscene."
         },
         "onSongStart": {
             "returns": "void",
             "args": "",
-            "documentation": ""
+            "documentation": "Called after the song starts."
         },
         "eventEarlyTrigger": {
-            "returns": "void",
+            "returns": "float",
             "args": "event:String, value1:String, value2:String, strumTime:Float",
-            "documentation": ""
+            "documentation": "Called while the event note is being initialized, return the time offset of when the event of this note should start."
         },
         "onEventPushed": {
             "returns": "void",
             "args": "event:String, value1:String, value2:String, strumTime:Float",
-            "documentation": ""
+            "documentation": "Called while the event note is being initialized, use it for precaching events that use the same assets, no matter the values."
         },
         "onResume": {
             "returns": "void",
             "args": "",
-            "documentation": ""
+            "documentation": "Called when the player resumes the game."
         },
         "onUpdate": {
             "returns": "void",
             "args": "elapsed:Float",
-            "documentation": ""
+            "documentation": "Called on each game frame update.\n\n*Note: This function is also called on the game over state!*"
         },
         "onPause": {
             "returns": "?",
             "args": "",
-            "documentation": ""
+            "documentation": "Called when the player requests to pause the game.\n\nReturning `Function_Stop` stops the further execution of this function, leading to disabling the game pause menu."
         },
         "onUpdatePost": {
             "returns": "void",
             "args": "elapsed:Float",
-            "documentation": ""
+            "documentation": "Called after each game frame update.\n\n*Note: This function is also called on the game over state!*"
         },
         "onGameOver": {
             "returns": "?",
             "args": "",
-            "documentation": ""
+            "documentation": "Called when the player funkin' dies.\n\nReturning `Function_Stop` stops the further execution of this function, leading to player's immortality and no game over screen."
         },
         "onEvent": {
             "returns": "void",
             "args": "event:String, value1:String, value2:String, strumTime:Float",
-            "documentation": ""
+            "documentation": "Called when a event note starts it's event."
         },
         "onMoveCamera": {
             "returns": "void",
             "args": "character:String",
-            "documentation": ""
+            "documentation": "Called when the camera moves to a character. The `character` can be either: `\"gf\"`, `\"dad\"` or `\"boyfriend\"`."
         },
         "onEndSong": {
             "returns": "?",
             "args": "",
-            "documentation": ""
+            "documentation": "Called when the song ends.\n\nReturning `Function_Stop` stops the further execution of this function, leading to no song end."
         },
         "onKeyPressPre": {
             "returns": "?",
             "args": "key:Int",
-            "documentation": ""
+            "documentation": "Called before the input system registers a key press.\n\nReturning `Function_Stop` prevents the input system and `onKeyPress` from registering this key press."
         },
         "onGhostTap": {
             "returns": "void",
             "args": "key:Int",
-            "documentation": ""
+            "documentation": "Called when the player presses a note key while there isn't any note in keys range, while `ghostTapping` is true."
         },
         "onKeyPress": {
             "returns": "void",
             "args": "key:Int",
-            "documentation": ""
+            "documentation": "Called when the game registers a key press."
         },
         "onKeyReleasePre": {
             "returns": "?",
             "args": "key:Int",
-            "documentation": ""
+            "documentation": "Called before the input system registers a key release.\n\nReturning `Function_Stop` prevents the input system and `onKeyRelease` from registering this key release."
         },
         "onKeyRelease": {
             "returns": "void",
             "args": "key:Int",
-            "documentation": ""
+            "documentation": "Called when the game registers a key release."
         },
         "noteMissPress": {
             "returns": "void",
             "args": "direction:Int",
-            "documentation": ""
+            "documentation": "Called when the player miss presses a note key while there isn't any note available, while `ghostTapping` is false."
         },
         "onStepHit": {
             "returns": "void",
             "args": "",
-            "documentation": ""
+            "documentation": "Called on each step hit."
         },
         "onBeatHit": {
             "returns": "void",
             "args": "",
-            "documentation": ""
+            "documentation": "Called on each beat hit."
         },
         "onSectionHit": {
             "returns": "void",
             "args": "",
-            "documentation": ""
+            "documentation": "Called on each section hit."
         },
         "onRecalculateRating": {
             "returns": "?",
             "args": "",
-            "documentation": ""
+            "documentation": "Called when the game wants to update the `ratingName`, `ratingPercent` and `ratingFC` fields.\n\nReturning `Function_Stop` stops the further execution of this function, leading to update of these fields."
         },
         "onGameOverStart": {
             "returns": "void",
             "args": "",
-            "documentation": ""
+            "documentation": "Called when the player *actually* funkin' dies."
         },
         "onGameOverConfirm": {
             "returns": "void",
             "args": "isAccept:Bool",
-            "documentation": ""
+            "documentation": "Called when the player leaves the game over state.\n\nIf `isAccept` is true, the player chose to retry, otherwise the player gave up."
         },
         "onTweenCompleted": {
             "returns": "void",
             "args": "tag:String, ?vars:String",
-            "documentation": ""
+            "documentation": "Called when a tween with a `tag` finishes."
         },
         "onTimerCompleted": {
             "returns": "void",
             "args": "tag:String, loops:Int, loopsLeft:Int",
-            "documentation": ""
+            "documentation": "Called when a timer with a `tag` finishes."
         },
         "onSoundFinished": {
             "returns": "void",
             "args": "tag:String",
-            "documentation": ""
+            "documentation": "Called when a sound with a `tag`, that was played using the `playSound` function finishes."
         },
         "onCountdownTick": {
             "returns": "void",
             "args": "counter:Int",
-            "documentation": ""
+            "documentation": "Called on each countdown tick.\n\nThe `counter` argument ranges from 0 to 4."
         },
         "onSpawnNote": {
             "returns": "void",
             "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool, strumTime:Float",
-            "documentation": ""
+            "documentation": "Called when a note has been spawned into the game."
         },
         "noteMiss": {
             "returns": "?",
             "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool",
-            "documentation": ""
+            "documentation": "Called when the player misses a note.\n\nReturning  `Function_StopHScript`, `Function_StopAll` or `Function_Stop` stops the HScript script from also receiving this event."
         },
         "opponentNoteHitPre": {
             "returns": "?",
             "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool",
-            "documentation": ""
+            "documentation": "Called when the opponent hits a note.\n\nReturning `Function_Stop` stops the further execution of this function, leading to the opponent not hitting this note *visually*.\n\nReturning `Function_StopHScript`, `Function_StopAll` or `Function_Stop` stops the HScript script from also receiving this event."
         },
         "opponentNoteHit": {
             "returns": "?",
             "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool",
-            "documentation": ""
+            "documentation": "Called after the opponent hits a note.\n\nReturning `Function_StopHScript`, `Function_StopAll` or `Function_Stop` stops the HScript script from also receiving this event."
         },
         "goodNoteHitPre": {
             "returns": "?",
             "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool",
-            "documentation": ""
+            "documentation": "Called when the player hits a note.\n\nReturning `Function_Stop` stops the further execution of this function, leading to the player not hitting this note.\n\nReturning `Function_StopHScript`, `Function_StopAll` or `Function_Stop` stops the HScript script from also receiving this event."
         },
         "goodNoteHit": {
             "returns": "?",
             "args": "index:Int, noteData:Int, noteType:String, isSustain:Bool",
-            "documentation": ""
+            "documentation": "Called after the player hits a note.\n\nReturning `Function_StopHScript`, `Function_StopAll` or `Function_Stop` stops the HScript script from also receiving this event."
         },
         "onCreate": {
             "returns": "void",
             "args": "",
-            "documentation": ""
+            "documentation": "Called after this script has been fully initialized."
         },
         "onDestroy": {
             "returns": "void",
             "args": "",
-            "documentation": ""
+            "documentation": "Called when the play state is being destroyed."
         }
     }
 }

@@ -56,9 +56,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
 			list.push({
 				detail: "---@funkinEngine={engine}",
-				documentation: "Set the FNF engine",
+				documentation: "Set the FNF engine for this script.",
 				kind: vscode.CompletionItemKind.Snippet,
-				label: "---@funkinEngine="
+				label: "funkinEngine=",
+				insertText: new vscode.SnippetString("---@funkinEngine=$0")
 			});
 
 			//add function
@@ -161,7 +162,7 @@ export async function activate(context: vscode.ExtensionContext) {
 			}
 			*/
 			if (event != null) {
-				markdownString.appendMarkdown("**FNF Engine Event/Trigger Function**\n\n" + event.documentation);
+				markdownString.appendMarkdown("**Engine Event/Trigger Function**\n\n" + event.documentation);
 				return new vscode.Hover(markdownString);
 			}
 			if (object != null) {
@@ -256,9 +257,18 @@ export async function activate(context: vscode.ExtensionContext) {
 					daComment += "\n---\n";
 				}
 
+				const includeCode = (event.returns && (
+					(event.returns + '').startsWith("array") || 
+					(event.returns + '').startsWith("bool") || 
+					event.returns == "float" || 
+					event.returns == "int" ||
+					event.returns == "number" || 
+					event.returns == "string"
+				)) ? 'return ' : '';
+
 				const snippet = new vscode.CompletionItem("Event: " + event.name + "(" + daArgs.join(", ") + ")");
-				snippet.detail = event.name + "(" + event.args + ")";
-				snippet.insertText = new vscode.SnippetString(daComment + "function " + event.name + "(" + haxeArgsToLua(event.args) + ")\n\t$0\nend");
+				snippet.detail = event.returns + " " + event.name + "(" + event.args + ")";
+				snippet.insertText = new vscode.SnippetString(daComment + "function " + event.name + "(" + haxeArgsToLua(event.args) + ")\n\t" + includeCode + "$0\nend");
 				snippet.documentation = new vscode.MarkdownString(event.documentation);
 				snippet.command = {
 					title: "complete",
@@ -451,6 +461,12 @@ export async function activate(context: vscode.ExtensionContext) {
 		diagnosticCollection.clear();
 		if (activeEditor && event.document === activeEditor.document) {
 			triggerUpdateDecorations(true);
+		}
+	}, null, context.subscriptions);
+
+	vscode.workspace.onDidChangeConfiguration(event => {
+		if (event.affectsConfiguration('funkinVSCode.offlineMode') || event.affectsConfiguration('funkinVSCode.onlineDataURL')) {
+			EngineData.CACHED.clear();
 		}
 	}, null, context.subscriptions);
 

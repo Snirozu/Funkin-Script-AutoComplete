@@ -561,7 +561,11 @@ interface SexyArg {
 	optional: boolean
 }
 
+let hasShownOutput = false;
 export function sendToOutput(string: string) {
-	outputChannel.show();
+	if (!hasShownOutput) {
+		outputChannel.show();
+		hasShownOutput = true;
+	}
 	outputChannel.appendLine(string);
 }

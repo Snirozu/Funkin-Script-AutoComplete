@@ -145,8 +145,7 @@
 	},
 	"dependencies": {
 		"@types/needle": "^3.2.0",
-		"fast-xml-parser": "^4.4.1",
-		"funkin-script-autocompleter": "file:",
+		"fast-xml-parser": "^4.5.3",
 		"needle": "^3.2.0"
 	}
 }

@@ -51,8 +51,7 @@ export async function getData(file: string): Promise<string | any> {
 		CACHED.set(file, content);
 	} 
 	catch (err) {
-		console.error('File Data ERR: ' + err);
-		sendToOutput("Errro while reading file: " + err);
+		vscode.window.showErrorMessage(err + '');
 		content = undefined;
 	}
 

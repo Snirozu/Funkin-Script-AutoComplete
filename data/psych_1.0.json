@@ -1230,7 +1230,22 @@
             "returns": "void",
             "args": "tag:String, destroy:Bool = true",
             "documentation": "Removes a previously added Lua Text.\n* `tag` - Lua Text nametag.\n* `destroy` *(Optional)* - If enabled, clears the text object from memory once removed, do not disable unless you know what you're doing.\n\n**Examples:**\n* `removeLuaText('myText')` - Removes a Lua Text created with `makeLuaText('myText', 'This is a Test')`."
-        }
+        },
+        "openCustomSubstate": {
+            "returns": "void",
+            "args": "name:String, ?pauseGame:Bool = false",
+            "documentation": "Opens an empty custom substate.\n* `name` - Identifier used for the Lua/HScript callbacks.\n* `pauseGame` *(Optional)* - Game stays paused while substate is open.\n\n**Examples:**\n* `openCustomSubstate('custom_substate')` - Opens a substate.\n* `openCustomSubstate('custom_pause_menu', true)` - Pauses game and open a substate.\n\n*Note: By default, the substate is completely blank when open, you can add Objects to it with \"insertToCustomSubstate\".*"
+        },
+        "closeCustomSubstate": {
+            "returns": "void",
+            "args": "",
+            "documentation": "Closes the custom substate."
+        },
+        "insertToCustomSubstate": {
+            "returns": "void",
+            "args": "tag:String, ?pos:Int = -1",
+            "documentation": "Inserts a Lua Sprite into the currently active Custom Substate.\n* `tag` - Lua Object tag to add.\n* `pos` *(Optional)* - Layering, default value is -1 and it inserts on top of everything.\n\n**Examples:**\n* `insertToCustomSubstate('mySprite')` - Insert Lua Sprite with tag \"mySprite\" at the top.\n* `insertToCustomSubstate('mySprite', 0)` - Insert Lua Sprite with tag \"mySprite\" at the bottom."
+        },
     },
     "variables": {
         "Function_StopLua": {

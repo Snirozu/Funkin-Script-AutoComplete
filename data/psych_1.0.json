@@ -1245,7 +1245,7 @@
             "returns": "void",
             "args": "tag:String, ?pos:Int = -1",
             "documentation": "Inserts a Lua Sprite into the currently active Custom Substate.\n* `tag` - Lua Object tag to add.\n* `pos` *(Optional)* - Layering, default value is -1 and it inserts on top of everything.\n\n**Examples:**\n* `insertToCustomSubstate('mySprite')` - Insert Lua Sprite with tag \"mySprite\" at the top.\n* `insertToCustomSubstate('mySprite', 0)` - Insert Lua Sprite with tag \"mySprite\" at the bottom."
-        },
+        }
     },
     "variables": {
         "Function_StopLua": {

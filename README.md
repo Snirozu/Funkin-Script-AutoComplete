@@ -6,7 +6,7 @@ Visual Studio Code AutoCompleter Extension for [Psych Engine](https://github.com
 - Function/Event/Variable auto completing
 - Warnings for deprecated functions
 - Hovers with documentation
-- API data is downloaded from the GitHub repository instead of being grabbed from local storage.
+- API data is downloaded from the Codeberg repository instead of being grabbed from local storage.
 ## Haxe Scripted Classes (EXPERIMENTAL)
 - Functional Haxe completion!
 - Completion for Friday Night Funkin v0.3.0 Modding API
@@ -33,7 +33,7 @@ Visual Studio Code AutoCompleter Extension for [Psych Engine](https://github.com
 - Disable deprecated warnings for specific function on this file: `---@diagnostic disable: {funcs}`
 - Disable deprecated warnings for specific function on next line: `---@diagnostic disable-next-line: {funcs}`
 
-Report bugs and contribute to this extension on [Github](https://github.com/Snirozu/Funkin-Script-AutoComplete)
+Report bugs and contribute to this extension on [Github](https://codeberg.org/Snirozu/Funkin-Script-AutoComplete)
 
 ## Contributing
 Any pull requests are appreciated, feel free to Pull Request any missing engines, functions or variables! <br>
@@ -46,6 +46,6 @@ If a function is deprecated add `"deprecated": "deprecated message here"` to the
 
 ## Compiling and Editing the source
 1. Install [npm](https://nodejs.org/en/download/)
-2. Clone this repo with ```git clone https://github.com/Snirozu/Funkin-Script-AutoComplete.git``` (must be in empty folder)
+2. Clone this repo with ```git clone https://codeberg.org/Snirozu/Funkin-Script-AutoComplete.git``` (must be in empty folder)
 3. To install all the libraries run ```npm install```
 4. And to compile run ```npm run build```

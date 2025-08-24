@@ -2,14 +2,14 @@
 	"name": "funkin-script-autocompleter",
 	"displayName": "Funkin Script AutoCompleter",
 	"description": "AutoCompleter for Friday Night Funkin` scripts",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"icon": "images/icon.png",
 	"publisher": "Snirozu",
 	"private": true,
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Snirozu/Funkin-Script-AutoComplete"
+		"url": "https://codeberg.org/Snirozu/Funkin-Script-AutoComplete"
 	},
 	"engines": {
 		"vscode": "^1.32.0"
@@ -55,7 +55,7 @@
 				},
 				"funkinVSCode.onlineDataURL": {
 					"type": "string",
-					"default": "https://raw.githubusercontent.com/Snirozu/Funkin-Script-AutoComplete/master/data/",
+					"default": "https://codeberg.org/Snirozu/Funkin-Script-AutoComplete/raw/branch/master/data/",
 					"description": "URL path to the online folder which contains all of the API Data for the different engines."
 				},
 				"funkinVSCode.enableOnlyOnCertainScripts": {
